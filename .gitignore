@@ -1,2 +1,3 @@
 .idea
-./src/debug
+src/debug
+supervisely_lib
