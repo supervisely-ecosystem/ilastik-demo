@@ -4,6 +4,7 @@ services:
     shm_size: '2gb'
     build: 
       context: .
+      dockerfile: Dockerfile-dev
       args:
         IMAGE: supervisely/ilastik:1.0.0
     ports:
