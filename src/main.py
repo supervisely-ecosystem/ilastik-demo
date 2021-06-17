@@ -63,6 +63,7 @@ def add_to_train_set(api: sly.Api, task_id, context, state, app_logger):
     #                               g.label_colors,
     #                               100)
 
+
 @g.my_app.callback("apply_to_current_image")
 @sly.timeit
 def apply_to_current_image(api: sly.Api, task_id, context, state, app_logger):
