@@ -55,7 +55,13 @@ def add_to_train_set(api: sly.Api, task_id, context, state, app_logger):
     print('state = ', state)
     image_id = context['imageId']
     _ = download_data(image_id, is_test=False)
-
+    # for each image retrain model
+    # generate_trained_project_file(g.path_to_trained_project,
+    #                               g.train_img_dir,
+    #                               g.machine_masks_dir,
+    #                               g.label_names,
+    #                               g.label_colors,
+    #                               100)
 
 @g.my_app.callback("apply_to_current_image")
 @sly.timeit
