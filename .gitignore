@@ -1,3 +1,4 @@
 .idea
 src/debug
 supervisely_lib
+secret_debug.env

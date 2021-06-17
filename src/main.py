@@ -84,9 +84,9 @@ def main():
     sly.logger.info(
         "Script arguments",
         extra={
-            "TEAM_ID"      : g.TEAM_ID,
-            "WORKSPACE_ID" : g.WORKSPACE_ID,
-            "TASK_ID"      : g.TASK_ID
+            "TEAM_ID": g.TEAM_ID,
+            "WORKSPACE_ID": g.WORKSPACE_ID,
+            "TASK_ID": g.TASK_ID
         }
     )
     data = {}

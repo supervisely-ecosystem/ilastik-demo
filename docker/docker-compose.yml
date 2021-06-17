@@ -1,0 +1,11 @@
+version: "2.2"
+services:
+  mmcls:
+    shm_size: '2gb'
+    runtime: nvidia
+    build: 
+      context: .
+    ports:
+      - "3333:22"
+    volumes:
+      - "./data:/data"
