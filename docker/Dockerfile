@@ -6,5 +6,5 @@ RUN wget https://files.ilastik.org/ilastik-1.4.0b14-Linux.tar.bz2 -O /ilastik-1.
 RUN mkdir ilastik-build
 RUN tar -xf /ilastik-1.4.0b14-Linux.tar.bz2 -C /ilastik-build
 
-
+COPY roi.py /ilastik-build/ilastik-meta/ilastik/lazyflow/roi.py
 
