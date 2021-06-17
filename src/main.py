@@ -2,6 +2,8 @@ import supervisely_lib as sly
 import globals as g
 import os
 import numpy as np
+import utils
+
 # context = {
 #     'datasetId': 6876,
 #     'teamId': 7,
@@ -51,9 +53,8 @@ def download_data(image_id, is_test=False):
 def add_to_train_set(api: sly.Api, task_id, context, state, app_logger):
     print('context = ', context)
     print('state = ', state)
-    # train model
     image_id = context['imageId']
-    download_data(image_id, is_test=False)
+    _ = download_data(image_id, is_test=False)
 
 
 @g.my_app.callback("apply_to_current_image")
@@ -62,6 +63,14 @@ def apply_to_current_image(api: sly.Api, task_id, context, state, app_logger):
     print('context = ', context)
     print('state = ', state)
     # infer model
+
+    # APPLY MODEL
+    image_id = context['imageId']
+    test_ann = download_data(image_id, is_test=True)
+    # predicted_images_bw = predict_image(g.path_to_trained_project, g.test_img_dir, g.predictions_dir)
+    # predicted_images_col = utils.bw_to_color(predicted_images_bw, g.machine_colors, g.pred_label_colors)
+    # utils.draw_predicitons(api, [image_id], g.project.id, g.project_meta, [test_ann],
+    #                        g.predictions_dir, g.pred_label_names, g.pred_label_colors)
 
 
 def main():
