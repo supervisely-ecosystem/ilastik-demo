@@ -5,24 +5,30 @@ import numpy as np
 
 
 def download_data(image_id, is_test=False):
-    test_ann = None
-    image = g.api.image.get_info_by_id(image_id)
-    if is_test:
-        img_dir = g.test_img_dir
-        test_ann_json = g.api.annotation.download(image.id).annotation
-        test_ann = sly.Annotation.from_json(test_ann_json, g.project_meta)
-        # test_anns.append(test_ann)
+    if is_test is True:
+        img_dir = g.test_dir
     else:
-        img_dir = g.train_img_dir
-        ann_json = g.api.annotation.download(image.id).annotation
-        ann = sly.Annotation.from_json(ann_json, g.project_meta)
-        machine_mask = np.zeros(shape=ann.img_size + (3,), dtype=np.uint8)
-        for label in ann.labels:
-            if not label.obj_class.name.endswith("_prediction"):
-                label.geometry.draw(machine_mask, color=g.machine_map[label.obj_class.name])
-        sly.image.write(os.path.join(g.machine_masks_dir, os.path.splitext(image.name)[0] + '.png'), machine_mask)
-    g.api.image.download_path(image.id, os.path.join(img_dir, image.name))
-    return test_ann
+        img_dir = g.train_dir
+
+    info = g.api.image.get_info_by_id(image_id)
+    img_path = os.path.join(img_dir, f"{image_id}{info.name}")
+
+    # if is_test:
+    #     img_dir = g.test_img_dir
+    #     test_ann_json = g.api.annotation.download(image.id).annotation
+    #     test_ann = sly.Annotation.from_json(test_ann_json, g.project_meta)
+    #     # test_anns.append(test_ann)
+    # else:
+    #     img_dir = g.train_dir
+    #     ann_json = g.api.annotation.download(image.id).annotation
+    #     ann = sly.Annotation.from_json(ann_json, g.project_meta)
+    #     machine_mask = np.zeros(shape=ann.img_size + (3,), dtype=np.uint8)
+    #     for label in ann.labels:
+    #         if not label.obj_class.name.endswith("_prediction"):
+    #             label.geometry.draw(machine_mask, color=g.machine_map[label.obj_class.name])
+    #     sly.image.write(os.path.join(g.machine_masks_dir, os.path.splitext(image.name)[0] + '.png'), machine_mask)
+    # g.api.image.download_path(image.id, os.path.join(img_dir, image.name))
+    # return test_ann
 
 
 @g.my_app.callback("add_to_train")
