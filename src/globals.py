@@ -1,6 +1,23 @@
 import os
 import supervisely_lib as sly
 
+from supervisely_lib.imaging.color import generate_rgb
+
+
+def prepare_data():
+    # PREPARE DATA TO APPLY MODEL
+    pred_label_names = []
+    pred_label_colors = []
+    existing_colors = label_colors
+    for name in label_names:
+        pred_label_names.append(name)
+
+        new_label_color = generate_rgb(existing_colors)
+        pred_label_colors.append(new_label_color)
+        existing_colors.append(new_label_color)
+    return pred_label_names, pred_label_colors
+
+
 my_app = sly.AppService()
 TEAM_ID = int(os.environ['context.teamId'])
 WORKSPACE_ID = int(os.environ['context.workspaceId'])
@@ -30,3 +47,4 @@ sly.fs.mkdir(os.path.join(proj_dir, 'predictions'))
 
 path_to_trained_project = os.path.join(proj_dir, f'{project.name}.ilp')
 predictions_dir = os.path.join(proj_dir, 'predictions')
+pred_label_names, pred_label_colors = prepare_data()
