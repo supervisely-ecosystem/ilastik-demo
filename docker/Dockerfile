@@ -15,4 +15,4 @@ FROM supervisely/base-py-sdk:6.1.81
 
 RUN wget  https://files.ilastik.org/ilastik-1.4.0b15-Linux.tar.bz2 -O /ilastik-1.4.0b15-Linux.tar.bz2
 RUN mkdir ilastik-build
-RUN tar -xf /ilastik-1.4.0b15-Linux.tar.bz2 -C /ilastik-bui
+RUN tar -xf /ilastik-1.4.0b15-Linux.tar.bz2 -C /ilastik-build
