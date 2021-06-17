@@ -6,20 +6,22 @@ import globals as g
 
 
 def download_data(image_id, is_test=False):
-    test_ann = None
     if is_test is True:
         img_dir = g.test_dir
     else:
         img_dir = g.train_dir
 
     info = g.api.image.get_info_by_id(image_id)
-    img_path = os.path.join(img_dir, f"{image_id}{sly.fs.get_file_ext(info.name)}")
-    if not sly.fs.file_exists(img_path):
-        g.api.image.download_path(image_id, img_path)
 
-    ann_path = os.path.join(img_dir, f"{image_id}.json")
+    cache_path = os.path.join(g.cache_dir, f"{image_id}{sly.fs.get_file_ext(info.name)}")
+    if not sly.fs.file_exists(cache_path):
+        g.api.image.download_path(image_id, cache_path)
+    img_path = os.path.join(img_dir, f"{image_id}{sly.fs.get_file_ext(info.name)}")
+    sly.fs.copy_file(cache_path, img_path)
+
     ann_json = g.api.annotation.download(image_id).annotation
-    sly.json.dump_json_file(ann_json, ann_path)
+    # ann_path = os.path.join(img_dir, f"{image_id}.json")
+    #sly.json.dump_json_file(ann_json, ann_path)
 
     ann = sly.Annotation.from_json(ann_json, g.project_meta)
     machine_mask = np.zeros(shape=ann.img_size + (3,), dtype=np.uint8)
@@ -51,44 +53,58 @@ def download_data(image_id, is_test=False):
 
 @g.my_app.callback("add_to_train")
 @sly.timeit
+@g.my_app.ignore_errors_and_show_dialog_window()
 def add_to_train(api: sly.Api, task_id, context, state, app_logger):
     image_id = context['imageId']
     _ = download_data(image_id, is_test=False)
 
-
     # generate_trained_project.py
-    train_cmd = "/ilastik-build/ilastik-1.4.0b14-Linux/bin/python "
-    docker_inspect_out = subprocess.Popen([train_cmd],
-                                          shell=True, executable="/bin/bash",
-                                          stdout=subprocess.PIPE).communicate()[0]
+    interpreter = "/ilastik-build/ilastik-1.4.0b14-Linux/bin/python"
+    train_script_path = os.path.join(g.source_path, "generate_trained_project.py")
+    ilp_path = os.path.join(g.my_app.data_dir, "project.ilp")
 
-    # ./ilastik-1.1.7-Linux/bin/python train_headless.py MyNewProject.ilp /tmp/cell-slide.png
+    train_cmd = f"{interpreter} " \
+                f"{train_script_path} " \
+                f"--save_ilp_to=\"{ilp_path}\" " \
+                f"--train_images_dir=\"{g.train_dir}\" " \
+                f"--machine_masks_dir=\"{g.machine_masks_dir}\" " \
+                f"--label_names=\"{g.label_names}\" " \
+                f"--label_colors=\"{g.label_colors}\""
+    sly.logger.info("Training", extra={"command": train_cmd})
 
-    # for each image retrain model
-    # generate_trained_project_file(g.path_to_trained_project,
-    #                               g.train_img_dir,
-    #                               g.machine_masks_dir,
-    #                               g.label_names,
-    #                               g.label_colors,
-    #                               100)
+    bash_out = subprocess.Popen([train_cmd], shell=True, executable="/bin/bash", stdout=subprocess.PIPE).communicate()
+    output_log = bash_out[0]
+    error_log = bash_out[1]
 
 
-@g.my_app.callback("apply_to_current_image")
+@g.my_app.callback("classify_pixels")
 @sly.timeit
-def apply_to_current_image(api: sly.Api, task_id, context, state, app_logger):
-    print('context = ', context)
-    print('state = ', state)
-    # infer model
-
-    # APPLY MODEL
+@g.my_app.ignore_errors_and_show_dialog_window()
+def classify_pixels(api: sly.Api, task_id, context, state, app_logger):
     image_id = context['imageId']
-    test_ann = download_data(image_id, is_test=True)
-    # predicted_images_bw = predict_image(g.path_to_trained_project, g.test_img_dir, g.predictions_dir)
-    # predicted_images_col = utils.bw_to_color(predicted_images_bw, g.machine_colors, g.pred_label_colors)
-    # utils.draw_predicitons(api, [image_id], g.project.id, g.project_meta, [test_ann],
-    #                        g.predictions_dir, g.pred_label_names, g.pred_label_colors)
+    sly.fs.clean_dir(g.test_dir)
+    sly.fs.clean_dir(g.predictions_dir)
+    ann = download_data(image_id, is_test=True)
+
+    interpreter = "/ilastik-build/ilastik-1.4.0b14-Linux/bin/python"
+    test_script_path = os.path.join(g.source_path, "apply_model.py")
+    ilp_path = os.path.join(g.my_app.data_dir, "project.ilp")
+    test_cmd =  f"{interpreter} " \
+                f"{test_script_path} " \
+                f"--classifier_path=\"{ilp_path}\" " \
+                f"--test_images_dir=\"{g.test_dir}\" " \
+                f"--save_predictions_to=\"{g.predictions_dir}\" "
+    sly.logger.info("Testing", extra={"command": test_cmd})
+
+    bash_out = subprocess.Popen([test_cmd], shell=True, executable="/bin/bash", stdout=subprocess.PIPE).communicate()
+    output_log = bash_out[0]
+    error_log = bash_out[1]
 
 
+#@TODO: try catch errors
+#@TODO: hotkeys
+#@TODO: upload project to team files
+#@TODO: buttons loading
 def main():
     sly.logger.info(
         "Script arguments",

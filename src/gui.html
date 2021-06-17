@@ -59,6 +59,10 @@
                            @click="command('add_to_train')">
                     <i class="zmdi zmdi-plus-circle mr5"></i>Add to train (alt+t)
                 </el-button>
+                <el-button type="success" size="mini" class="mt5 ml5 mb5"
+                           @click="command('classify_pixels')">
+                    <i class="zmdi zmdi-plus-circle mr5"></i>Classify pixels (alt+m)
+                </el-button>
             </div>
             <el-tabs id="small_tabs" v-model="state.tabName">
                 <el-tab-pane label="EXAMPLES" name="examples">
