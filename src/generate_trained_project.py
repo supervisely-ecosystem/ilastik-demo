@@ -43,9 +43,9 @@ def generate_trained_project_file(project_output_path, raw_data_dir, label_data_
     def set_feature(feature_id, scale):
         selections[FeatureIds.index(feature_id), ScalesList.index(scale)] = True
 
-    set_feature("GaussianSmoothing", 0.3)
-    set_feature("GaussianSmoothing", 1.0)
-    set_feature("GaussianGradientMagnitude", 1.0)
+    for feature_id in FeatureIds:
+        for scale in ScalesList:
+            set_feature(feature_id, scale)
 
     opFeatures = shell.workflow.featureSelectionApplet.topLevelOperator
     opFeatures.Scales.setValue(ScalesList)
