@@ -134,10 +134,11 @@ def convert_h5_seg_to_png_mask(path_to_h5_seg):
     return path_to_h5_seg
 
 
-prediction_parser = argparse.ArgumentParser(description="Output predictions for test images")
-prediction_parser.add_argument("--classifier_path",     default="", type=str, help="path to classifier")
-prediction_parser.add_argument("--test_images_dir",     default="", type=str, help="path to test images directory")
-prediction_parser.add_argument("--save_predictions_to", default="", type=str, help="output path to prediction images directory")
+if __name__ == '__main__':
+    prediction_parser = argparse.ArgumentParser(description="Output predictions for test images")
+    prediction_parser.add_argument("--classifier_path",     default="", type=str, help="path to classifier")
+    prediction_parser.add_argument("--test_images_dir",     default="", type=str, help="path to test images directory")
+    prediction_parser.add_argument("--save_predictions_to", default="", type=str, help="output path to prediction images directory")
 
-pred_args = prediction_parser.parse_args()
-predicted_images_bw = predict_image(pred_args.classifier_path, pred_args.test_images_dir, pred_args.save_predictions_to)
+    pred_args = prediction_parser.parse_args()
+    predicted_images_bw = predict_image(pred_args.classifier_path, pred_args.test_images_dir, pred_args.save_predictions_to)

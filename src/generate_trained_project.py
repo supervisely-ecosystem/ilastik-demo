@@ -90,20 +90,23 @@ def generate_trained_project_file(project_output_path, raw_data_dir, label_data_
     shell.projectManager.saveProject(force_all_save=False)
 
 
-parser = argparse.ArgumentParser(description="ilastik trained project file")
-parser.add_argument("--save_ilp_to",       default="",  type=str,  help="output path to ilastik project")
-parser.add_argument("--train_images_dir",  default="",  type=str,  help="path to train images directory")
-parser.add_argument("--machine_masks_dir", default="",  type=str,  help="path to machine masks directory")
-parser.add_argument("--label_names",       nargs="+",   default=[], help="class names in Supervisely project")
-parser.add_argument("--label_colors",      nargs="+",   default=[], help="class colors in Supervisely project")
-parser.add_argument("--num_tress_total",   default=100, type=int,  help="total number of trees")
+if __name__ == '__main__':
 
-args = parser.parse_args()
-generate_trained_project_file(args.save_ilp_to,
-                              args.train_images_dir,
-                              args.machine_masks_dir,
-                              args.label_names,
-                              args.label_colors,
-                              args.num_tress_total)
+    # usage example: python generate_trained_project.py --save_ilp_to /path/to/lip_folder --label_names a b c
 
-# usage example: python generate_trained_project.py --save_ilp_to /path/to/lip_folder --label_names a b c
+    parser = argparse.ArgumentParser(description="ilastik trained project file")
+    parser.add_argument("--save_ilp_to",       default="",  type=str,  help="output path to ilastik project")
+    parser.add_argument("--train_images_dir",  default="",  type=str,  help="path to train images directory")
+    parser.add_argument("--machine_masks_dir", default="",  type=str,  help="path to machine masks directory")
+    parser.add_argument("--label_names",       nargs="+",   default=[], help="class names in Supervisely project")
+    parser.add_argument("--label_colors",      nargs="+",   default=[], help="class colors in Supervisely project")
+    parser.add_argument("--num_tress_total",   default=100, type=int,  help="total number of trees")
+
+    args = parser.parse_args()
+    generate_trained_project_file(args.save_ilp_to,
+                                  args.train_images_dir,
+                                  args.machine_masks_dir,
+                                  args.label_names,
+                                  args.label_colors,
+                                  args.num_tress_total)
+
