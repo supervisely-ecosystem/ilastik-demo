@@ -9,6 +9,6 @@ FROM supervisely/base-py-sdk:6.1.81
 RUN apt-get install unzip
 RUN wget https://github.com/supervisely-ecosystem/ilastik-demo/releases/download/v0/ilastik-1.4.0b14-Linux.zip -O /ilastik-1.4.0b14-Linux.zip
 RUN mkdir /ilastik-build
-unzip /ilastik-1.4.0b14-Linux.zip -d /ilastik-build
+RUN unzip /ilastik-1.4.0b14-Linux.zip -d /ilastik-build
 COPY roi.py /ilastik-build/ilastik-meta/ilastik/lazyflow/roi.py
 
