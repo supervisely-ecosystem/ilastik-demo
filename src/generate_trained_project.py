@@ -43,12 +43,12 @@ def generate_trained_project_file(project_output_path, raw_data_dir, label_data_
     def set_feature(feature_id, scale):
         selections[FeatureIds.index(feature_id), ScalesList.index(scale)] = True
 
-    # for feature_id in FeatureIds:
-    #     for scale in ScalesList:
-    #         set_feature(feature_id, scale)
+    for feature_id in FeatureIds:
+        for scale in ScalesList:
+            set_feature(feature_id, scale)
 
-    set_feature("GaussianSmoothing", 0.3)
-    set_feature("GaussianSmoothing", 1)
+    # set_feature("GaussianSmoothing", 0.3)
+    # set_feature("GaussianSmoothing", 1)
 
     opFeatures = shell.workflow.featureSelectionApplet.topLevelOperator
     opFeatures.Scales.setValue(ScalesList)
@@ -91,6 +91,7 @@ def generate_trained_project_file(project_output_path, raw_data_dir, label_data_
     opPixelClassification.FreezePredictions.setValue(False)
     _ = opPixelClassification.Classifier.value
     shell.projectManager.saveProject(force_all_save=False)
+    shell.projectManager._closeCurrentProject()
 
 
 if __name__ == '__main__':

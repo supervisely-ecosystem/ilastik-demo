@@ -30,7 +30,7 @@ def download_data(image_id, is_test=False):
             #@TODO: skip prediction by object tag "prediction"
             label.geometry.draw(machine_mask, color=g.machine_map[label.obj_class.name])
 
-    sly.image.write(os.path.join(g.machine_masks_dir, f"{image_id}.png"), machine_mask)
+    sly.image.write(os.path.join(g.machine_masks_dir, f"{image_id}.png"), machine_mask[:, :, 0])
     return ann
 
 
@@ -42,7 +42,7 @@ def add_to_train(api: sly.Api, task_id, context, state, app_logger):
     _ = download_data(image_id, is_test=False)
 
     # generate_trained_project.py
-    interpreter = "/ilastik-build/ilastik-1.4.0b14-Linux/bin/python"
+    interpreter = "/ilastik-build/ilastik-1.4.0b15-Linux/bin/python"
     train_script_path = os.path.join(g.source_path, "generate_trained_project.py")
     ilp_path = os.path.join(g.my_app.data_dir, "project.ilp")
 
@@ -69,7 +69,7 @@ def classify_pixels(api: sly.Api, task_id, context, state, app_logger):
     sly.fs.clean_dir(g.predictions_dir)
     ann = download_data(image_id, is_test=True)
 
-    interpreter = "/ilastik-build/ilastik-1.4.0b14-Linux/bin/python"
+    interpreter = "/ilastik-build/ilastik-1.4.0b15-Linux/bin/python"
     test_script_path = os.path.join(g.source_path, "apply_model.py")
     ilp_path = os.path.join(g.my_app.data_dir, "project.ilp")
     test_cmd =  f"{interpreter} " \
