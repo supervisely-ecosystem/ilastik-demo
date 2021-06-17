@@ -16,7 +16,6 @@ from ilastik.applets.pixelClassification.opPixelClassification import OpArgmaxCh
 from lazyflow.graph import Graph
 from lazyflow.utility import PathComponents
 from lazyflow.operators.ioOperators import OpInputDataReader, OpFormattedDataExport
-from supervisely_lib.io.fs import get_file_name
 
 
 def predict_image(path_to_trained_project, test_img_dir, predictions_dir, segmentation=True):
@@ -34,7 +33,7 @@ def predict_image(path_to_trained_project, test_img_dir, predictions_dir, segmen
     test_data_paths = sorted([os.path.join(test_img_dir, test_img_path) for test_img_path in os.listdir(test_img_dir)])
     prediction_paths = []
     for img in test_data_paths:
-        img_name = get_file_name(img)+'.h5'
+        img_name = os.path.splitext(os.path.basename(img))[0]+'.h5'
         input_data = image.imread(img)
         input_data = vigra.taggedView(input_data, "yxc")
         role_data_dict = [{"Raw Data": PreloadedArrayDatasetInfo(preloaded_array=input_data)}]
