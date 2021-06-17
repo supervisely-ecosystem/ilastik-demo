@@ -2,29 +2,6 @@ import supervisely_lib as sly
 import globals as g
 import os
 import numpy as np
-import utils
-
-# context = {
-#     'datasetId': 6876,
-#     'teamId': 7,
-#     'workspaceId': 299,
-#     'projectId': 4895,
-#     'imageId': 899951,
-#     'figureId': None,
-#     'figureClassId': None,
-#     'figureClassTitle': None,
-#     'toolClassId': 41103,
-#     'sessionId': 'f0f454a1-07ae-47fa-98ac-58af346624b8',
-#     'viewport': {
-#         'offsetX': 98.99103124999999,
-#         'offsetY': 17.975000000000023,
-#         'zoom': 0.8538125
-#     },
-#     'tool': 'bitmap',
-#     'userId': 276,
-#     'jobId': None,
-#     'request_id': '7754f23a-41a7-494e-a797-f29dc0cbe9cc'
-# }
 
 
 def download_data(image_id, is_test=False):
@@ -48,13 +25,13 @@ def download_data(image_id, is_test=False):
     return test_ann
 
 
-@g.my_app.callback("add_to_train_set")
+@g.my_app.callback("add_to_train")
 @sly.timeit
-def add_to_train_set(api: sly.Api, task_id, context, state, app_logger):
-    print('context = ', context)
-    print('state = ', state)
+def add_to_train(api: sly.Api, task_id, context, state, app_logger):
     image_id = context['imageId']
     _ = download_data(image_id, is_test=False)
+    # ./ilastik-1.1.7-Linux/bin/python train_headless.py MyNewProject.ilp /tmp/cell-slide.png
+
     # for each image retrain model
     # generate_trained_project_file(g.path_to_trained_project,
     #                               g.train_img_dir,
@@ -84,12 +61,14 @@ def main():
     sly.logger.info(
         "Script arguments",
         extra={
-            "TEAM_ID": g.TEAM_ID,
-            "WORKSPACE_ID": g.WORKSPACE_ID,
-            "TASK_ID": g.TASK_ID
+            "team_id": g.team_id,
+            "workspace_id": g.workspace_id,
+            "task_id": g.task_id
         }
     )
-    data = {}
+    data = {
+        "ownerId": g.owner_id
+    }
     state = {}
 
     g.my_app.run(data=data, state=state)
