@@ -33,23 +33,6 @@ def download_data(image_id, is_test=False):
     sly.image.write(os.path.join(g.machine_masks_dir, f"{image_id}.png"), machine_mask)
     return ann
 
-    # if is_test:
-    #     img_dir = g.test_img_dir
-    #     test_ann_json = g.api.annotation.download(image.id).annotation
-    #     test_ann = sly.Annotation.from_json(test_ann_json, g.project_meta)
-    #     # test_anns.append(test_ann)
-    # else:
-    #     img_dir = g.train_dir
-    #     ann_json = g.api.annotation.download(image.id).annotation
-    #     ann = sly.Annotation.from_json(ann_json, g.project_meta)
-    #     machine_mask = np.zeros(shape=ann.img_size + (3,), dtype=np.uint8)
-    #     for label in ann.labels:
-    #         if not label.obj_class.name.endswith("_prediction"):
-    #             label.geometry.draw(machine_mask, color=g.machine_map[label.obj_class.name])
-    #     sly.image.write(os.path.join(g.machine_masks_dir, os.path.splitext(image.name)[0] + '.png'), machine_mask)
-    # g.api.image.download_path(image.id, os.path.join(img_dir, image.name))
-    # return test_ann
-
 
 @g.my_app.callback("add_to_train")
 @sly.timeit
@@ -79,7 +62,7 @@ def add_to_train(api: sly.Api, task_id, context, state, app_logger):
 
 @g.my_app.callback("classify_pixels")
 @sly.timeit
-@g.my_app.ignore_errors_and_show_dialog_window()
+#@g.my_app.ignore_errors_and_show_dialog_window()
 def classify_pixels(api: sly.Api, task_id, context, state, app_logger):
     image_id = context['imageId']
     sly.fs.clean_dir(g.test_dir)
