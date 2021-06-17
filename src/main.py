@@ -58,7 +58,7 @@ def add_to_train(api: sly.Api, task_id, context, state, app_logger):
 
     # generate_trained_project.py
     train_cmd = "/ilastik-build/ilastik-1.4.0b14-Linux/bin/python "
-    docker_inspect_out = subprocess.Popen([docker_inspect_cmd],
+    docker_inspect_out = subprocess.Popen([train_cmd],
                                           shell=True, executable="/bin/bash",
                                           stdout=subprocess.PIPE).communicate()[0]
 
