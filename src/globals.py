@@ -21,7 +21,7 @@ def prepare_data():
 
 
 my_app = sly.AppService()
-sly.fs.clean_dir(my_app.data_dir)  #@TODO: for debug
+#sly.fs.clean_dir(my_app.data_dir)  #@TODO: for debug
 
 task_id = my_app.task_id
 team_id = int(os.environ['context.teamId'])

@@ -97,6 +97,18 @@ def classify_pixels(api: sly.Api, task_id, context, state, app_logger):
     output_log = bash_out[0]
     error_log = bash_out[1]
 
+    prob_path = img_path.replace(sly.fs.get_file_ext(img_path), "_Probabilities.h5")
+    interpreter = "/ilastik-build/ilastik-1.4.0b14-Linux/bin/python"
+    convert_script_path = os.path.join(g.source_path, "predictions_to_segmentation.py")
+    test_cmd = f"{interpreter} {convert_script_path} " \
+               f"--export_drange='[0,255]' --output_format=png --pipeline_result_drange='[1,2]' " \
+               f"{prob_path} "
+    sly.logger.info("Probabilities to Segmentation", extra={"command": test_cmd})
+
+    bash_out = subprocess.Popen([test_cmd], shell=True, executable="/bin/bash", stdout=subprocess.PIPE).communicate()
+    output_log = bash_out[0]
+    error_log = bash_out[1]
+
 
 #@TODO: try catch errors
 #@TODO: hotkeys
