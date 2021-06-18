@@ -31,7 +31,7 @@ def download_data(image_id, is_test=False):
             label.geometry.draw(machine_mask, color=g.machine_map[label.obj_class.name])
 
     sly.image.write(os.path.join(g.machine_masks_dir, f"{image_id}.png"), machine_mask[:, :, 0])
-    return ann
+    return ann, img_path
 
 
 @g.my_app.callback("add_to_train")
@@ -39,7 +39,7 @@ def download_data(image_id, is_test=False):
 @g.my_app.ignore_errors_and_show_dialog_window()
 def add_to_train(api: sly.Api, task_id, context, state, app_logger):
     image_id = context['imageId']
-    _ = download_data(image_id, is_test=False)
+    _, _ = download_data(image_id, is_test=False)
 
     interpreter = "/ilastik-build/ilastik-1.4.0b14-Linux/bin/python"
     #interpreter = "/ilastik-build/ilastik-1.3.3post3-Linux/bin/python"
@@ -75,16 +75,21 @@ def classify_pixels(api: sly.Api, task_id, context, state, app_logger):
     image_id = context['imageId']
     sly.fs.clean_dir(g.test_dir)
     sly.fs.clean_dir(g.predictions_dir)
-    ann = download_data(image_id, is_test=True)
+    ann, img_path = download_data(image_id, is_test=True)
 
-    interpreter = "/ilastik-build/ilastik-1.4.0b15-Linux/bin/python"
-    test_script_path = os.path.join(g.source_path, "apply_model.py")
+    # interpreter = "/ilastik-build/ilastik-1.4.0b15-Linux/bin/python"
+    # test_script_path = os.path.join(g.source_path, "apply_model.py")
     ilp_path = os.path.join(g.my_app.data_dir, "project.ilp")
-    test_cmd =  f"{interpreter} " \
-                f"{test_script_path} " \
-                f"--classifier_path=\"{ilp_path}\" " \
-                f"--test_images_dir=\"{g.test_dir}\" " \
-                f"--save_predictions_to=\"{g.predictions_dir}\" "
+    # test_cmd =  f"{interpreter} " \
+    #             f"{test_script_path} " \
+    #             f"--classifier_path=\"{ilp_path}\" " \
+    #             f"--test_images_dir=\"{g.test_dir}\" " \
+    #             f"--save_predictions_to=\"{g.predictions_dir}\" "
+
+    test_cmd = f"/ilastik-build/ilastik-1.4.0b14-Linux/run_ilastik.sh " \
+               f"--headless " \
+               f"--project={ilp_path} " \
+               f"{img_path}"
     sly.logger.info("Testing", extra={"command": test_cmd})
 
     bash_out = subprocess.Popen([test_cmd], shell=True, executable="/bin/bash", stdout=subprocess.PIPE).communicate()
