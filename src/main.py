@@ -88,16 +88,25 @@ def classify_pixels(api: sly.Api, task_id, context, state, app_logger):
     #             f"--save_predictions_to=\"{g.predictions_dir}\" "
 
     #['probabilities', 'simple segmentation', 'uncertainty', 'features', 'labels']
+    # test_cmd = f"/ilastik-build/ilastik-1.4.0b14-Linux/run_ilastik.sh " \
+    #            f"--headless " \
+    #            f"--project={ilp_path} " \
+    #            f"--output_format='png' " \
+    #            f"--pipeline_result_drange='[0.0, 1.0]' " \
+    #            f"--export_drange='[0,255]' " \
+    #            f"{img_path}"
+
     test_cmd = f"/ilastik-build/ilastik-1.4.0b14-Linux/run_ilastik.sh " \
                f"--headless " \
                f"--project={ilp_path} " \
+               f"--export_source='Simple Segmentation' " \
                f"--output_format='png' " \
-               f"--pipeline_result_drange='[0.0, 1.0]' " \
-               f"--export_drange='[0,255]' " \
                f"{img_path}"
 
-
-# f"--export_drange='[0,255]' " \
+    # f"--export_drange='[0,255]' " \
+    # f"--pipeline_result_drange='[0.0, 1.0]' " \
+        #f"--export_source='labels' " \
+        # f"--export_drange='[0,255]' " \
 # f"--pipeline_result_drange='[0.0, 1.0]' " \
 # f"--output_format='png' " \
 #  \
@@ -114,6 +123,9 @@ def classify_pixels(api: sly.Api, task_id, context, state, app_logger):
     bash_out = subprocess.Popen([test_cmd], shell=True, executable="/bin/bash", stdout=subprocess.PIPE).communicate()
     output_log = bash_out[0]
     error_log = bash_out[1]
+
+    import utils
+    utils.bw_to_color()
 
     # prob_path = img_path.replace(sly.fs.get_file_ext(img_path), "_Probabilities.h5")
     # interpreter = "/ilastik-build/ilastik-1.4.0b14-Linux/bin/python"
