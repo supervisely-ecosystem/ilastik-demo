@@ -78,36 +78,54 @@ def classify_pixels(api: sly.Api, task_id, context, state, app_logger):
     ann, img_path = download_data(image_id, is_test=True)
     ilp_path = os.path.join(g.my_app.data_dir, "project.ilp")
 
-    # interpreter = "/ilastik-build/ilastik-1.4.0b14-Linux/bin/python"
+    interpreter = "/ilastik-build/ilastik-1.4.0b14-Linux/bin/python"
+
     # test_script_path = os.path.join(g.source_path, "apply_model.py")
-    #
     # test_cmd =  f"{interpreter} " \
     #             f"{test_script_path} " \
     #             f"--classifier_path=\"{ilp_path}\" " \
     #             f"--test_images_dir=\"{g.test_dir}\" " \
     #             f"--save_predictions_to=\"{g.predictions_dir}\" "
 
+    #['probabilities', 'simple segmentation', 'uncertainty', 'features', 'labels']
     test_cmd = f"/ilastik-build/ilastik-1.4.0b14-Linux/run_ilastik.sh " \
                f"--headless " \
                f"--project={ilp_path} " \
+               f"--output_format='png' " \
+               f"--pipeline_result_drange='[0.0, 1.0]' " \
+               f"--export_drange='[0,255]' " \
                f"{img_path}"
+
+
+# f"--export_drange='[0,255]' " \
+# f"--pipeline_result_drange='[0.0, 1.0]' " \
+# f"--output_format='png' " \
+#  \
+    # test_cmd = f"/ilastik-build/ilastik-1.4.0b14-Linux/run_ilastik.sh " \
+    #            f"--headless " \
+    #            f"--project={ilp_path} " \
+    #            f"--export_source='segmentation'" \
+    #            f"--export_drange='[0,255]' " \
+    #            f"--pipeline_result_drange='[0.0, 1.0]' " \
+    #            f"--output_format='png' " \
+    #            f"{img_path}"
+
     sly.logger.info("Testing", extra={"command": test_cmd})
-
     bash_out = subprocess.Popen([test_cmd], shell=True, executable="/bin/bash", stdout=subprocess.PIPE).communicate()
     output_log = bash_out[0]
     error_log = bash_out[1]
 
-    prob_path = img_path.replace(sly.fs.get_file_ext(img_path), "_Probabilities.h5")
-    interpreter = "/ilastik-build/ilastik-1.4.0b14-Linux/bin/python"
-    convert_script_path = os.path.join(g.source_path, "predictions_to_segmentation.py")
-    test_cmd = f"{interpreter} {convert_script_path} " \
-               f"--export_drange='[0,255]' --output_format=png --pipeline_result_drange='[1,2]' " \
-               f"{prob_path} "
-    sly.logger.info("Probabilities to Segmentation", extra={"command": test_cmd})
-
-    bash_out = subprocess.Popen([test_cmd], shell=True, executable="/bin/bash", stdout=subprocess.PIPE).communicate()
-    output_log = bash_out[0]
-    error_log = bash_out[1]
+    # prob_path = img_path.replace(sly.fs.get_file_ext(img_path), "_Probabilities.h5")
+    # interpreter = "/ilastik-build/ilastik-1.4.0b14-Linux/bin/python"
+    # convert_script_path = os.path.join(g.source_path, "predictions_to_segmentation.py")
+    # test_cmd = f"{interpreter} {convert_script_path} " \
+    #            f"--export_drange='[0,255]' --output_format=png --pipeline_result_drange='[1,2]' " \
+    #            f"{prob_path} "
+    # sly.logger.info("Probabilities to Segmentation", extra={"command": test_cmd})
+    #
+    # bash_out = subprocess.Popen([test_cmd], shell=True, executable="/bin/bash", stdout=subprocess.PIPE).communicate()
+    # output_log = bash_out[0]
+    # error_log = bash_out[1]
 
 
 #@TODO: try catch errors
