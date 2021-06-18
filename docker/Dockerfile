@@ -6,10 +6,10 @@ FROM supervisely/base-py-sdk:6.1.81
 #RUN mkdir ilastik-build
 #RUN tar -xf /ilastik-1.4.0b14-Linux.tar.bz2 -C /ilastik-build
 
-#RUN apt-get install unzip
-#RUN wget https://github.com/supervisely-ecosystem/ilastik-demo/releases/download/v0/ilastik-1.4.0b14-Linux.zip -O /ilastik-1.4.0b14-Linux.zip
-#RUN mkdir /ilastik-build
-#RUN unzip /ilastik-1.4.0b14-Linux.zip -d /ilastik-build
+RUN apt-get install unzip
+RUN wget https://github.com/supervisely-ecosystem/ilastik-demo/releases/download/v0/ilastik-1.4.0b14-Linux.zip -O /ilastik-1.4.0b14-Linux.zip
+RUN mkdir /ilastik-build
+RUN unzip /ilastik-1.4.0b14-Linux.zip -d /ilastik-build
 #COPY roi.py /ilastik-build/ilastik-meta/ilastik/lazyflow/roi.py
 
 
@@ -18,6 +18,6 @@ FROM supervisely/base-py-sdk:6.1.81
 #RUN tar -xf /ilastik-1.4.0b15-Linux.tar.bz2 -C /ilastik-build
 
 
-RUN wget  https://files.ilastik.org/ilastik-1.3.3post3-Linux.tar.bz2 -O /ilastik.tar.bz2
-RUN mkdir ilastik-build
-RUN tar -xf /ilastik.tar.bz2 -C /ilastik-build
+#RUN wget  https://files.ilastik.org/ilastik-1.3.3post3-Linux.tar.bz2 -O /ilastik.tar.bz2
+#RUN mkdir ilastik-build
+#RUN tar -xf /ilastik.tar.bz2 -C /ilastik-build

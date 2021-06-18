@@ -41,8 +41,8 @@ def add_to_train(api: sly.Api, task_id, context, state, app_logger):
     image_id = context['imageId']
     _ = download_data(image_id, is_test=False)
 
-    #interpreter = "/ilastik-build/ilastik-1.4.0b15-Linux/bin/python"
-    interpreter = "/ilastik-build/ilastik/bin/python"
+    interpreter = "/ilastik-build/ilastik-1.4.0b14-Linux/bin/python"
+    #interpreter = "/ilastik-build/ilastik-1.3.3post3-Linux/bin/python"
     ilp_path = os.path.join(g.my_app.data_dir, "project.ilp")
 
     #train_script_path = os.path.join(g.source_path, "generate_trained_project.py")
