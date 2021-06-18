@@ -41,18 +41,26 @@ def add_to_train(api: sly.Api, task_id, context, state, app_logger):
     image_id = context['imageId']
     _ = download_data(image_id, is_test=False)
 
-    # generate_trained_project.py
-    interpreter = "/ilastik-build/ilastik-1.4.0b15-Linux/bin/python"
-    train_script_path = os.path.join(g.source_path, "generate_trained_project.py")
+    #interpreter = "/ilastik-build/ilastik-1.4.0b15-Linux/bin/python"
+    interpreter = "/ilastik-build/ilastik/bin/python"
     ilp_path = os.path.join(g.my_app.data_dir, "project.ilp")
 
+    #train_script_path = os.path.join(g.source_path, "generate_trained_project.py")
+    # train_cmd = f"{interpreter} " \
+    #             f"{train_script_path} " \
+    #             f"--save_ilp_to=\"{ilp_path}\" " \
+    #             f"--train_images_dir=\"{g.train_dir}\" " \
+    #             f"--machine_masks_dir=\"{g.machine_masks_dir}\" " \
+    #             f"--label_names=\"{g.label_names}\" " \
+    #             f"--label_colors=\"{g.label_colors}\""
+
+    train_script_path = os.path.join(g.source_path, "train_headless.py")
     train_cmd = f"{interpreter} " \
                 f"{train_script_path} " \
-                f"--save_ilp_to=\"{ilp_path}\" " \
-                f"--train_images_dir=\"{g.train_dir}\" " \
-                f"--machine_masks_dir=\"{g.machine_masks_dir}\" " \
-                f"--label_names=\"{g.label_names}\" " \
-                f"--label_colors=\"{g.label_colors}\""
+                f"{ilp_path} " \
+                f"{os.path.join(g.train_dir, '899992.png')} " \
+                f"{os.path.join(g.machine_masks_dir, '899992.png')} " \
+
     sly.logger.info("Training", extra={"command": train_cmd})
 
     bash_out = subprocess.Popen([train_cmd], shell=True, executable="/bin/bash", stdout=subprocess.PIPE).communicate()

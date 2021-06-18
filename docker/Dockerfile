@@ -13,6 +13,11 @@ FROM supervisely/base-py-sdk:6.1.81
 #COPY roi.py /ilastik-build/ilastik-meta/ilastik/lazyflow/roi.py
 
 
-RUN wget  https://files.ilastik.org/ilastik-1.4.0b15-Linux.tar.bz2 -O /ilastik-1.4.0b15-Linux.tar.bz2
+#RUN wget  https://files.ilastik.org/ilastik-1.4.0b15-Linux.tar.bz2 -O /ilastik-1.4.0b15-Linux.tar.bz2
+#RUN mkdir ilastik-build
+#RUN tar -xf /ilastik-1.4.0b15-Linux.tar.bz2 -C /ilastik-build
+
+
+RUN wget  https://files.ilastik.org/ilastik-1.3.3post3-Linux.tar.bz2 -O /ilastik.tar.bz2
 RUN mkdir ilastik-build
-RUN tar -xf /ilastik-1.4.0b15-Linux.tar.bz2 -C /ilastik-build
+RUN tar -xf /ilastik.tar.bz2 -C /ilastik-build
