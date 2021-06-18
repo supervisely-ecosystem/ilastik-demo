@@ -90,9 +90,21 @@ def classify_pixels(api: sly.Api, task_id, context, state, app_logger):
 
     import utils
     seg_path = img_path.replace(sly.fs.get_file_ext(img_path), "_Simple Segmentation.png")
-    utils.bw_to_color([seg_path], g.machine_colors, g.label_colors)
+    img = sly.image.read(seg_path)
+    mask = img[:, :, 0]
+    labels = []
+    for class_name in g.label_names:
+        color = g.machine_map[class_name][0]
+        mask_bool = mask == color
+        labels.append(sly.Label(sly.Bitmap(mask_bool), g.project_meta.get_obj_class(class_name)))
+
+    ann = ann.add_labels(labels)
+    api.annotation.upload_ann(image_id, ann)
 
 
+    #utils.bw_to_color([seg_path], g.machine_colors, g.label_colors)
+
+#@TODO: add prediction to bottom + add tag "auto" + add remove autolabels button
 #@TODO: create all features
 #@TODO: try catch errors
 #@TODO: hotkeys
