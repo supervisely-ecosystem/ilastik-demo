@@ -29,7 +29,6 @@ def bw_to_color(bw_img_paths, grayscale_colors, pred_label_colors):
                     if pixels[w, h] == tuple(grayscale):
                         pixels[w, h] = tuple(color)
         img.save(bw_img_path)
-
     return bw_img_paths
 
 
