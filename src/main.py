@@ -104,6 +104,7 @@ def classify_pixels(api: sly.Api, task_id, context, state, app_logger):
 
     #utils.bw_to_color([seg_path], g.machine_colors, g.label_colors)
 
+#@TODO: remove auto objects before training
 #@TODO: add prediction to bottom + add tag "auto" + add remove autolabels button
 #@TODO: create all features
 #@TODO: try catch errors
