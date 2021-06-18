@@ -76,10 +76,11 @@ def classify_pixels(api: sly.Api, task_id, context, state, app_logger):
     sly.fs.clean_dir(g.test_dir)
     sly.fs.clean_dir(g.predictions_dir)
     ann, img_path = download_data(image_id, is_test=True)
-
-    # interpreter = "/ilastik-build/ilastik-1.4.0b15-Linux/bin/python"
-    # test_script_path = os.path.join(g.source_path, "apply_model.py")
     ilp_path = os.path.join(g.my_app.data_dir, "project.ilp")
+
+    # interpreter = "/ilastik-build/ilastik-1.4.0b14-Linux/bin/python"
+    # test_script_path = os.path.join(g.source_path, "apply_model.py")
+    #
     # test_cmd =  f"{interpreter} " \
     #             f"{test_script_path} " \
     #             f"--classifier_path=\"{ilp_path}\" " \
