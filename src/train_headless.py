@@ -45,14 +45,13 @@ def main():
     # parsed_args = parser.parse_args()
 
     parser = argparse.ArgumentParser(description="ilastik trained project file")
-    parser.add_argument("--save_ilp_to", default="", type=str, help="output path to ilastik project")
-    parser.add_argument("--train_images_dir", default="", type=str, help="path to train images directory")
-    parser.add_argument("--machine_masks_dir", default="", type=str, help="path to machine masks directory")
+    parser.add_argument("--project", default="", type=str, required=True)
+    parser.add_argument("--images", action='append', required=True)
+    parser.add_argument("--masks", action='append', required=True)
     # parser.add_argument("--label_names", nargs="+", default=[], help="class names in Supervisely project")
     # parser.add_argument("--label_colors", nargs="+", default=[], help="class colors in Supervisely project")
     # parser.add_argument("--num_tress_total", default=100, type=int, help="total number of trees")
     parsed_args = parser.parse_args()
-
 
     # FIXME: This function returns hard-coded features for now.
     feature_selections = prepare_feature_selections()
@@ -67,9 +66,9 @@ def main():
     # classifier_factory = SklearnLazyflowClassifierFactory( AdaBoostClassifier, n_estimators=50 )
 
     generate_trained_project_file(
-        parsed_args.save_ilp_to,
-        parsed_args.train_images_dir,
-        parsed_args.machine_masks_dir,
+        parsed_args.project,
+        parsed_args.images,
+        parsed_args.masks,
         feature_selections,
         classifier_factory,
     )
