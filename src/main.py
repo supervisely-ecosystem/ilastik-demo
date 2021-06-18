@@ -64,6 +64,8 @@ def add_to_train(api: sly.Api, task_id, context, state, app_logger):
     bash_out = subprocess.Popen([train_cmd], shell=True, executable="/bin/bash", stdout=subprocess.PIPE).communicate()
     output_log = bash_out[0]
     error_log = bash_out[1]
+    g.my_app.show_modal_window("PixelClassification has been successfully trained", level="info")
+    api.task.set_field(task_id, "state.loading", False)
 
 
 @g.my_app.callback("classify_pixels")
@@ -101,9 +103,11 @@ def classify_pixels(api: sly.Api, task_id, context, state, app_logger):
     ann = ann.add_labels(labels)
     api.annotation.upload_ann(image_id, ann)
 
+    api.task.set_field(task_id, "state.loading", False)
 
     #utils.bw_to_color([seg_path], g.machine_colors, g.label_colors)
 
+#@TODO: show modal window ValueError("Unknown level 'debug'. Supported levels: ['warning', 'info', 'error']")
 #@TODO: remove auto objects before training
 #@TODO: add prediction to bottom + add tag "auto" + add remove autolabels button
 #@TODO: create all features
@@ -124,7 +128,9 @@ def main():
     data = {
         "ownerId": g.owner_id
     }
-    state = {}
+    state = {
+        "loading": False
+    }
 
     g.my_app.run(data=data, state=state)
 

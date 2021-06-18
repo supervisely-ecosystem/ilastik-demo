@@ -55,12 +55,12 @@
             <div class="app-header">
                 <div class="ml5"><b>ACTIONS:</b></div>
 <!--                :disabled="!state.selectedItem"-->
-                <el-button type="success" size="mini" class="mt5 ml5 mb5"
-                           @click="command('add_to_train')">
+                <el-button type="success" size="mini" class="mt5 ml5 mb5" :loading="state.loading"
+                           @click="state.loading = true; command('add_to_train')">
                     <i class="zmdi zmdi-plus-circle mr5"></i>Add to train (alt+t)
                 </el-button>
-                <el-button type="success" size="mini" class="mt5 ml5 mb5"
-                           @click="command('classify_pixels')">
+                <el-button type="success" size="mini" class="mt5 ml5 mb5" :loading="state.loading"
+                           @click="state.loading = true; command('classify_pixels')">
                     <i class="zmdi zmdi-plus-circle mr5"></i>Classify pixels (alt+m)
                 </el-button>
             </div>
