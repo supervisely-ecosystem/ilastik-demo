@@ -27,6 +27,8 @@ team_id = int(os.environ['context.teamId'])
 workspace_id = int(os.environ['context.workspaceId'])
 project_id = int(os.environ['context.projectId'])
 owner_id = int(os.environ['context.userId'])
+selected_classes = int(os.environ['modal.state.classes'])
+
 
 #debug_dir = os.environ['debug_dir']
 api: sly.Api = my_app.public_api
