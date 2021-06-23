@@ -171,6 +171,7 @@ def main():
     state = {}
     ui.init(data, state)
 
+
     g.my_app.compile_template(g.root_source_dir)
 
     #sly.fs.clean_dir(g.my_app.data_dir) #@TODO: for debug

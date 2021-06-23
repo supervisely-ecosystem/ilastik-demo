@@ -18,15 +18,8 @@
     </sly-style>
 
     <div class="ml5 mr10" v-if="context.userId === data.ownerId">
-        <div v-if="!state.classesInfo">
-            <div><b>ILASTIK PROJECT:</b></div>
-            <div class="fflex">
-                <el-button size="mini" type="primary" @click="command('new')">New</el-button>
-                <el-button size="mini" type="primary" @click="command('open')">Open</el-button>
-            </div>
-        </div>
         <el-tabs class="small" v-model="state.tabName" v-if="state.classesInfo">
-            <el-tab-pane label="CLASSES" name="classes">
+            <el-tab-pane label="INFO" name="info">
                 {% include 'src/ui/target_classes.html' %}
             </el-tab-pane>
             <el-tab-pane label="TRAIN" name="train">
