@@ -4,12 +4,12 @@
     </div>
 
     <sly-style>
-        #nn-image-labeling .el-checkbox.small .el-checkbox__inner {
+        #ilastik .el-checkbox.small .el-checkbox__inner {
         height: 14px;
         width: 14px;
         }
 
-        #nn-image-labeling .el-tabs.small .el-tabs__item {
+        #ilastik .el-tabs.small .el-tabs__item {
         font-size: 10px;
         font-weight: 500;
         height: 30px;
@@ -17,37 +17,27 @@
         }
     </sly-style>
 
-    <div v-else>
-        <div class="ml5 mt5"><b>ILASTIK PROJECT:</b></div>
-        <div v-if="!state.classesInfo" class="ml5 mb10">
-            <el-button size="mini" type="primary" class="ml5" @click="command('new')">New</el-button>
-            <el-button size="mini" type="primary" @click="command('load')">Load</el-button>
+    <div class="ml5 mr10" v-if="context.userId === data.ownerId">
+        <div v-if="!state.classesInfo">
+            <div><b>ILASTIK PROJECT:</b></div>
+            <div class="fflex">
+                <el-button size="mini" type="primary" @click="command('new')">New</el-button>
+                <el-button size="mini" type="primary" @click="command('open')">Open</el-button>
+            </div>
         </div>
-        <div v-else class="ml5 mb10">
-            <el-button size="mini" type="primary" @click="command('save')">Save</el-button>
-            <el-button size="mini" type="primary" @click="command('close')">Close</el-button>
-            <!--                    <el-button type="success" size="mini" class="mt5 ml5 mb5" :loading="state.loading"-->
-            <!--                               @click="state.loading = true; command('add_to_train')">-->
-            <!--                        Add image to train (alt+t)-->
-            <!--                    </el-button>-->
-            <!--                    <el-button type="primary" size="mini" class="mt5 ml5 mb5" :loading="state.loading"-->
-            <!--                               @click="state.loading = true; command('classify_pixels')">-->
-            <!--                        Classify pixels (alt+m)-->
-            <!--                    </el-button>-->
-            <!--                    <el-button type="danger" size="mini" class="mt5 ml5 mb5" :loading="state.loading"-->
-            <!--                               @click="state.loading = true; command('remove_predictions')">-->
-            <!--                        Remove predictions (alt+r)-->
-            <!--                    </el-button>-->
-        </div>
-        <div class="ml5 mr10" style="margin-left: 2px; margin-right: 2px;">
-            <el-tabs id="small_tabs" v-model="state.tabName" v-if="state.classesInfo">
-                <el-tab-pane label="TRAIN" name="train">
-                    {% include 'src/ui/target_classes.html' %}
-                </el-tab-pane>
-                <el-tab-pane label="PREDICT" name="predict">
-                    predict
-                </el-tab-pane>
-            </el-tabs>
-        </div>
+        <el-tabs class="small" v-model="state.tabName" v-if="state.classesInfo">
+            <el-tab-pane label="SETTINGS" name="settings">
+                {% include 'src/ui/target_classes.html' %}
+                <el-button size="mini" type="success" @click="command('save')">Save project to team files</el-button>
+                <el-button size="mini" type="warning" @click="command('close')">
+                    <i class="zmdi zmdi-close mr5"></i>Close project
+                </el-button>
+            </el-tab-pane>
+            <el-tab-pane label="TRAIN" name="train">
+            </el-tab-pane>
+            <el-tab-pane label="PREDICT" name="predict">
+                predict
+            </el-tab-pane>
+        </el-tabs>
     </div>
 </div>

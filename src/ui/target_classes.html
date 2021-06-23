@@ -1,15 +1,19 @@
 <div>
-    Target classes
-<!--    <table>-->
-<!--        <tbody>-->
-<!--        <tr v-for="(tagMeta, index) in state.tagsInfo">-->
-<!--            <td>-->
-<!--                <el-checkbox class="small" v-model="state.tags[index]"></el-checkbox>-->
-<!--            </td>-->
-<!--            <td><i class="zmdi zmdi-label ml5 mr5" :style="{color: tagMeta.color}"></i></td>-->
-<!--            <td><b style="color: #777777">{{tagMeta.name}}</b></td>-->
-<!--            <td><span class="ml5">{{tagMeta['value_type']}}</span></td>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--    </table>-->
+    <div><b>Target classes:</b></div>
+    <div>Only bitmap classes can be used</div>
+    <table>
+        <tbody>
+        <tr v-for="(objClass, index) in state.classesInfo">
+            <td>
+                <el-checkbox class="small"
+                             v-model="state.selectedClasses[objClass.title]"
+                             :disabled="data.disabledClasses[objClass.title]">
+                </el-checkbox>
+            </td>
+            <td><i class="zmdi zmdi-circle ml5 mr5" :style="{color: objClass.color}"></i></td>
+            <td><b style="color: #777777">{{objClass.title}}</b></td>
+            <td><span class="ml5">{{objClass.shape}}</span></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
