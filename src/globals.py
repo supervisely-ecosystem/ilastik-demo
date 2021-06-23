@@ -21,7 +21,6 @@ def prepare_data():
 
 
 my_app = sly.AppService()
-#sly.fs.clean_dir(my_app.data_dir)  #@TODO: for debug
 
 task_id = my_app.task_id
 team_id = int(os.environ['context.teamId'])
@@ -45,7 +44,7 @@ project = api.project.get_info_by_id(project_id)
 project_meta = sly.ProjectMeta.from_json(api.project.get_meta(project.id))
 label_names = [obj_class.name for obj_class in project_meta.obj_classes]
 label_colors = [obj_class.color for obj_class in project_meta.obj_classes]
-machine_map = {obj_class.name: [idx, idx, idx] for idx, obj_class in enumerate(project_meta.obj_classes, start=1)}
+machine_map = {obj_class.name: [idx, idx, idx] for idx, obj_class in enumerate(project_meta.obj_classes, start=1)} ###
 machine_colors = [machine_color for machine_color in machine_map.values()]
 
 # TRAIN_IMAGES_IDS = [899951, 899948, 899953]
@@ -68,3 +67,6 @@ sly.fs.mkdir(machine_masks_dir)
 path_to_trained_project = os.path.join(proj_dir, f'{project.name}.ilp')
 predictions_dir = os.path.join(proj_dir, 'predictions')
 pred_label_names, pred_label_colors = prepare_data()
+
+prediciton_tag_meta = sly.TagMeta("ilastik_prediction", sly.TagValueType.NONE)
+prediciton_tag = sly.Tag(prediciton_tag_meta)
