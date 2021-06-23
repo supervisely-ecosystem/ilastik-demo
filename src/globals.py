@@ -27,7 +27,7 @@ team_id = int(os.environ['context.teamId'])
 workspace_id = int(os.environ['context.workspaceId'])
 project_id = int(os.environ['context.projectId'])
 owner_id = int(os.environ['context.userId'])
-selected_classes = int(os.environ['modal.state.classes'])
+selected_classes = ["lemon", "kiwi"] #os.environ['modal.state.classes']
 
 
 #debug_dir = os.environ['debug_dir']
