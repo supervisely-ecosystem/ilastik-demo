@@ -1,11 +1,11 @@
 import os
 import numpy as np
+import cv2
 import subprocess
 import supervisely_lib as sly
+import ui
 import globals as g
-
-import cv2
-from PIL import Image
+import model_io
 
 
 def download_data(image_id, is_test=False):
@@ -143,6 +143,8 @@ def remove_predicted_labels(api: sly.Api, task_id, context, state, app_logger):
             g.api.annotation.upload_ann(image_id, ann)
     api.task.set_field(task_id, "state.loading", False)
 
+
+#@TODO: remove utils.py
 #@TODO: show modal window ValueError("Unknown level 'debug'. Supported levels: ['warning', 'info', 'error']")
 #@TODO: remove auto objects before training
 #@TODO: add prediction to bottom + add tag "auto" + add remove autolabels button
@@ -161,12 +163,13 @@ def main():
             "task_id": g.task_id
         }
     )
-    data = {
-        "ownerId": g.owner_id
-    }
-    state = {
-        "loading": False
-    }
+
+    data = {}
+    state = {}
+    ui.init(data, state)
+
+    g.my_app.compile_template(g.root_source_dir)
+
     #sly.fs.clean_dir(g.my_app.data_dir) #@TODO: for debug
     g.my_app.run(data=data, state=state)
 
