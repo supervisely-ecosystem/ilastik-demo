@@ -4,12 +4,7 @@
     <table>
         <tbody>
         <tr v-for="(objClass, index) in state.classesInfo">
-            <td>
-                <el-checkbox class="small"
-                             v-model="state.selectedClasses[objClass.title]"
-                             :disabled="data.disabledClasses[objClass.title]">
-                </el-checkbox>
-            </td>
+            <td><el-checkbox class="small" v-model="state.selectedClasses[objClass.title]"></el-checkbox></td>
             <td><i class="zmdi zmdi-circle ml5 mr5" :style="{color: objClass.color}"></i></td>
             <td><b style="color: #777777">{{objClass.title}}</b></td>
             <td><span class="ml5">{{objClass.shape}}</span></td>

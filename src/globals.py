@@ -65,6 +65,10 @@ machine_colors = [machine_color for machine_color in machine_map.values()]
 # FOLDER STRUCTURE
 proj_dir = os.path.join(my_app.data_dir, project.name)  # os.path.join(g.debug_dir, g.project.name)
 cache_dir = os.path.join(proj_dir, 'cache')
+
+cache_img_dir = os.path.join(proj_dir, 'cache')
+cache_ann_dir = os.path.join(proj_dir, 'cache')
+
 train_dir = os.path.join(proj_dir, 'train')
 test_dir = os.path.join(proj_dir, 'test')
 predictions_dir = os.path.join(proj_dir, 'predictions')

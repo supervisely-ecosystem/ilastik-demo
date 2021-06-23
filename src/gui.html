@@ -26,17 +26,20 @@
             </div>
         </div>
         <el-tabs class="small" v-model="state.tabName" v-if="state.classesInfo">
-            <el-tab-pane label="SETTINGS" name="settings">
+            <el-tab-pane label="CLASSES" name="classes">
                 {% include 'src/ui/target_classes.html' %}
+            </el-tab-pane>
+            <el-tab-pane label="TRAIN" name="train">
+                {% include 'src/ui/train.html' %}
+            </el-tab-pane>
+            <el-tab-pane label="PREDICT" name="predict">
+                predict
+            </el-tab-pane>
+            <el-tab-pane label="SETTINGS" name="settings">
                 <el-button size="mini" type="success" @click="command('save')">Save project to team files</el-button>
                 <el-button size="mini" type="warning" @click="command('close')">
                     <i class="zmdi zmdi-close mr5"></i>Close project
                 </el-button>
-            </el-tab-pane>
-            <el-tab-pane label="TRAIN" name="train">
-            </el-tab-pane>
-            <el-tab-pane label="PREDICT" name="predict">
-                predict
             </el-tab-pane>
         </el-tabs>
     </div>
