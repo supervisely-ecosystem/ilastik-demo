@@ -1,10 +1,16 @@
 import supervisely_lib as sly
 import globals as g
+import cache
 
+model_meta
 
 def init(data, state):
     state["classesInfo"] = None
-    state["selectedClasses"] = None
+
+    if g.mode == "newProject":
+        project_meta = cache.get_project_meta(g.project_id)
+    else:
+        raise NotImplementedError()
 
 
 def refresh_classes():

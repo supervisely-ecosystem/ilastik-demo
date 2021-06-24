@@ -35,6 +35,10 @@
             <el-radio slot="label" v-model="state.projectMode" label="newProject">
                 New ilastik project
             </el-radio>
+            <sly-select-class :project-id="state.projectId"
+                              :classes.sync="state.classes"
+                              :options="{multiple: true; showLabel: false}">
+            </sly-select-class>
         </el-tab-pane>
         <el-tab-pane name="openProject">
             <el-radio slot="label" v-model="state.projectMode" label="openProject">

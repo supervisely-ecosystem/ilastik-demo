@@ -8,11 +8,18 @@ my_app = sly.AppService()
 
 task_id = my_app.task_id
 team_id = int(os.environ['context.teamId'])
-workspace_id = int(os.environ['context.workspaceId'])
-project_id = int(os.environ['context.projectId'])
 owner_id = int(os.environ['context.userId'])
-selected_classes = json.loads(os.environ['modal.state.classes'])
+workspace_id = int(os.environ['context.workspaceId'])
+
 mode = os.environ['modal.state.projectMode']
+
+if mode == "newProject":
+    project_id = int(os.environ['context.projectId'])
+    selected_classes = json.loads(os.environ['modal.state.classes'])
+else:
+    project_id = None
+    selected_classes = None
+
 
 api: sly.Api = my_app.public_api
 
@@ -35,13 +42,6 @@ sly.logger.info(f"Added to sys.path: {ui_sources_dir}")
 #     if project_meta.tag_metas.get(prediction_tag_meta.name) is None:
 #         project_meta.tag_metas.add(prediction_tag_meta)
 #         api.project.update_meta(project_id, project_meta.to_json())
-
-
-if projectMode == "newProject":
-    pass
-else:
-    raise NotImplementedError()
-
 
 
 

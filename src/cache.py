@@ -3,24 +3,33 @@ import cv2
 import supervisely_lib as sly
 import globals as g
 
-
-def download(image_id, dir):
-    info = g.api.image.get_info_by_id(image_id)
+project_meta = {}
 
 
-    cached_image_path = os.path.join(g.cache_dir, f"{image_id}.png")
+def get_project_meta(project_id):
+    pass
+
+def update_project_meta(project_id):
+    pass
 
 
-    if not sly.fs.file_exists(cached_image_path):
-        img = g.api.image.download_np(image_id)
-        gray_img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-        cv2.imwrite(cached_image_path, gray_img)
-
-    ann_json = g.api.annotation.download(image_id).annotation
-    ann_path = os.path.join(img_dir, f"{image_id}.json")
-    sly.json.dump_json_file(ann_json, ann_path)
-
-    return cached_image_path,
+# def download(image_id, dir):
+#     info = g.api.image.get_info_by_id(image_id)
+#
+#
+#     cached_image_path = os.path.join(g.cache_dir, f"{image_id}.png")
+#
+#
+#     if not sly.fs.file_exists(cached_image_path):
+#         img = g.api.image.download_np(image_id)
+#         gray_img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+#         cv2.imwrite(cached_image_path, gray_img)
+#
+#     ann_json = g.api.annotation.download(image_id).annotation
+#     ann_path = os.path.join(img_dir, f"{image_id}.json")
+#     sly.json.dump_json_file(ann_json, ann_path)
+#
+#     return cached_image_path,
 
 
 
