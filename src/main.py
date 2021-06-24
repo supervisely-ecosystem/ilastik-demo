@@ -3,15 +3,12 @@ import numpy as np
 import cv2
 import subprocess
 import supervisely_lib as sly
-import ui
+from src.ui import ui
 import globals as g
 
 # imports to register callbacks
-import model_io
-from ui import train
-
-modelWeightsOptions = os.environ['modal.state.modelWeightsOptions']
-custom_project_path = os.environ['modal.state.classifierPath']
+# import model_io
+# from ui import train
 
 
 # def download_data(image_id, is_test=False):

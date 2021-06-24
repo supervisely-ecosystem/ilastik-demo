@@ -1,15 +1,14 @@
 from src import globals as g
-from src import cache
-
 import supervisely_lib as sly
 # import globals as g
 # import cache
+
+from src import cache
 
 # model_meta
 
 def init(data, state):
     state["classesInfo"] = None
-
     if g.mode == "newProject":
         project_meta = cache.get_project_meta(g.project_id)
     else:

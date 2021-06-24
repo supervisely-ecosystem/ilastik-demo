@@ -7,7 +7,9 @@ project_meta = {}
 
 
 def get_project_meta(project_id):
-    pass
+    project_meta = g.api.project.get_meta(project_id)
+    project_meta = sly.ProjectMeta.from_json(project_meta)
+    return project_meta
 
 def update_project_meta(project_id):
     pass
