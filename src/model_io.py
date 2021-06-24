@@ -1,6 +1,8 @@
 import supervisely_lib as sly
 import globals as g
-import target_classes
+# import target_classes
+
+from ui import target_classes
 
 
 @g.my_app.callback("new")

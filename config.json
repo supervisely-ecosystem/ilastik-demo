@@ -1,0 +1,24 @@
+{
+  "name": "ilastik-demo",
+  "type": "app",
+  "categories": [
+    "neural network",
+    "detection"
+  ],
+  "description": "Deploy model as REST API service",
+  "docker_image": "supervisely/base-py-sdk:6.1.84",
+  "main_script": "supervisely/serve/src/sly_serve.py",
+  "modal_template": "supervisely/serve/src/modal.html",
+  "modal_template_state": {
+    "projectModeOptions": "newProject",
+    "classes": [],
+    "classifierPath": ""
+  },
+  "task_location": "application_sessions",
+  "icon": "https://i.imgur.com/2U6HufM.png",
+  "isolate": true,
+  "integrated_into": ["image_annotation_tool"],
+  "context_menu": {
+    "target": ["images_project"]
+  }
+}

@@ -8,7 +8,10 @@ import globals as g
 
 # imports to register callbacks
 import model_io
-import train
+from ui import train
+
+modelWeightsOptions = os.environ['modal.state.modelWeightsOptions']
+custom_project_path = os.environ['modal.state.classifierPath']
 
 
 # def download_data(image_id, is_test=False):

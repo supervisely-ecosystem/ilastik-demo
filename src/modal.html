@@ -30,9 +30,9 @@
         height: auto; line-height: normal; border-radius: 4px; }
     </sly-style>
 
-    <el-tabs type="border-card" class="el-tabs-cards" v-model="state.modelWeightsOptions">
+    <el-tabs type="border-card" class="el-tabs-cards" v-model="state.projectModeOptions">
         <el-tab-pane name="newProject">
-            <el-radio slot="label" v-model="state.projectMode" label="newProject">
+            <el-radio slot="label" v-model="state.projectModeOptions" label="newProject">
                 New ilastik project
             </el-radio>
             <sly-select-class :project-id="state.projectId"
@@ -41,9 +41,13 @@
             </sly-select-class>
         </el-tab-pane>
         <el-tab-pane name="openProject">
-            <el-radio slot="label" v-model="state.projectMode" label="openProject">
-                Open ilastik project
+            <el-radio slot="label" v-model="state.projectModeOptions" label="openProject">
+                Existing ilastik project
             </el-radio>
+            <sly-field title="Path to existing project" description="Path to ilastik project in Team Files">
+                <el-input v-model="state.classifierPath"
+                          placeholder="Path to folder containing .ilp file in Team Files"></el-input>
+            </sly-field>
         </el-tab-pane>
     </el-tabs>
 </div>
