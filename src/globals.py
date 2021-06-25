@@ -6,6 +6,7 @@ import supervisely_lib as sly
 
 my_app = sly.AppService()
 
+
 task_id = my_app.task_id
 team_id = int(os.environ['context.teamId'])
 owner_id = int(os.environ['context.userId'])
@@ -16,6 +17,8 @@ mode = os.environ['modal.state.projectMode']
 if mode == "newProject":
     project_id = int(os.environ['context.projectId'])
     selected_classes = json.loads(os.environ['modal.state.classes'])
+    if len(selected_classes) == 0:
+        raise Exception("No selected classes")
 else:
     project_id = None
     selected_classes = None
@@ -44,20 +47,11 @@ sly.logger.info(f"Added to sys.path: {ui_sources_dir}")
 #         api.project.update_meta(project_id, project_meta.to_json())
 
 
+project = api.project.get_info_by_id(project_id)
+project_meta = sly.ProjectMeta.from_json(api.project.get_meta(project_id))
 
-
-
-
-# prediction_tag_meta = sly.TagMeta("ilastik_prediction", sly.TagValueType.NONE)
-# prediction_tag = sly.Tag(prediction_tag_meta)
-#
-# project = api.project.get_info_by_id(project_id)
-# project_meta = None
-
-
-
-
-
+prediction_tag_meta = sly.TagMeta("ilastik_prediction", sly.TagValueType.NONE)
+prediction_tag = sly.Tag(prediction_tag_meta)
 
 #
 
@@ -71,25 +65,30 @@ sly.logger.info(f"Added to sys.path: {ui_sources_dir}")
 # machine_colors = [machine_color for machine_color in machine_map.values()]
 #
 # # FOLDER STRUCTURE
-# proj_dir = os.path.join(my_app.data_dir, project.name)  # os.path.join(g.debug_dir, g.project.name)
+proj_dir = os.path.join(my_app.data_dir, project.name)  # os.path.join(g.debug_dir, g.project.name)
 # cache_dir = os.path.join(proj_dir, 'cache')
+
+#cache_img_dir = os.path.join(proj_dir, 'cache')
+#cache_ann_dir = os.path.join(proj_dir, 'cache')
+
+train_dir = os.path.join(proj_dir, 'train')
+ann_dir = os.path.join(proj_dir, 'ann')
+test_dir = os.path.join(proj_dir, 'test')
+predictions_dir = os.path.join(proj_dir, 'predictions')
+machine_masks_dir = os.path.join(proj_dir, 'masks_machine')
 #
-# cache_img_dir = os.path.join(proj_dir, 'cache')
-# cache_ann_dir = os.path.join(proj_dir, 'cache')
 #
-# train_dir = os.path.join(proj_dir, 'train')
-# test_dir = os.path.join(proj_dir, 'test')
-# predictions_dir = os.path.join(proj_dir, 'predictions')
-# machine_masks_dir = os.path.join(proj_dir, 'masks_machine')
-#
-#
-# def init_directories():
-#     sly.fs.clean_dir(proj_dir)
-#     sly.fs.mkdir(cache_dir)
-#     sly.fs.mkdir(train_dir)
-#     sly.fs.mkdir(test_dir)
-#     sly.fs.mkdir(predictions_dir)
-#     sly.fs.mkdir(machine_masks_dir)
+def init_directories():
+    sly.fs.clean_dir(proj_dir)
+    # sly.fs.mkdir(cache_dir)
+    sly.fs.mkdir(train_dir)
+    sly.fs.mkdir(ann_dir)
+    sly.fs.mkdir(test_dir)
+    sly.fs.mkdir(predictions_dir)
+    sly.fs.mkdir(machine_masks_dir)
+
+init_directories()
+
 #
 #
 # path_to_trained_project = os.path.join(proj_dir, f'{project.name}.ilp')

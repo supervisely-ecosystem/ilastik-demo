@@ -17,7 +17,13 @@
         }
     </sly-style>
 
+
     <div class="ml5 mr10" v-if="context.userId === data.ownerId">
+        ImageId: {{context.imageId}}
+        <pre>
+            {{ JSON.stringify(data, undefined, 2) }}
+            {{ JSON.stringify(state, undefined, 2) }}
+        </pre>
         <el-tabs class="small" v-model="state.tabName" v-if="state.classesInfo">
             <el-tab-pane label="INFO" name="info">
                 {% include 'src/ui/target_classes.html' %}
@@ -26,7 +32,7 @@
                 {% include 'src/ui/train.html' %}
             </el-tab-pane>
             <el-tab-pane label="PREDICT" name="predict">
-                predict
+                {% include 'src/ui/predict.html' %}
             </el-tab-pane>
             <el-tab-pane label="SETTINGS" name="settings">
                 <el-button size="mini" type="success" @click="command('save')">Save project to team files</el-button>

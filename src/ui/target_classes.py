@@ -11,6 +11,8 @@ def init(data, state):
     state["classesInfo"] = None
     if g.mode == "newProject":
         project_meta = cache.get_project_meta(g.project_id)
+        project_meta = project_meta.from_json(project_meta.to_json())
+        state["classesInfo"] = project_meta.obj_classes.to_json()
     else:
         raise NotImplementedError()
 

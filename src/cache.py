@@ -2,6 +2,7 @@ import os
 import cv2
 import supervisely_lib as sly
 import globals as g
+import numpy as np
 
 project_meta = {}
 
@@ -11,33 +12,35 @@ def get_project_meta(project_id):
     project_meta = sly.ProjectMeta.from_json(project_meta)
     return project_meta
 
+
 def update_project_meta(project_id):
     pass
 
 
-# def download(image_id, dir):
-#     info = g.api.image.get_info_by_id(image_id)
-#
-#
-#     cached_image_path = os.path.join(g.cache_dir, f"{image_id}.png")
-#
-#
-#     if not sly.fs.file_exists(cached_image_path):
-#         img = g.api.image.download_np(image_id)
-#         gray_img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-#         cv2.imwrite(cached_image_path, gray_img)
-#
-#     ann_json = g.api.annotation.download(image_id).annotation
-#     ann_path = os.path.join(img_dir, f"{image_id}.json")
-#     sly.json.dump_json_file(ann_json, ann_path)
-#
-#     return cached_image_path,
+def download_train(image_id):
+    train_img_path = os.path.join(g.train_dir, f"{image_id}.png")
+    mask_img_path = g.machine_masks_dir, f"{image_id}.png"
+
+    if not sly.fs.file_exists(train_img_path):
+        img = g.api.image.download_np(image_id)
+        gray_img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+        cv2.imwrite(g.train_dir, gray_img)
+
+    ann_json = g.api.annotation.download(image_id).annotation
+    ann_path = os.path.join(g.ann_dir, f"{image_id}.json")
+    sly.json.dump_json_file(ann_json, ann_path)
+
+    ann = sly.Annotation.from_json(ann_json)
+    machine_mask = np.zeros(shape=ann.img_size + (3,), dtype=np.uint8)
+    sly.image.write(os.path.join(mask_img_path), machine_mask[:, :, 0])
+
+    return train_img_path, ann_path, mask_img_path
 
 
 
 
-
-
+#
+#
 # def download_image(image_id, is_test=False):
 #     if is_test is True:
 #         img_dir = g.test_dir
@@ -58,7 +61,6 @@ def update_project_meta(project_id):
 #     #if is_test is False:
 #     image = cv2.imread(cache_path)
 #     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-#     image = Image.fromarray(image)
 #     image.save(cache_path)
 #
 #     img_path = os.path.join(img_dir, f"{image_id}.png")

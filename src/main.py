@@ -58,38 +58,38 @@ import globals as g
 #     return ann, img_path
 
 
-@g.my_app.callback("add_to_train")
-@sly.timeit
-@g.my_app.ignore_errors_and_show_dialog_window()
-def add_to_train(api: sly.Api, task_id, context, state, app_logger):
-    image_id = context['imageId']
-    _, _ = download_data(image_id, is_test=False)
-
-    images = sly.fs.list_files(g.train_dir, sly.image.SUPPORTED_IMG_EXTS)
-    masks = []
-    for image_path in images:
-        mask_path = os.path.join(g.machine_masks_dir, sly.fs.get_file_name(image_path) + ".png")
-        if not sly.fs.file_exists(mask_path):
-            raise RuntimeError(f"Mask doesn't exist: {mask_path}")
-        masks.append(mask_path)
-
-    interpreter = "/ilastik-build/ilastik-1.4.0b14-Linux/bin/python"
-    ilp_path = os.path.join(g.my_app.data_dir, "project.ilp")
-
-    train_script_path = os.path.join(g.source_path, "train_headless.py")
-    train_cmd = f"{interpreter} " \
-                f"{train_script_path} " \
-                f"--project={ilp_path} "
-    for image_path, mask_path in zip(images, masks):
-        train_cmd += f"--images='{image_path}' "
-        train_cmd += f"--masks='{mask_path}' "
-
-    sly.logger.info("Training", extra={"command": train_cmd})
-    bash_out = subprocess.Popen([train_cmd], shell=True, executable="/bin/bash", stdout=subprocess.PIPE).communicate()
-    output_log = bash_out[0]
-    error_log = bash_out[1]
-    g.my_app.show_modal_window("PixelClassification has been successfully trained", level="info")
-    api.task.set_field(task_id, "state.loading", False)
+# @g.my_app.callback("add_to_train")
+# @sly.timeit
+# @g.my_app.ignore_errors_and_show_dialog_window()
+# def add_to_train(api: sly.Api, task_id, context, state, app_logger):
+#     image_id = context['imageId']
+#     _, _ = download_data(image_id, is_test=False)
+#
+#     images = sly.fs.list_files(g.train_dir, sly.image.SUPPORTED_IMG_EXTS)
+#     masks = []
+#     for image_path in images:
+#         mask_path = os.path.join(g.machine_masks_dir, sly.fs.get_file_name(image_path) + ".png")
+#         if not sly.fs.file_exists(mask_path):
+#             raise RuntimeError(f"Mask doesn't exist: {mask_path}")
+#         masks.append(mask_path)
+#
+#     interpreter = "/ilastik-build/ilastik-1.4.0b14-Linux/bin/python"
+#     ilp_path = os.path.join(g.my_app.data_dir, "project.ilp")
+#
+#     train_script_path = os.path.join(g.source_path, "train_headless.py")
+#     train_cmd = f"{interpreter} " \
+#                 f"{train_script_path} " \
+#                 f"--project={ilp_path} "
+#     for image_path, mask_path in zip(images, masks):
+#         train_cmd += f"--images='{image_path}' "
+#         train_cmd += f"--masks='{mask_path}' "
+#
+#     sly.logger.info("Training", extra={"command": train_cmd})
+#     bash_out = subprocess.Popen([train_cmd], shell=True, executable="/bin/bash", stdout=subprocess.PIPE).communicate()
+#     output_log = bash_out[0]
+#     error_log = bash_out[1]
+#     g.my_app.show_modal_window("PixelClassification has been successfully trained", level="info")
+#     api.task.set_field(task_id, "state.loading", False)
 
 
 @g.my_app.callback("classify_pixels")
