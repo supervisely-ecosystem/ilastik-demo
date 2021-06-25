@@ -1,10 +1,10 @@
-#import globals as g
-from src import globals as g
+import globals as g
 import supervisely_lib as sly
 
 
-@g.my_app.callback("rm_predictions")
+@g.my_app.callback("remove_predicted_labels")
 @sly.timeit
+# @g.my_app.ignore_errors_and_show_dialog_window()
 def remove_predicted_labels(api: sly.Api, task_id, context, state, app_logger):
     image_id = context['imageId']
     ann_info = g.api.annotation.download(image_id).annotation

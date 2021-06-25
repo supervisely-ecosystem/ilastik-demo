@@ -3,8 +3,10 @@ import numpy as np
 import cv2
 import subprocess
 import supervisely_lib as sly
-from src.ui import ui
+import ui
 import globals as g
+
+import train
 
 # imports to register callbacks
 # import model_io
@@ -141,7 +143,7 @@ def remove_predicted_labels(api: sly.Api, task_id, context, state, app_logger):
     ann_info = g.api.annotation.download(image_id).annotation
     ann = sly.Annotation.from_json(ann_info, g.project_meta)
     for label in ann.labels:
-        if g.prediciton_tag in label.tags:
+        if g.prediction_tag in label.tags:
             ann = ann.delete_label(label)
             g.api.annotation.upload_ann(image_id, ann)
     api.task.set_field(task_id, "state.loading", False)

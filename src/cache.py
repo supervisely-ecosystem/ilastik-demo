@@ -17,24 +17,27 @@ def update_project_meta(project_id):
     pass
 
 
-def download_train(image_id):
+def download_train(image_id, project_id):
     train_img_path = os.path.join(g.train_dir, f"{image_id}.png")
-    mask_img_path = g.machine_masks_dir, f"{image_id}.png"
+    mask_img_path = os.path.join(g.machine_masks_dir, f"{image_id}.png")
 
     if not sly.fs.file_exists(train_img_path):
         img = g.api.image.download_np(image_id)
         gray_img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-        cv2.imwrite(g.train_dir, gray_img)
+        cv2.imwrite(train_img_path, gray_img)
 
     ann_json = g.api.annotation.download(image_id).annotation
     ann_path = os.path.join(g.ann_dir, f"{image_id}.json")
     sly.json.dump_json_file(ann_json, ann_path)
 
-    ann = sly.Annotation.from_json(ann_json)
+    ann = sly.Annotation.from_json(ann_json, project_meta=get_project_meta(project_id))
     machine_mask = np.zeros(shape=ann.img_size + (3,), dtype=np.uint8)
-    sly.image.write(os.path.join(mask_img_path), machine_mask[:, :, 0])
+    for label in ann.labels:
+        if g.prediction_tag in label.tags:
+           ann = ann.delete_label(label)
+        label.geometry.draw(machine_mask, color=g.machine_map[label.obj_class.name])
 
-    return train_img_path, ann_path, mask_img_path
+    sly.image.write(os.path.join(mask_img_path), machine_mask[:, :, 0])
 
 
 
