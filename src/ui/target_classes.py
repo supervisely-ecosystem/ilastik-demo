@@ -1,11 +1,7 @@
-from src import globals as g
+import cache
+import globals as g
 import supervisely_lib as sly
-# import globals as g
-# import cache
 
-from src import cache
-
-# model_meta
 
 def init(data, state):
     state["classesInfo"] = None

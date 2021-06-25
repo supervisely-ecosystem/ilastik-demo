@@ -17,12 +17,32 @@ def add_to_train(api: sly.Api, task_id, context, state, app_logger):
     project_id = context['projectId']
 
     image_name = str(image_id) + '.png'
-    if image_name in os.listdir(g.train_dir):
+    train_images = os.listdir(g.train_dir)
+    if image_name in train_images:
         g.my_app.show_modal_window(f"Image: {image_name} is already in the training set")
     else:
         cache.download_train(image_id, project_id)
+        train_images = os.listdir(g.train_dir)
         fields = [
-            {"field": "data.trainSet", "payload":  os.listdir(g.train_dir)}
+            {"field": "data.trainSet", "payload":  train_images}
+        ]
+        api.app.set_fields(g.task_id, fields)
+
+
+@g.my_app.callback("remove_from_train")
+@sly.timeit
+# @g.my_app.ignore_errors_and_show_dialog_window()
+def remove_from_train(api: sly.Api, task_id, context, state, app_logger):
+    image_id = context['imageId']
+    image_name = str(image_id) + '.png'
+    train_images = os.listdir(g.train_dir)
+    if image_name not in train_images:
+        g.my_app.show_modal_window(f"Image: {image_name} is not in the training set")
+    else:
+        cache.remove_train_image_from_set(image_id)
+        train_images.remove(image_name)
+        fields = [
+            {"field": "data.trainSet", "payload":  train_images}
         ]
         api.app.set_fields(g.task_id, fields)
 
@@ -39,7 +59,7 @@ def train_model(api: sly.Api, task_id, context, state, app_logger):
         masks.append(mask_path)
 
     interpreter = "/ilastik-build/ilastik-1.4.0b14-Linux/bin/python"
-    ilp_path = os.path.join(g.my_app.data_dir, g.proj_dir, "project.ilp")
+    ilp_path = os.path.join(g.my_app.data_dir, g.proj_dir, f"{g.project.name}.ilp")
 
     train_script_path = os.path.join(g.source_path, "train_headless.py")
     train_cmd = f"{interpreter} " \

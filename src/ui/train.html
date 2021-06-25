@@ -1,5 +1,6 @@
 <div>
     <el-button size="mini" type="primary" @click="command('add_to_train')">Add image to train set</el-button>
+    <el-button size="mini" type="danger" @click="command('remove_from_train')">Remove image from train set</el-button>
     <el-button size="mini" type="success" @click="command('train_model')">Train model</el-button>
     <div><b>Images in train set:</b></div>
     <div v-if="data.trainSet === null"> There are no images {{name}}</div>

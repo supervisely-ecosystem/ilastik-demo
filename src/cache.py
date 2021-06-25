@@ -1,8 +1,8 @@
 import os
 import cv2
-import supervisely_lib as sly
-import globals as g
 import numpy as np
+import globals as g
+import supervisely_lib as sly
 
 project_meta = {}
 
@@ -15,6 +15,16 @@ def get_project_meta(project_id):
 
 def update_project_meta(project_id):
     pass
+
+
+def remove_train_image_from_set(image_id):
+    train_img_path = os.path.join(g.train_dir, f"{image_id}.png")
+    mask_img_path = os.path.join(g.machine_masks_dir, f"{image_id}.png")
+    ann_path = os.path.join(g.ann_dir, f"{image_id}.json")
+
+    sly.fs.silent_remove(train_img_path)
+    sly.fs.silent_remove(mask_img_path)
+    sly.fs.silent_remove(ann_path)
 
 
 def download_train(image_id, project_id):
@@ -39,6 +49,28 @@ def download_train(image_id, project_id):
 
     sly.image.write(os.path.join(mask_img_path), machine_mask[:, :, 0])
 
+
+def download_test(image_id):
+    test_img_path = os.path.join(g.test_dir, f"{image_id}.png")
+
+    tag_meta = g.project_meta.get_tag_meta(g.prediction_tag.name)
+    if tag_meta is None:
+        project_meta = g.project_meta.add_tag_meta(g.prediciton_tag_meta)
+        g.api.project.update_meta(g.project.id, project_meta.to_json())
+
+    if not sly.fs.file_exists(test_img_path):
+        img = g.api.image.download_np(image_id)
+        gray_img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+        cv2.imwrite(test_img_path, gray_img)
+
+    ann_json = g.api.annotation.download(image_id).annotation
+    ann = sly.Annotation.from_json(ann_json, g.project_meta)
+
+    for label in ann.labels:
+        if not label.obj_class.name.endswith("_prediction"):
+            if g.prediciton_tag in label.tags:
+                ann = ann.delete_label(label)
+    return ann, test_img_path
 
 
 

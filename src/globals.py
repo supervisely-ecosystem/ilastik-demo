@@ -59,7 +59,7 @@ prediction_tag = sly.Tag(prediction_tag_meta)
 # refresh_meta()
 #
 #
-# label_names = [obj_class.name for obj_class in project_meta.obj_classes]
+label_names = [obj_class.name for obj_class in project_meta.obj_classes]
 # label_colors = [obj_class.color for obj_class in project_meta.obj_classes]
 machine_map = {obj_class.name: [idx, idx, idx] for idx, obj_class in enumerate(project_meta.obj_classes, start=1)} ###
 # machine_colors = [machine_color for machine_color in machine_map.values()]
@@ -93,7 +93,7 @@ init_directories()
 
 #
 #
-# path_to_trained_project = os.path.join(proj_dir, f'{project.name}.ilp')
+path_to_trained_project = os.path.join(proj_dir, f'{project.name}.ilp')
 # pred_label_names, pred_label_colors = prepare_data()
 #
 # from supervisely_lib.imaging.color import generate_rgb
