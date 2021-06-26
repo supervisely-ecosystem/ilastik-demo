@@ -36,7 +36,7 @@
                 <el-radio slot="label" v-model="state.projectModeOptions" label="newProject">
                     New ilastik project
                 </el-radio>
-                <sly-select-class :project-id="context.slyProjectId"
+                <sly-select-class :project-id="context.projectId"
                                   :classes.sync="state.classes"
                                   :options="{multiple: true, showLabel: false}">
                 </sly-select-class>
