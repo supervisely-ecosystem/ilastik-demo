@@ -12,7 +12,8 @@ owner_id = int(os.environ['context.userId'])
 workspace_id = int(os.environ['context.workspaceId'])
 
 mode = os.environ['modal.state.projectMode']
-project_id = os.environ['context.projectId']
+
+project_id = os.environ['modal.state.slyProjectId']
 
 if mode == "newProject":
     selected_classes = json.loads(os.environ['modal.state.classes'])
