@@ -11,7 +11,7 @@ team_id = int(os.environ['context.teamId'])
 owner_id = int(os.environ['context.userId'])
 workspace_id = int(os.environ['context.workspaceId'])
 
-mode = os.environ['modal.state.projectModeOptions']
+mode = os.environ['modal.state.projectMode']
 project_id = os.environ['context.projectId']
 
 if mode == "newProject":

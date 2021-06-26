@@ -31,9 +31,9 @@
     </sly-style>
 
     <sly-field title="Choose Project mode" description="Create new ilastik project or use exisiting one">
-        <el-tabs type="border-card" class="el-tabs-cards" v-model="state.projectModeOptions">
+        <el-tabs type="border-card" class="el-tabs-cards" v-model="state.projectMode">
             <el-tab-pane name="newProject">
-                <el-radio slot="label" v-model="state.projectModeOptions" label="newProject">
+                <el-radio slot="label" v-model="state.projectMode" label="newProject">
                     New ilastik project
                 </el-radio>
                 <sly-select-class :project-id="context.projectId"
@@ -42,7 +42,7 @@
                 </sly-select-class>
             </el-tab-pane>
             <el-tab-pane name="openProject">
-                <el-radio slot="label" v-model="state.projectModeOptions" label="openProject">
+                <el-radio slot="label" v-model="state.projectMode" label="openProject">
                     Existing ilastik project
                 </el-radio>
                 <sly-field title="Path to existing project" description="Path to ilastik project in Team Files">
