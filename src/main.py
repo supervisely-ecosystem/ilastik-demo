@@ -1,8 +1,4 @@
-import os
 import ui
-import cv2
-import subprocess
-import numpy as np
 import globals as g
 import supervisely_lib as sly
 
@@ -26,6 +22,7 @@ import predict
 #@TODO: add multiple images to train-headless
 
 #@TODO: add message to train tab that model has been trained?
+#@TODO: save project only if .ilp file exists
 def main():
     sly.logger.info(
         "Script arguments",

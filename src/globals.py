@@ -17,6 +17,8 @@ project_id = os.environ['modal.state.slyProjectId']
 
 if mode == "newProject":
     my_app.logger.warn(os.environ['modal.state.classes'])
+    print(os.environ['modal.state.classes'])
+    print(type(os.environ['modal.state.classes']))
     selected_classes = json.loads(os.environ['modal.state.classes'])
     if len(selected_classes) < 2:
         raise Exception("At least 2 classes must be selected")
