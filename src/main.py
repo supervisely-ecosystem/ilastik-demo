@@ -1,5 +1,5 @@
 import os
-from ui import ui
+import ui
 import cv2
 import subprocess
 import numpy as np
@@ -41,8 +41,6 @@ def main():
     ui.init(data, state)
 
     g.my_app.compile_template(g.root_source_dir)
-
-    #sly.fs.clean_dir(g.my_app.data_dir) #@TODO: for debug
     g.my_app.run(data=data, state=state)
 
 
