@@ -32,9 +32,12 @@
                 {% include 'src/ui/predict.html' %}
             </el-tab-pane>
             <el-tab-pane label="SETTINGS" name="settings">
-                <el-input placeholder="Please input name for your project" v-model="data.newProjectName"></el-input>
-                <el-button size="mini" type="success" @click="command('save')">Save project to team files</el-button>
-                    <i class="zmdi zmdi-close mr5"></i>Close project
+                <el-input placeholder="Please input name for your project" v-model="state.newProjectName"></el-input>
+                <el-button size="mini"
+                           type="success"
+                           @click="command('save')"
+                           :disabled="(state.newProjectName.length === 0)">
+                    Save project to team files
                 </el-button>
             </el-tab-pane>
         </el-tabs>
