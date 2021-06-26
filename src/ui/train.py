@@ -36,9 +36,14 @@ def remove_from_train(api: sly.Api, task_id, context, state, app_logger):
     else:
         cache.remove_train_image_from_set(image_id)
         train_images.remove(image_name)
-        fields = [
-            {"field": "data.trainSet", "payload":  train_images}
-        ]
+        if len(train_images) == 0:
+            fields = [
+                {"field": "data.trainSet", "payload": None}
+            ]
+        else:
+            fields = [
+                {"field": "data.trainSet", "payload":  train_images}
+            ]
         api.app.set_fields(g.task_id, fields)
 
 

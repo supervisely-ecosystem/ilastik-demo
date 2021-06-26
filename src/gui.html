@@ -36,7 +36,7 @@
                 <el-button size="mini"
                            type="success"
                            @click="command('save')"
-                           :disabled="(state.newProjectName.length === 0)">
+                           :disabled="(state.newProjectName === null)">
                     Save project to team files
                 </el-button>
             </el-tab-pane>
