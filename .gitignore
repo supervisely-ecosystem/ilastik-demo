@@ -1,3 +1,4 @@
 .idea
 src/debug
 supervisely_lib
+../../../Work/Applications/labeler-first-time-through/secret_debug.env

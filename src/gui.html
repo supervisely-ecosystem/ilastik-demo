@@ -1,5 +1,45 @@
-<div class="fflex">
-    <el-button class="regular" type="primary" @click="command('add_to_train_set')">Add to train set</el-button>
-    <el-button class="regular" type="primary" @click="command('apply_to_current_image')">Apply to image</el-button>
-</div>
+<div id="ilastik">
+    <div v-if="context.userId !== data.ownerId" style="color: red;">
+        You don't have permissions to open this application session.
+    </div>
 
+    <sly-style>
+        #ilastik .el-checkbox.small .el-checkbox__inner {
+        height: 14px;
+        width: 14px;
+        }
+
+        #ilastik .el-tabs.small .el-tabs__item {
+        font-size: 10px;
+        font-weight: 500;
+        height: 30px;
+        line-height: 30px;
+        }
+    </sly-style>
+    <pre>
+        {{ JSON.stringify(context, undefined, 2) }}
+    </pre>
+
+    <div class="ml5 mr10" v-if="context.userId === data.ownerId">
+        <el-tabs class="small" v-model="state.tabName" v-if="state.classesInfo">
+            <el-tab-pane label="INFO" name="info">
+                {% include 'src/ui/target_classes.html' %}
+            </el-tab-pane>
+            <el-tab-pane label="TRAIN" name="train">
+                {% include 'src/ui/train.html' %}
+            </el-tab-pane>
+            <el-tab-pane label="PREDICT" name="predict">
+                {% include 'src/ui/predict.html' %}
+            </el-tab-pane>
+            <el-tab-pane label="SETTINGS" name="settings">
+                <el-input placeholder="Please input name for your project" v-model="state.newProjectName"></el-input>
+                <el-button size="mini"
+                           type="success"
+                           @click="command('save')"
+                           :disabled="(state.newProjectName === null)">
+                    Save project to team files
+                </el-button>
+            </el-tab-pane>
+        </el-tabs>
+    </div>
+</div>

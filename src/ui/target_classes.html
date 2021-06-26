@@ -1,0 +1,13 @@
+<div>
+    <div><b>Mode: </b>{{data.mode}}</div>
+    <div><b>Target classes:</b></div>
+    <table>
+        <tbody>
+        <tr v-for="(objClass, index) in state.classesInfo">
+            <td><i class="zmdi zmdi-circle ml5 mr5" :style="{color: objClass.color}"></i></td>
+            <td><b style="color: #777777">{{objClass.title}}</b></td>
+            <td><span class="ml5">{{objClass.shape}}</span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

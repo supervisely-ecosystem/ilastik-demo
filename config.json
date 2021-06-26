@@ -9,13 +9,14 @@
   "docker_image": "supervisely/base-py-sdk:6.1.84",
   "main_script": "src/main.py",
   "modal_template": "src/modal.html",
+  "gui_template": "src/gui.html",
   "modal_template_state": {
-    "projectModeOptions": "newProject",
+    "projectMode": "newProject",
     "classes": [],
     "classifierPath": ""
   },
   "task_location": "application_sessions",
-  "icon": "https://i.imgur.com/d8SfMFk.png",
+  "icon": "https://i.imgur.com/pIz4rq9.png",
   "icon_background": "#FFFFFF",
   "isolate": true,
   "integrated_into": ["image_annotation_tool"],
