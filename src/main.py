@@ -148,6 +148,10 @@ import predict
 #@TODO: upload project to team files
 #@TODO: buttons loading
 #@TODO: add multiple images to train-headless
+
+#@TODO: add modal window with mgs: "There are no image in the trainset" IF len(os.listdir(train_path)) == 0 after removing image from trainset
+#@TODO: add message to train tab that model has been trained?
+#@TODO: add to trainset always overwrite image
 def main():
     sly.logger.info(
         "Script arguments",

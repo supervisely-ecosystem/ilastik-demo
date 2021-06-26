@@ -16,17 +16,12 @@ def add_to_train(api: sly.Api, task_id, context, state, app_logger):
     image_id = context['imageId']
     project_id = context['projectId']
 
-    image_name = str(image_id) + '.png'
+    cache.download_train(image_id, project_id)
     train_images = os.listdir(g.train_dir)
-    if image_name in train_images:
-        g.my_app.show_modal_window(f"Image: {image_name} is already in the training set")
-    else:
-        cache.download_train(image_id, project_id)
-        train_images = os.listdir(g.train_dir)
-        fields = [
-            {"field": "data.trainSet", "payload":  train_images}
-        ]
-        api.app.set_fields(g.task_id, fields)
+    fields = [
+        {"field": "data.trainSet", "payload":  train_images}
+    ]
+    api.app.set_fields(g.task_id, fields)
 
 
 @g.my_app.callback("remove_from_train")
@@ -45,6 +40,7 @@ def remove_from_train(api: sly.Api, task_id, context, state, app_logger):
             {"field": "data.trainSet", "payload":  train_images}
         ]
         api.app.set_fields(g.task_id, fields)
+
 
 @g.my_app.callback("train_model")
 @sly.timeit

@@ -1,4 +1,3 @@
-import os
 import cache
 import subprocess
 import numpy as np

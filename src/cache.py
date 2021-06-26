@@ -68,7 +68,7 @@ def download_test(image_id):
 
     for label in ann.labels:
         if not label.obj_class.name.endswith("_prediction"):
-            if g.prediciton_tag in label.tags:
+            if g.prediction_tag in label.tags:
                 ann = ann.delete_label(label)
     return ann, test_img_path
 
