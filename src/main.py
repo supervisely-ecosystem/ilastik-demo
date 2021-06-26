@@ -1,5 +1,5 @@
 import os
-import ui
+from ui import ui
 import cv2
 import subprocess
 import numpy as np
@@ -39,7 +39,6 @@ def main():
     data = {}
     state = {}
     ui.init(data, state)
-
 
     g.my_app.compile_template(g.root_source_dir)
 

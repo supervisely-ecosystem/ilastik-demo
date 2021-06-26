@@ -1,6 +1,4 @@
-#import globals as g
-from src import globals as g
-import supervisely_lib as sly
+import globals as g
 import target_classes
 import train
 import settings
