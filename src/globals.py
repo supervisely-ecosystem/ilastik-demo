@@ -12,9 +12,9 @@ owner_id = int(os.environ['context.userId'])
 workspace_id = int(os.environ['context.workspaceId'])
 
 mode = os.environ['modal.state.projectModeOptions']
+project_id = os.environ['context.projectId']
 
 if mode == "newProject":
-    project_id = int(os.environ['context.projectId'])
     selected_classes = json.loads(os.environ['modal.state.classes'])
     if len(selected_classes) < 2:
         raise Exception("At least 2 classes must be selected")
