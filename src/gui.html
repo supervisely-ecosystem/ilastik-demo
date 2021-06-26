@@ -17,7 +17,7 @@
         }
     </sly-style>
     <pre>
-        {{ JSON.stringify(context, undefined, 2) }}
+        {{ JSON.stringify(state, undefined, 2) }}
     </pre>
 
     <div class="ml5 mr10" v-if="context.userId === data.ownerId">
