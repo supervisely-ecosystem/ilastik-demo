@@ -2,6 +2,8 @@ import ui
 import globals as g
 import supervisely_lib as sly
 
+from ui import ui
+
 import train
 import predict
 
