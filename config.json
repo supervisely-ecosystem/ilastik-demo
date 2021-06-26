@@ -16,7 +16,8 @@
     "classifierPath": ""
   },
   "task_location": "application_sessions",
-  "icon": "https://i.imgur.com/d8SfMFk.png",
+  "icon": "https://i.imgur.com/pIz4rq9.png",
+  "icon_background": "#FFFFFF",
   "isolate": true,
   "integrated_into": ["image_annotation_tool"],
   "context_menu": {
