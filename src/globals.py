@@ -16,8 +16,7 @@ mode = os.environ['modal.state.projectMode']
 project_id = os.environ['modal.state.slyProjectId']
 
 if mode == "newProject":
-    os.environ['modal.state.classes'].replace("'", '"')
-    selected_classes = json.loads(os.environ['modal.state.classes'])
+    selected_classes = json.loads(os.environ["modal.state.classes"])
     #selected_classes = json.loads(os.environ['modal.state.classes'])
     if len(selected_classes) < 2:
         raise Exception("At least 2 classes must be selected")
