@@ -6,7 +6,6 @@ import supervisely_lib as sly
 
 my_app = sly.AppService()
 
-
 task_id = my_app.task_id
 team_id = int(os.environ['context.teamId'])
 owner_id = int(os.environ['context.userId'])
@@ -17,8 +16,8 @@ mode = os.environ['modal.state.projectModeOptions']
 if mode == "newProject":
     project_id = int(os.environ['context.projectId'])
     selected_classes = json.loads(os.environ['modal.state.classes'])
-    if len(selected_classes) == 0:
-        raise Exception("At least 1 class must be selected")
+    if len(selected_classes) < 2:
+        raise Exception("At least 2 classes must be selected")
 else:
     project_id = None
     selected_classes = None
