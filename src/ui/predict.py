@@ -1,3 +1,4 @@
+import os
 import cache
 import subprocess
 import numpy as np
@@ -25,6 +26,7 @@ def remove_predicted_labels(api: sly.Api, task_id, context, state, app_logger):
 def predict(api: sly.Api, task_id, context, state, app_logger):
     image_id = context['imageId']
     sly.fs.clean_dir(g.test_dir)
+    sly.fs.clean_dir(g.test_ann_dir)
     sly.fs.clean_dir(g.predictions_dir)
     ann, img_path = cache.download_test(image_id)
     ilp_path = g.path_to_trained_project
@@ -52,6 +54,8 @@ def predict(api: sly.Api, task_id, context, state, app_logger):
         labels.append(sly.Label(sly.Bitmap(mask_bool), g.project_meta.get_obj_class(class_name), tags=sly.TagCollection([g.prediction_tag])))
 
     ann = ann.add_labels(labels)
-    api.annotation.upload_ann(image_id, ann)
+    ann_path = os.path.join(g.test_ann_dir, f"{image_id}.json")
+    sly.json.dump_json_file(ann.to_json(), ann_path)
 
+    api.annotation.upload_ann(image_id, ann)
     api.task.set_field(task_id, "state.loading", False)

@@ -7,22 +7,19 @@ import predict
 
 # imports to register callbacks
 # import model_io
-# from ui import train
 
 
 #@TODO: remove utils.py
 #@TODO: show modal window ValueError("Unknown level 'debug'. Supported levels: ['warning', 'info', 'error']")
-#@TODO: remove auto objects before training
-#@TODO: add prediction to bottom + add tag "auto" + add remove autolabels button
 #@TODO: create all features
 #@TODO: try catch errors
 #@TODO: hotkeys
-#@TODO: upload project to team files
 #@TODO: buttons loading
 #@TODO: add multiple images to train-headless
 
+#@TODO: launch app from instance
+#@TODO: get classes from modal
 #@TODO: add message to train tab that model has been trained?
-#@TODO: save project only if .ilp file exists
 def main():
     sly.logger.info(
         "Script arguments",
