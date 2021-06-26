@@ -9,9 +9,8 @@ def init(data, state):
     if g.mode == "newProject":
         project_meta = cache.get_project_meta(g.project_id)
         project_meta = project_meta.from_json(project_meta.to_json())
-        selected_classes = os.environ['modal.state.classes']
         for obj_class in project_meta.obj_classes:
-            if obj_class.name in selected_classes:
+            if obj_class.name in g.selected_classes:
                 state["classesInfo"] = obj_class.to_json()
     else:
         raise NotImplementedError()
