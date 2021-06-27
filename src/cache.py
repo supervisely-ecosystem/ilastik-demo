@@ -31,8 +31,9 @@ def download_train(image_id, project_id):
         for ann_class in ann_classes:
             if sel_class == ann_class:
                 cnt += 1
-                if cnt >= 2:
+                if cnt == 2:
                     is_in = True
+                    break
 
     if is_in is False:
         g.my_app.show_modal_window(f"There are no selected classes on current image. Please draw labels and try again")

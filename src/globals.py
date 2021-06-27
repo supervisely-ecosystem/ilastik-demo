@@ -16,7 +16,6 @@ project_id = os.environ['modal.state.slyProjectId']
 
 if mode == "newProject":
     selected_classes = json.loads(os.environ["modal.state.classes"])
-    #selected_classes = os.environ["modal.state.classes"]
     if len(selected_classes) < 2:
         raise Exception("At least 2 classes must be selected")
 else:
@@ -48,7 +47,6 @@ prediction_tag = sly.Tag(prediction_tag_meta)
 
 label_names = [obj_class.name for obj_class in project_meta.obj_classes]
 # label_colors = [obj_class.color for obj_class in project_meta.obj_classes]
-
 machine_map = {obj_class.name: [idx, idx, idx] for idx, obj_class in enumerate(project_meta.obj_classes, start=1)}
 # machine_colors = [machine_color for machine_color in machine_map.values()]
 
@@ -60,7 +58,9 @@ test_dir = os.path.join(proj_dir, 'test')
 test_ann_dir = os.path.join(proj_dir, 'test_ann')
 machine_masks_dir = os.path.join(proj_dir, 'masks_machine')
 
-#predictions_dir = os.path.join(proj_dir, 'predictions')
+path_to_trained_project = os.path.join(proj_dir, f'{project.name}.ilp')
+
+# predictions_dir = os.path.join(proj_dir, 'predictions')
 # cache_dir = os.path.join(proj_dir, 'cache')
 # cache_img_dir = os.path.join(proj_dir, 'cache')
 # cache_ann_dir = os.path.join(proj_dir, 'cache')
@@ -79,10 +79,9 @@ def init_directories():
 
 
 init_directories()
-path_to_trained_project = os.path.join(proj_dir, f'{project.name}.ilp')
+
+
 # pred_label_names, pred_label_colors = prepare_data()
-
-
 # from supervisely_lib.imaging.color import generate_rgb
 # def prepare_data():
 #     # PREPARE DATA TO APPLY MODEL
