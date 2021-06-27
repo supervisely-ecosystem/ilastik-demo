@@ -1,5 +1,5 @@
 import os
-import ui
+import init_ui
 import cache
 import subprocess
 import numpy as np

@@ -1,8 +1,7 @@
 import globals as g
 import supervisely_lib as sly
 
-#import ui             # for instance
-from ui import ui     # for debug
+import init_ui             # for instance
 
 import train
 import predict
@@ -34,7 +33,7 @@ def main():
 
     data = {}
     state = {}
-    ui.init(data, state)
+    init_ui.init(data, state)
 
     g.my_app.compile_template(g.root_source_dir)
     g.my_app.run(data=data, state=state)
