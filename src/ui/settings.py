@@ -17,13 +17,15 @@ def save_project_to_team_files(api: sly.Api, task_id, context, state, app_logger
     if f"{g.project.name}.ilp" in sly.fs.list_files(g.proj_dir):
         g.my_app.show_modal_window("Classifier not found. Please train model to save project.")
     else:
+        sly.fs.silent_remove(g.test_dir)
+        sly.fs.silent_remove(g.test_ann_dir)
         project_dir = g.proj_dir
         result_archive = os.path.join(g.my_app.data_dir, state["newProjectName"])
 
         sly.fs.archive_directory(project_dir, result_archive)
         app_logger.info("Result directory is archived")
 
-        remote_archive_path = f"/ilastik/{state['newProjectName']}"
+        remote_archive_path = f"/ilastik/{state['newProjectName']}" + ".tar"
 
         if os.path.exists(remote_archive_path):
             g.my_app.show_modal_window(f"Project with name: {state['newProjectName']} already exists in Team Files. "

@@ -15,7 +15,8 @@ mode = os.environ['modal.state.projectMode']
 project_id = os.environ['modal.state.slyProjectId']
 
 if mode == "newProject":
-    selected_classes = os.environ["modal.state.classes"]
+    selected_classes = json.loads(os.environ["modal.state.classes"])
+    #selected_classes = os.environ["modal.state.classes"]
     if len(selected_classes) < 2:
         raise Exception("At least 2 classes must be selected")
 else:
@@ -57,9 +58,9 @@ train_dir = os.path.join(proj_dir, 'train')
 train_ann_dir = os.path.join(proj_dir, 'train_ann')
 test_dir = os.path.join(proj_dir, 'test')
 test_ann_dir = os.path.join(proj_dir, 'test_ann')
-predictions_dir = os.path.join(proj_dir, 'predictions')
 machine_masks_dir = os.path.join(proj_dir, 'masks_machine')
 
+#predictions_dir = os.path.join(proj_dir, 'predictions')
 # cache_dir = os.path.join(proj_dir, 'cache')
 # cache_img_dir = os.path.join(proj_dir, 'cache')
 # cache_ann_dir = os.path.join(proj_dir, 'cache')
@@ -72,8 +73,8 @@ def init_directories():
     sly.fs.mkdir(train_ann_dir)
     sly.fs.mkdir(test_dir)
     sly.fs.mkdir(test_ann_dir)
-    sly.fs.mkdir(predictions_dir)
     sly.fs.mkdir(machine_masks_dir)
+    # sly.fs.mkdir(predictions_dir)
     # sly.fs.mkdir(cache_dir)
 
 
