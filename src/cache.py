@@ -16,7 +16,7 @@ def remove_train_image_from_set(image_id):
 
 
 def download_train(image_id, project_id):
-    selected_classes = g.selected_classes.replace("[", "").replace("]", "").split()
+    selected_classes = g.selected_classes.replace("[", "").replace("]", "").replace('"', '').replace(",", "").split()
     ann_json = g.api.annotation.download(image_id).annotation
     ann = sly.Annotation.from_json(ann_json, project_meta=g.project_meta)
 
