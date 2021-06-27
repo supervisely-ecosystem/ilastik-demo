@@ -1,8 +1,9 @@
-import ui
 import globals as g
 import supervisely_lib as sly
 
-#from ui import ui
+import ui             # for instance
+from ui import ui     # for debug
+
 import train
 import predict
 
