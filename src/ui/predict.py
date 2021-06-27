@@ -42,7 +42,7 @@ def predict(api: sly.Api, task_id, context, state, app_logger):
     bash_out = subprocess.Popen([test_cmd], shell=True, executable="/bin/bash", stdout=subprocess.PIPE).communicate()
     output_log = bash_out[0]
     error_log = bash_out[1]
-    seg_path = img_path.replace(sly.fs.get_file_ext(img_path), "_Simple_Segmentation.png")
+    seg_path = img_path.replace(sly.fs.get_file_ext(img_path), "_Simple Segmentation.png")
     img = sly.image.read(seg_path)
     mask = img[:, :, 0]
     labels = []
