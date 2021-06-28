@@ -5,7 +5,6 @@ import tarfile
 from pathlib import Path
 import supervisely_lib as sly
 
-import globals
 
 my_app = sly.AppService()
 
@@ -16,13 +15,6 @@ workspace_id = int(os.environ['context.workspaceId'])
 
 mode = os.environ['modal.state.projectMode']
 project_id = os.environ['modal.state.slyProjectId']
-
-
-if mode == "newProject":
-    selected_classes = json.loads(os.environ["modal.state.classes"])
-    if len(selected_classes) < 2:
-        raise Exception("At least 2 classes must be selected")
-
 
 api: sly.Api = my_app.public_api
 
@@ -38,18 +30,14 @@ ui_sources_dir = os.path.join(source_path, "ui")
 sys.path.append(ui_sources_dir)
 sly.logger.info(f"Added to sys.path: {ui_sources_dir}")
 
-
 project = api.project.get_info_by_id(project_id)
 project_meta = sly.ProjectMeta.from_json(api.project.get_meta(project_id))
 
 prediction_tag_meta = sly.TagMeta("ilastik_prediction", sly.TagValueType.NONE)
 prediction_tag = sly.Tag(prediction_tag_meta)
 
-
 label_names = [obj_class.name for obj_class in project_meta.obj_classes]
-# label_colors = [obj_class.color for obj_class in project_meta.obj_classes]
 machine_map = {obj_class.name: [idx, idx, idx] for idx, obj_class in enumerate(project_meta.obj_classes, start=1)}
-# machine_colors = [machine_color for machine_color in machine_map.values()]
 
 ## FOLDER STRUCTURE
 proj_dir = os.path.join(my_app.data_dir, project.name)
@@ -58,8 +46,6 @@ train_ann_dir = os.path.join(proj_dir, 'train_ann')
 test_dir = os.path.join(proj_dir, 'test')
 test_ann_dir = os.path.join(proj_dir, 'test_ann')
 machine_masks_dir = os.path.join(proj_dir, 'masks_machine')
-
-path_to_trained_project = os.path.join(proj_dir, f'{project.name}.ilp')
 
 
 def init_directories():
@@ -75,17 +61,25 @@ def init_directories():
 init_directories()
 
 
+if mode == "newProject":
+    selected_classes = json.loads(os.environ["modal.state.classes"])
+    path_to_trained_project = os.path.join(proj_dir, f'{project.name}.ilp')
+    if len(selected_classes) < 2:
+        raise Exception("At least 2 classes must be selected")
+
+
 if mode == "openProject":
     remote_classifier_path = os.environ["modal.state.classifierPath"]
     local_classifier_path = os.path.join(proj_dir, "existing_project.tar")
     api.file.download(team_id, remote_classifier_path, local_classifier_path)
     tr = tarfile.open(local_classifier_path)
     tr.extractall(proj_dir)
+    sly.fs.silent_remove(local_classifier_path)
     for file in os.listdir(proj_dir):
         if file.endswith(".ilp"):
-            os.rename(file, f"{project.name}.ilp")
+            os.rename(os.path.join(proj_dir, file), os.path.join(proj_dir, f"{project.name}.ilp"))
+            path_to_trained_project = os.path.join(proj_dir, f"{project.name}.ilp")
             break
-    sly.fs.silent_remove(local_classifier_path)
 
     ex_meta_json = sly.json.load_json_file(os.path.join(proj_dir, "meta.json"))
     ex_meta = sly.ProjectMeta.from_json(ex_meta_json)
