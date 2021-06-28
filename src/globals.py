@@ -36,8 +36,12 @@ project_meta = sly.ProjectMeta.from_json(api.project.get_meta(project_id))
 prediction_tag_meta = sly.TagMeta("ilastik_prediction", sly.TagValueType.NONE)
 prediction_tag = sly.Tag(prediction_tag_meta)
 
+# label_names = [obj_class.name for obj_class in project_meta.obj_classes]
+# machine_map = {obj_class.name: [idx, idx, idx] for idx, obj_class in enumerate(project_meta.obj_classes, start=1)}
+
 label_names = [obj_class.name for obj_class in project_meta.obj_classes]
 machine_map = {obj_class.name: [idx, idx, idx] for idx, obj_class in enumerate(project_meta.obj_classes, start=1)}
+
 
 ## FOLDER STRUCTURE
 proj_dir = os.path.join(my_app.data_dir, project.name)

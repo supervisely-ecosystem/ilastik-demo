@@ -6,9 +6,6 @@ import init_ui
 import train
 import predict
 
-# imports to register callbacks
-# import model_io
-
 
 #@TODO: remove utils.py
 #@TODO: show modal window ValueError("Unknown level 'debug'. Supported levels: ['warning', 'info', 'error']")
@@ -19,9 +16,7 @@ import predict
 #@TODO: add multiple images to train-headless
 
 #@TODO: launch app from instance
-#@TODO: get classes from modal
 #@TODO: create machine map from selected classes
-#@TODO: work with existing project
 #@TODO: ?add message to train tab that model has been trained?
 def main():
     sly.logger.info(
