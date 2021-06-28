@@ -75,7 +75,6 @@ def download_test(image_id):
     ann = sly.Annotation.from_json(ann_json, g.project_meta)
 
     for label in ann.labels:
-        if not label.obj_class.name.endswith("_prediction"):
-            if g.prediction_tag in label.tags:
-                ann = ann.delete_label(label)
+        if g.prediction_tag in label.tags:
+            ann = ann.delete_label(label)
     return ann, test_img_path

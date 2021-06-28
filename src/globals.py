@@ -36,12 +36,6 @@ project_meta = sly.ProjectMeta.from_json(api.project.get_meta(project_id))
 prediction_tag_meta = sly.TagMeta("ilastik_prediction", sly.TagValueType.NONE)
 prediction_tag = sly.Tag(prediction_tag_meta)
 
-# label_names = [obj_class.name for obj_class in project_meta.obj_classes]
-# machine_map = {obj_class.name: [idx, idx, idx] for idx, obj_class in enumerate(project_meta.obj_classes, start=1)}
-
-label_names = [obj_class.name for obj_class in project_meta.obj_classes]
-machine_map = {obj_class.name: [idx, idx, idx] for idx, obj_class in enumerate(project_meta.obj_classes, start=1)}
-
 
 ## FOLDER STRUCTURE
 proj_dir = os.path.join(my_app.data_dir, project.name)
@@ -70,9 +64,7 @@ if mode == "newProject":
     path_to_trained_project = os.path.join(proj_dir, f'{project.name}.ilp')
     if len(selected_classes) < 2:
         raise Exception("At least 2 classes must be selected")
-
-
-if mode == "openProject":
+else:
     remote_classifier_path = os.environ["modal.state.classifierPath"]
     local_classifier_path = os.path.join(proj_dir, "existing_project.tar")
     api.file.download(team_id, remote_classifier_path, local_classifier_path)
@@ -92,3 +84,5 @@ if mode == "openProject":
         raise Exception("At least 2 classes must be selected")
     project_meta = project_meta.merge(ex_meta)
     api.project.update_meta(project_id, project_meta.to_json())
+
+machine_map = {obj_class: [idx, idx, idx] for idx, obj_class in enumerate(selected_classes, start=1)}

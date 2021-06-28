@@ -42,7 +42,7 @@ def predict(api: sly.Api, task_id, context, state, app_logger):
     img = sly.image.read(seg_path)
     mask = img[:, :, 0]
     labels = []
-    for class_name in g.label_names:
+    for class_name in g.selected_classes:
         color = g.machine_map[class_name][0]
         mask_bool = mask == color
         if not np.any(mask_bool):
