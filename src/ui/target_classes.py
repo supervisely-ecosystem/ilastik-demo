@@ -5,14 +5,10 @@ import supervisely_lib as sly
 
 
 def init(data, state):
-    state["classesInfo"] = None
-    if g.mode == "newProject":
-        state["classesInfo"] = []
-        for obj_class in g.project_meta.obj_classes:
-            if obj_class.name in g.selected_classes:
-                state["classesInfo"].append(obj_class.to_json())
-    else:
-        raise NotImplementedError()
+    state["classesInfo"] = []
+    for obj_class in g.project_meta.obj_classes:
+        if obj_class.name in g.selected_classes:
+            state["classesInfo"].append(obj_class.to_json())
 
 
 def refresh_meta(): # same as in download_test, useless

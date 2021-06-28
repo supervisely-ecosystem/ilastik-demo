@@ -1,4 +1,3 @@
-import os
 import cache
 import subprocess
 import numpy as np
@@ -25,8 +24,6 @@ def remove_predicted_labels(api: sly.Api, task_id, context, state, app_logger):
 # @g.my_app.ignore_errors_and_show_dialog_window()
 def predict(api: sly.Api, task_id, context, state, app_logger):
     image_id = context['imageId']
-    # sly.fs.clean_dir(g.test_dir)
-    # sly.fs.clean_dir(g.test_ann_dir)
     ann, img_path = cache.download_test(image_id)
     ilp_path = g.path_to_trained_project
 

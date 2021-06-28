@@ -1,6 +1,7 @@
 import os
-import init_ui
+import json
 import cache
+import init_ui
 import subprocess
 import numpy as np
 import globals as g
@@ -22,12 +23,20 @@ def save_project_to_team_files(api: sly.Api, task_id, context, state, app_logger
         project_dir = g.proj_dir
         result_archive = os.path.join(g.my_app.data_dir, state["newProjectName"] + ".tar")
 
-        meta_json = api.project.get_meta(g.project_id)
-        sly.io.json.dump_json_file(meta_json, os.path.join(g.proj_dir, 'meta.json'))
+        meta_json = g.api.project.get_meta(g.project_id)
+        meta = sly.ProjectMeta.from_json(meta_json)
+        for obj_class in meta.obj_classes:
+            if obj_class.name not in g.selected_classes:
+                meta = meta.delete_obj_class(obj_class.name)
+        for tag_meta in meta.tag_metas:
+            if tag_meta.name != g.prediction_tag_meta.name:
+                meta = meta.delete_tag_meta(tag_meta.name)
+
+        sly.io.json.dump_json_file(meta.to_json(), os.path.join(g.proj_dir, 'meta.json'))
         sly.fs.archive_directory(project_dir, result_archive)
         app_logger.info("Result directory is archived")
 
-        remote_archive_path = f"/ilastik/{state['newProjectName']}"
+        remote_archive_path = f"/ilastik/{state['newProjectName']}" + ".tar"
 
         if os.path.exists(remote_archive_path):
             g.my_app.show_modal_window(f"Project with name: {state['newProjectName']} already exists in Team Files. "

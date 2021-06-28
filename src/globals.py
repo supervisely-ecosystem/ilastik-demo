@@ -1,8 +1,11 @@
 import os
 import sys
 import json
+import tarfile
 from pathlib import Path
 import supervisely_lib as sly
+
+import globals
 
 my_app = sly.AppService()
 
@@ -14,13 +17,11 @@ workspace_id = int(os.environ['context.workspaceId'])
 mode = os.environ['modal.state.projectMode']
 project_id = os.environ['modal.state.slyProjectId']
 
+
 if mode == "newProject":
     selected_classes = json.loads(os.environ["modal.state.classes"])
     if len(selected_classes) < 2:
         raise Exception("At least 2 classes must be selected")
-else:
-    project_id = None
-    selected_classes = None
 
 
 api: sly.Api = my_app.public_api
@@ -60,11 +61,6 @@ machine_masks_dir = os.path.join(proj_dir, 'masks_machine')
 
 path_to_trained_project = os.path.join(proj_dir, f'{project.name}.ilp')
 
-# predictions_dir = os.path.join(proj_dir, 'predictions')
-# cache_dir = os.path.join(proj_dir, 'cache')
-# cache_img_dir = os.path.join(proj_dir, 'cache')
-# cache_ann_dir = os.path.join(proj_dir, 'cache')
-
 
 def init_directories():
     sly.fs.mkdir(proj_dir)
@@ -74,24 +70,27 @@ def init_directories():
     sly.fs.mkdir(test_dir)
     sly.fs.mkdir(test_ann_dir)
     sly.fs.mkdir(machine_masks_dir)
-    # sly.fs.mkdir(predictions_dir)
-    # sly.fs.mkdir(cache_dir)
 
 
 init_directories()
 
 
-# pred_label_names, pred_label_colors = prepare_data()
-# from supervisely_lib.imaging.color import generate_rgb
-# def prepare_data():
-#     # PREPARE DATA TO APPLY MODEL
-#     pred_label_names = []
-#     pred_label_colors = []
-#     existing_colors = list(label_colors)
-#     for name in label_names:
-#         pred_label_names.append(name)
-#
-#         new_label_color = generate_rgb(existing_colors)
-#         pred_label_colors.append(new_label_color)
-#         existing_colors.append(new_label_color)
-#     return pred_label_names, pred_label_colors
+if mode == "openProject":
+    remote_classifier_path = os.environ["modal.state.classifierPath"]
+    local_classifier_path = os.path.join(proj_dir, "existing_project.tar")
+    api.file.download(team_id, remote_classifier_path, local_classifier_path)
+    tr = tarfile.open(local_classifier_path)
+    tr.extractall(proj_dir)
+    for file in os.listdir(proj_dir):
+        if file.endswith(".ilp"):
+            os.rename(file, f"{project.name}.ilp")
+            break
+    sly.fs.silent_remove(local_classifier_path)
+
+    ex_meta_json = sly.json.load_json_file(os.path.join(proj_dir, "meta.json"))
+    ex_meta = sly.ProjectMeta.from_json(ex_meta_json)
+    selected_classes = [obj_class.name for obj_class in ex_meta.obj_classes]
+    if len(selected_classes) < 2:
+        raise Exception("At least 2 classes must be selected")
+    project_meta = project_meta.merge(ex_meta)
+    api.project.update_meta(project_id, project_meta.to_json())
