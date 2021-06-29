@@ -11,7 +11,7 @@
   "modal_template": "src/modal.html",
   "gui_template": "src/gui.html",
   "modal_template_state": {
-    "projectMode": "newProject",
+    "projectMode": "Create new Project",
     "classes": [],
     "classifierPath": ""
   },

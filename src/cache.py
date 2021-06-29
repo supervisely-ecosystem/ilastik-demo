@@ -6,10 +6,10 @@ import globals as g
 import supervisely_lib as sly
 
 
-def remove_train_image_from_set(image_id):
-    train_img_path = os.path.join(g.train_dir, f"{image_id}.png")
-    train_ann_path = os.path.join(g.train_ann_dir, f"{image_id}.json")
-    mask_img_path = os.path.join(g.machine_masks_dir, f"{image_id}.png")
+def remove_train_image_from_set(image_name):
+    train_img_path = os.path.join(g.train_dir, image_name)
+    train_ann_path = os.path.join(g.train_ann_dir, image_name)
+    mask_img_path = os.path.join(g.machine_masks_dir, image_name)
 
     sly.fs.silent_remove(train_img_path)
     sly.fs.silent_remove(train_ann_path)

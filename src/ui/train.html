@@ -1,11 +1,33 @@
 <div>
-    <el-button size="mini" type="primary" @click="command('add_to_train')">Add image to train set</el-button>
-    <el-button size="mini" type="danger" @click="command('remove_from_train')">Remove image from train set</el-button>
-    <el-button size="mini" type="success" @click="command('train_model')">Train model</el-button>
-    <div><b>Images in train set:</b></div>
-    <div v-if="data.trainSet === null"> There are no images</div>
-    <div v-for="name in data.trainSet" v-if="data.trainSet != null">
-        {{name}}
+    <el-button size="mini"
+               type="primary"
+               :loading="state.loading"
+               @click="state.loading = true; command('add_to_train');">
+        Add image to train set
+    </el-button>
+    <div class="mt5 ml10"><b>Images in train set:</b></div>
+    <div class="mt5 ml15" v-if="data.trainSet === null"> There are no images</div>
+    <div class="mt5 ml15" v-for="name in data.trainSet" v-if="data.trainSet != null">
+        <span class="el-tag el-tag--primary mt5">
+            <span class="el-select__tags-text">{{name}}</span>
+                 <el-button type="text"
+                            size="mini"
+                            :loading="state.loading"
+                            @click="state.loading = true; state.toDelete = name; command('remove_from_train');">
+                      <i class="el-tag__close el-icon-close"></i>
+                 </el-button>
+        </span>
+
+    </div>
+    <div class="mt10">
+        <el-button size="mini"
+                   type="success"
+                   :loading="state.loading"
+                   @click="state.loading = true; command('train_model');">
+            Train model
+        </el-button>
+        <div class="mt5 ml15" v-if="state.classifierStatus === null">Classifier not trained yet</div>
+        <div class="mt5 ml15" v-if="state.classifierStatus != null"><b>Classifier: </b>{{state.classifierStatus}}</div>
     </div>
 </div>
 

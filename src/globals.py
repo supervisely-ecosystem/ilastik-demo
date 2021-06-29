@@ -59,13 +59,16 @@ def init_directories():
 init_directories()
 
 
-if mode == "newProject":
+if mode == "Create new Project":
+    classifier_path = None
+    classifier_status = "No trained classifier detected"
     selected_classes = json.loads(os.environ["modal.state.classes"])
     path_to_trained_project = os.path.join(proj_dir, f'{project.name}.ilp')
     if len(selected_classes) < 2:
         raise Exception("At least 2 classes must be selected")
 else:
     remote_classifier_path = os.environ["modal.state.classifierPath"]
+    remote_classifier_info = api.file.get_info_by_path(team_id, remote_classifier_path)
     local_classifier_path = os.path.join(proj_dir, "existing_project.tar")
     api.file.download(team_id, remote_classifier_path, local_classifier_path)
     tr = tarfile.open(local_classifier_path)
@@ -73,6 +76,7 @@ else:
     sly.fs.silent_remove(local_classifier_path)
     for file in os.listdir(proj_dir):
         if file.endswith(".ilp"):
+            remote_classifier_status = f"{file} {remote_classifier_info.updated_at}"
             os.rename(os.path.join(proj_dir, file), os.path.join(proj_dir, f"{project.name}.ilp"))
             path_to_trained_project = os.path.join(proj_dir, f"{project.name}.ilp")
             break

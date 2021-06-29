@@ -1,4 +1,14 @@
 <div>
-    <el-button size="mini" type="danger" @click="command('rm_predictions')">Remove predictions from image</el-button>
-    <el-button size="mini" type="success" @click="command('predict')">Predict</el-button>
+    <el-button size="mini"
+               type="danger"
+               :loading="state.loading"
+               @click="state.loading = true; command('rm_predictions');">
+        Remove predictions from image
+    </el-button>
+    <el-button size="mini"
+               type="success"
+               :loading="state.loading"
+               @click="state.loading = true; command('predict');">
+        Predict
+    </el-button>
 </div>

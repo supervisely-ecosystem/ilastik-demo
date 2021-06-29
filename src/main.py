@@ -1,23 +1,23 @@
+import init_ui
 import globals as g
 import supervisely_lib as sly
 
-import init_ui
 
-import train
-import predict
-
-
-#@TODO: remove utils.py
+## MAX
 #@TODO: show modal window ValueError("Unknown level 'debug'. Supported levels: ['warning', 'info', 'error']")
 #@TODO: create all features
-#@TODO: try catch errors
 #@TODO: hotkeys
-#@TODO: buttons loading
 #@TODO: add multiple images to train-headless
 
+
 #@TODO: launch app from instance
-#@TODO: create machine map from selected classes
-#@TODO: ?add message to train tab that model has been trained?
+
+#@TODO: existing project launch progress
+#@TODO: save project progress bar
+
+#@TODO: add slyfields with description to buttons?
+#@TODO: Predict all unlabeled images button?
+#@TODO: Videos support?
 def main():
     sly.logger.info(
         "Script arguments",

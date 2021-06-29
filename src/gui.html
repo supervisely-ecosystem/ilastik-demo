@@ -16,7 +16,13 @@
         line-height: 30px;
         }
     </sly-style>
+
+<!--    <div>-->
+<!--        <el-progress :percentage="70"></el-progress>-->
+<!--    </div>-->
+
     <div class="ml5 mr10" v-if="context.userId === data.ownerId">
+
         <el-tabs class="small" v-model="state.tabName" v-if="state.classesInfo">
             <el-tab-pane label="INFO" name="info">
                 {% include 'src/ui/target_classes.html' %}
@@ -28,11 +34,14 @@
                 {% include 'src/ui/predict.html' %}
             </el-tab-pane>
             <el-tab-pane label="SETTINGS" name="settings">
-                <el-input placeholder="Please input name for your project" v-model="state.newProjectName"></el-input>
-                <el-button size="mini"
+                <el-input size="small" placeholder="Please input name for your project"
+                          v-model="state.newProjectName"></el-input>
+                <el-button class="mt5 ml10"
+                           size="mini"
                            type="success"
-                           @click="command('save')"
-                           :disabled="(state.newProjectName === null)">
+                           :disabled="(state.newProjectName === null)"
+                           :loading="state.loading"
+                           @click="state.loading = true; command('save');">
                     Save project to team files
                 </el-button>
             </el-tab-pane>
