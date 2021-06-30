@@ -1,7 +1,4 @@
-import os
-import cache
 import globals as g
-import supervisely_lib as sly
 
 
 def init(data, state):

@@ -1,9 +1,6 @@
 import os
-import json
 import cache
 import init_ui
-import subprocess
-import numpy as np
 import globals as g
 import supervisely_lib as sly
 
@@ -11,9 +8,10 @@ import supervisely_lib as sly
 def init(data, state):
     state["newProjectName"] = None
 
+
 @g.my_app.callback("save")
 @sly.timeit
-# @g.my_app.ignore_errors_and_show_dialog_window()
+@g.my_app.ignore_errors_and_show_dialog_window()
 def save_project_to_team_files(api: sly.Api, task_id, context, state, app_logger):
     try:
         if f"{g.project.name}.ilp" in sly.fs.list_files(g.proj_dir):
@@ -34,12 +32,11 @@ def save_project_to_team_files(api: sly.Api, task_id, context, state, app_logger
                 if tag_meta.name != g.prediction_tag_meta.name:
                     meta = meta.delete_tag_meta(tag_meta.name)
 
-            sly.io.json.dump_json_file(meta.to_json(), os.path.join(g.proj_dir, 'meta.json'))
+            sly.json.dump_json_file(meta.to_json(), os.path.join(g.proj_dir, 'meta.json'))
             sly.fs.archive_directory(project_dir, result_archive)
             app_logger.info("Result directory is archived")
 
             remote_archive_path = f"/ilastik/{state['newProjectName']}" + ".tar"
-
             if os.path.exists(remote_archive_path):
                 g.my_app.show_modal_window(f"Project with name: {state['newProjectName']} already exists in Team Files. "
                                            f"Please select another name.")

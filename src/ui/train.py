@@ -16,7 +16,7 @@ def init(data, state):
 
 @g.my_app.callback("add_to_train")
 @sly.timeit
-# @g.my_app.ignore_errors_and_show_dialog_window()
+@g.my_app.ignore_errors_and_show_dialog_window()
 def add_to_train(api: sly.Api, task_id, context, state, app_logger):
     try:
         image_id = context['imageId']
@@ -36,7 +36,7 @@ def add_to_train(api: sly.Api, task_id, context, state, app_logger):
 
 @g.my_app.callback("remove_from_train")
 @sly.timeit
-# @g.my_app.ignore_errors_and_show_dialog_window()
+@g.my_app.ignore_errors_and_show_dialog_window()
 def remove_from_train(api: sly.Api, task_id, context, state, app_logger):
     try:
         image_name = state["toDelete"]
@@ -64,7 +64,7 @@ def remove_from_train(api: sly.Api, task_id, context, state, app_logger):
 
 @g.my_app.callback("train_model")
 @sly.timeit
-# @g.my_app.ignore_errors_and_show_dialog_window()
+@g.my_app.ignore_errors_and_show_dialog_window()
 def train_model(api: sly.Api, task_id, context, state, app_logger):
     try:
         images_paths = sly.fs.list_files(g.train_dir, sly.image.SUPPORTED_IMG_EXTS)

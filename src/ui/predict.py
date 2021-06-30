@@ -7,7 +7,7 @@ import supervisely_lib as sly
 
 @g.my_app.callback("rm_predictions")
 @sly.timeit
-# @g.my_app.ignore_errors_and_show_dialog_window()
+@g.my_app.ignore_errors_and_show_dialog_window()
 def remove_predicted_labels(api: sly.Api, task_id, context, state, app_logger):
     try:
         image_id = context['imageId']
@@ -17,7 +17,6 @@ def remove_predicted_labels(api: sly.Api, task_id, context, state, app_logger):
             if g.prediction_tag in label.tags:
                 ann = ann.delete_label(label)
         g.api.annotation.upload_ann(image_id, ann)
-
         api.task.set_field(task_id, "state.loading", False)
     except Exception as e:
         api.task.set_field(task_id, "state.loading", False)
@@ -26,7 +25,7 @@ def remove_predicted_labels(api: sly.Api, task_id, context, state, app_logger):
 
 @g.my_app.callback("predict")
 @sly.timeit
-# @g.my_app.ignore_errors_and_show_dialog_window()
+@g.my_app.ignore_errors_and_show_dialog_window()
 def predict(api: sly.Api, task_id, context, state, app_logger):
     try:
         image_id = context['imageId']
@@ -57,13 +56,9 @@ def predict(api: sly.Api, task_id, context, state, app_logger):
             labels.append(sly.Label(sly.Bitmap(mask_bool), g.project_meta.get_obj_class(class_name), tags=sly.TagCollection([g.prediction_tag])))
 
         ann = ann.add_labels(labels)
-        # ann_path = os.path.join(g.test_ann_dir, f"{image_id}.json")
-        # sly.json.dump_json_file(ann.to_json(), ann_path)
-
         api.annotation.upload_ann(image_id, ann)
         sly.fs.clean_dir(g.test_dir)
         sly.fs.clean_dir(g.test_ann_dir)
-
         api.task.set_field(task_id, "state.loading", False)
     except Exception as e:
         api.task.set_field(task_id, "state.loading", False)

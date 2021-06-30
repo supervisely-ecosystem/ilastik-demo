@@ -1,6 +1,5 @@
 import os
 import cv2
-import json
 import numpy as np
 import globals as g
 import supervisely_lib as sly
