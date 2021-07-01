@@ -1,5 +1,5 @@
-import init_ui
 import globals as g
+import init_ui
 import supervisely_lib as sly
 
 import predict
