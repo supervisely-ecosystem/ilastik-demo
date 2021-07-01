@@ -1,8 +1,8 @@
 import os
 import train
 import settings
-import target_classes
 import globals as g
+import target_classes
 import mode_selector as ms
 
 

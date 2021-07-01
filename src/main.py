@@ -2,6 +2,11 @@ import init_ui
 import globals as g
 import supervisely_lib as sly
 
+import predict
+import train
+import settings
+
+
 
 ## MAX
 #@TODO: show modal window ValueError("Unknown level 'debug'. Supported levels: ['warning', 'info', 'error']")
