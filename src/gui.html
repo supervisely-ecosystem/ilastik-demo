@@ -19,6 +19,13 @@
 
     <div class="ml5 mr10" v-if="context.userId === data.ownerId">
 
+
+        <div v-if="data.progressName1" class="mt10">
+            <div>{{ data.progressName1 }}: {{ data.currentProgressLabel1 }} / {{ data.totalProgressLabel1 }}</div>
+            <el-progress :percentage="Math.round(data.currentProgress1 * 100 / data.totalProgress1)"></el-progress>
+        </div>
+
+
         <el-tabs class="small" v-model="state.tabName" v-if="state.classesInfo">
             <el-tab-pane label="INFO" name="info">
                 {% include 'src/ui/target_classes.html' %}
@@ -40,6 +47,12 @@
                            @click="state.loading = true; command('save');">
                     Save project to team files
                 </el-button>
+                <div v-if="data.progressName2" class="mt10">
+                    <div>{{ data.progressName2 }}: {{ data.currentProgressLabel2 }} / {{ data.totalProgressLabel2 }}
+                    </div>
+                    <el-progress
+                            :percentage="Math.round(data.currentProgress2 * 100 / data.totalProgress2)"></el-progress>
+                </div>
             </el-tab-pane>
         </el-tabs>
     </div>

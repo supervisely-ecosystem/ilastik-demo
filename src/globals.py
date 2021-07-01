@@ -1,12 +1,16 @@
 import os
 import sys
 import json
+import init_ui
 import tarfile
 from pathlib import Path
 import supervisely_lib as sly
 
 
 my_app = sly.AppService()
+
+api: sly.Api = my_app.public_api
+
 
 task_id = my_app.task_id
 team_id = int(os.environ['context.teamId'])
@@ -15,8 +19,6 @@ workspace_id = int(os.environ['context.workspaceId'])
 
 mode = os.environ['modal.state.projectMode']
 project_id = os.environ['modal.state.slyProjectId']
-
-api: sly.Api = my_app.public_api
 
 root_source_dir = str(Path(sys.argv[0]).parents[1])
 sly.logger.info(f"Root source directory: {root_source_dir}")
@@ -70,7 +72,16 @@ else:
     remote_classifier_path = os.environ["modal.state.classifierPath"]
     remote_classifier_info = api.file.get_info_by_path(team_id, remote_classifier_path)
     local_classifier_path = os.path.join(proj_dir, "existing_project.tar")
+
+    progress_upload_cb = init_ui.get_progress_cb(api, task_id, 1,
+                                                 "Preparing project",
+                                                 api.file.get_info_by_path(team_id, remote_classifier_path).size,
+                                                 is_size=True,
+                                                 func=init_ui.set_progress)
     api.file.download(team_id, remote_classifier_path, local_classifier_path)
+
+
+    #api.file.download(team_id, remote_classifier_path, local_classifier_path)
     tr = tarfile.open(local_classifier_path)
     tr.extractall(proj_dir)
     sly.fs.silent_remove(local_classifier_path)
@@ -88,5 +99,6 @@ else:
         raise Exception("At least 2 classes must be selected")
     project_meta = project_meta.merge(ex_meta)
     api.project.update_meta(project_id, project_meta.to_json())
+    api.task.set_field(task_id, "state.loading", False)
 
 machine_map = {obj_class: [idx, idx, idx] for idx, obj_class in enumerate(selected_classes, start=1)}
