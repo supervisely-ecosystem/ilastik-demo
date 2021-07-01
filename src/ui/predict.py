@@ -2,6 +2,8 @@ import cache
 import subprocess
 import numpy as np
 import globals as g
+import init_directories
+import mode_selector as ms
 import supervisely_lib as sly
 
 
@@ -30,7 +32,7 @@ def predict(api: sly.Api, task_id, context, state, app_logger):
     try:
         image_id = context['imageId']
         ann, img_path = cache.download_test(image_id)
-        ilp_path = g.path_to_trained_project
+        ilp_path = ms.path_to_trained_project
 
         test_cmd = f"/ilastik-build/ilastik-1.4.0b14-Linux/run_ilastik.sh " \
                    f"--headless " \
@@ -47,8 +49,8 @@ def predict(api: sly.Api, task_id, context, state, app_logger):
         img = sly.image.read(seg_path)
         mask = img[:, :, 0]
         labels = []
-        for class_name in g.selected_classes:
-            color = g.machine_map[class_name][0]
+        for class_name in ms.selected_classes:
+            color = ms.machine_map[class_name][0]
             mask_bool = mask == color
             if not np.any(mask_bool):
                 g.my_app.logger.warn(f"Mask for class: {class_name} is empty")
@@ -57,8 +59,8 @@ def predict(api: sly.Api, task_id, context, state, app_logger):
 
         ann = ann.add_labels(labels)
         api.annotation.upload_ann(image_id, ann)
-        sly.fs.clean_dir(g.test_dir)
-        sly.fs.clean_dir(g.test_ann_dir)
+        sly.fs.clean_dir(init_directories.test_dir)
+        sly.fs.clean_dir(init_directories.test_ann_dir)
         api.task.set_field(task_id, "state.loading", False)
     except Exception as e:
         api.task.set_field(task_id, "state.loading", False)

@@ -3,6 +3,7 @@ import cache
 import datetime
 import subprocess
 import globals as g
+import init_directories
 import supervisely_lib as sly
 
 
@@ -10,7 +11,7 @@ def init(data, state):
     if g.mode == "Create new Project":
         data["trainSet"] = None
     else:
-        data["trainSet"] = os.listdir(g.train_dir)
+        data["trainSet"] = os.listdir(init_directories.train_dir)
     state["toDelete"] = None
 
 
@@ -23,7 +24,7 @@ def add_to_train(api: sly.Api, task_id, context, state, app_logger):
         project_id = context['projectId']
 
         cache.download_train(image_id, project_id)
-        train_images = os.listdir(g.train_dir)
+        train_images = os.listdir(init_directories.train_dir)
         fields = [
             {"field": "data.trainSet", "payload":  train_images},
             {"field": "state.loading", "payload":  False}
@@ -40,7 +41,7 @@ def add_to_train(api: sly.Api, task_id, context, state, app_logger):
 def remove_from_train(api: sly.Api, task_id, context, state, app_logger):
     try:
         image_name = state["toDelete"]
-        train_images = os.listdir(g.train_dir)
+        train_images = os.listdir(init_directories.train_dir)
         if image_name not in train_images:
             g.my_app.show_modal_window(f"Image: {image_name} is not in the training set")
             api.task.set_field(task_id, "state.loading", False)
@@ -55,7 +56,7 @@ def remove_from_train(api: sly.Api, task_id, context, state, app_logger):
                 fields = [
                     {"field": "data.trainSet", "payload":  train_images}
                 ]
-            api.app.set_fields(g.task_id, fields)
+            api.app.set_fields(task_id, fields)
             api.task.set_field(task_id, "state.loading", False)
     except Exception as e:
         api.task.set_field(task_id, "state.loading", False)
@@ -67,18 +68,18 @@ def remove_from_train(api: sly.Api, task_id, context, state, app_logger):
 @g.my_app.ignore_errors_and_show_dialog_window()
 def train_model(api: sly.Api, task_id, context, state, app_logger):
     try:
-        images_paths = sly.fs.list_files(g.train_dir, sly.image.SUPPORTED_IMG_EXTS)
+        images_paths = sly.fs.list_files(init_directories.train_dir, sly.image.SUPPORTED_IMG_EXTS)
         masks = []
         for image_path in images_paths:
-            mask_path = os.path.join(g.machine_masks_dir, sly.fs.get_file_name_with_ext(image_path))
+            mask_path = os.path.join(init_directories.machine_masks_dir, sly.fs.get_file_name_with_ext(image_path))
             if not sly.fs.file_exists(mask_path):
                 raise RuntimeError(f"Mask doesn't exist: {mask_path}")
             masks.append(mask_path)
 
         interpreter = "/ilastik-build/ilastik-1.4.0b14-Linux/bin/python"
-        ilp_path = os.path.join(g.my_app.data_dir, g.proj_dir, f"{g.project.name}.ilp")
+        ilp_path = os.path.join(g.my_app.data_dir, init_directories.proj_dir, f"{g.project.name}.ilp")
 
-        train_script_path = os.path.join(g.source_path, "train_headless.py")
+        train_script_path = os.path.join(init_directories.source_path, "train_headless.py")
         train_cmd = f"{interpreter} " \
                     f"{train_script_path} " \
                     f"--project={ilp_path} "
