@@ -4,6 +4,7 @@ import init_ui_progress
 import init_directories
 import mode_selector as ms
 import supervisely_lib as sly
+from functools import partial
 
 
 def init(data, state):
@@ -22,7 +23,6 @@ def save_project_to_team_files(api: sly.Api, task_id, context, state, app_logger
             sly.fs.remove_dir(init_directories.test_dir)
             sly.fs.remove_dir(init_directories.test_ann_dir)
             project_dir = init_directories.proj_dir
-            result_archive = os.path.join(g.my_app.data_dir, state["newProjectName"] + ".tar")
 
             meta_json = g.api.project.get_meta(g.project_id)
             meta = sly.ProjectMeta.from_json(meta_json)
@@ -32,24 +32,29 @@ def save_project_to_team_files(api: sly.Api, task_id, context, state, app_logger
             for tag_meta in meta.tag_metas:
                 if tag_meta.name != g.prediction_tag_meta.name:
                     meta = meta.delete_tag_meta(tag_meta.name)
-
             sly.json.dump_json_file(meta.to_json(), os.path.join(init_directories.proj_dir, 'meta.json'))
-            sly.fs.archive_directory(project_dir, result_archive)
-            app_logger.info("Result directory is archived")
 
-            remote_archive_path = f"/ilastik/{state['newProjectName']}" + ".tar"
-            if os.path.exists(remote_archive_path):
+            remote_dir_path = f"/ilastik/{state['newProjectName']}"
+            if os.path.exists(remote_dir_path):
                 g.my_app.show_modal_window(f"Project with name: {state['newProjectName']} already exists in Team Files. "
                                            f"Please select another name.")
                 api.task.set_field(task_id, "state.loading", False)
             else:
-                progress_upload_cb = init_ui_progress.get_progress_cb(api, task_id, 2,
-                                                        "Saving classifier",
-                                                        sly.fs.get_file_size(result_archive),
-                                                        is_size=True,
-                                                        func=init_ui_progress.set_progress)
-                file_info = api.file.upload(context["teamId"], result_archive, remote_archive_path, progress_upload_cb)
-                g.my_app.show_modal_window(f"Classifier has been saved to Team-Files: {file_info.full_storage_url}")
+                def upload_artifacts_and_log_progress():
+                    def upload_monitor(monitor, api: sly.Api, task_id, progress: sly.Progress):
+                        if progress.total == 0:
+                            progress.set(monitor.bytes_read, monitor.len, report=False)
+                        else:
+                            progress.set_current_value(monitor.bytes_read, report=False)
+                        init_ui_progress._update_progress_ui(g.api, g.task_id, progress, 2)
+
+                    progress = sly.Progress("Upload project directory with classifier to Team Files", 0, is_size=True)
+                    progress_cb = partial(upload_monitor, api=g.api, task_id=g.task_id, progress=progress)
+                    res_dir = g.api.file.upload_directory(g.team_id, project_dir, remote_dir_path,
+                                                      progress_size_cb=progress_cb)
+                    return res_dir
+                res_dir = upload_artifacts_and_log_progress()
+                g.my_app.show_modal_window(f"Classifier has been saved to Team-Files: {res_dir}")
                 api.task.set_field(task_id, "state.loading", False)
     except Exception as e:
         api.task.set_field(task_id, "state.loading", False)
