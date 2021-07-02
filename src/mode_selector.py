@@ -1,7 +1,5 @@
 import os
 import json
-import shutil
-import tarfile
 import globals as g
 import init_directories
 import init_ui_progress
