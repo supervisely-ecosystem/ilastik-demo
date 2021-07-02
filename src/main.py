@@ -1,11 +1,16 @@
+import supervisely_lib as sly
 import globals as g
 import init_ui
-import supervisely_lib as sly
 
-import predict
 import train
+import predict
 import settings
 
+import cache
+import mode_selector
+import target_classes
+import init_ui_progress
+import init_directories
 
 
 ## MAX

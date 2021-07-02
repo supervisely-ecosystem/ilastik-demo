@@ -18,6 +18,3 @@ def init_directories():
     sly.fs.mkdir(test_dir)
     sly.fs.mkdir(test_ann_dir)
     sly.fs.mkdir(machine_masks_dir)
-
-
-init_directories()

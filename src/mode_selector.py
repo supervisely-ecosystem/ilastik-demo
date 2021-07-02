@@ -1,5 +1,6 @@
 import os
 import json
+import shutil
 import tarfile
 import globals as g
 import init_directories
@@ -11,26 +12,33 @@ if g.mode == "Create new Project":
     classifier_path = None
     classifier_status = "No trained classifier detected"
     selected_classes = json.loads(os.environ["modal.state.classes"])
+    init_directories.init_directories()
     path_to_trained_project = os.path.join(init_directories.proj_dir, f'{g.project.name}.ilp')
     if len(selected_classes) < 2:
         raise Exception("At least 2 classes must be selected")
 else:
+    if sly.fs.dir_exists(init_directories.proj_dir):
+        sly.fs.remove_dir(init_directories.proj_dir)
     remote_classifier_path = os.environ["modal.state.classifierPath"]
-    remote_classifier_info = g.api.file.get_info_by_path(g.team_id, remote_classifier_path)
-    local_classifier_path = os.path.join(init_directories.proj_dir, "existing_project.tar")
+    local_classifier_path = os.path.join(init_directories.proj_dir)
+
+    dir_size = 0
+    file_infos = g.api.file.list2(g.team_id, remote_classifier_path)
+    for file_info in file_infos:
+        dir_size += file_info.sizeb
+        if file_info.name.endswith('.ilp'):
+            date = file_info.updated_at
+
     progress_upload_cb = init_ui_progress.get_progress_cb(g.api, g.task_id, 1,
                                                  "Preparing project",
-                                                 g.api.file.get_info_by_path(g.team_id, remote_classifier_path).sizeb,
+                                                 dir_size,
                                                  is_size=True,
                                                  func=init_ui_progress.set_progress)
-    g.api.file.download(g.team_id, remote_classifier_path, local_classifier_path)
 
-    tr = tarfile.open(local_classifier_path)
-    tr.extractall(init_directories.proj_dir)
-    sly.fs.silent_remove(local_classifier_path)
+    g.api.file.download_directory(g.team_id, remote_classifier_path, local_classifier_path)
     for file in os.listdir(init_directories.proj_dir):
         if file.endswith(".ilp"):
-            remote_classifier_status = f"{file} {remote_classifier_info.updated_at}"
+            remote_classifier_status = f"{file} {date}"
             os.rename(os.path.join(init_directories.proj_dir, file), os.path.join(init_directories.proj_dir, f"{g.project.name}.ilp"))
             path_to_trained_project = os.path.join(init_directories.proj_dir, f"{g.project.name}.ilp")
             break
