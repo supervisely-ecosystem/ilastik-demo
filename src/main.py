@@ -2,6 +2,8 @@ import os
 import sys
 from pathlib import Path
 import supervisely_lib as sly
+
+
 root_source_dir = str(Path(sys.argv[0]).parents[1])
 sly.logger.info(f"Root source directory: {root_source_dir}")
 sys.path.append(root_source_dir)
@@ -17,11 +19,9 @@ sly.logger.info(f"Added to sys.path: {ui_sources_dir}")
 
 import globals as g
 import init_ui
-
 import train
 import predict
 import settings
-
 import cache
 import mode_selector
 import target_classes
