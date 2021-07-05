@@ -3,6 +3,7 @@ import json
 import globals as g
 import init_directories
 import init_ui_progress
+from functools import partial
 import supervisely_lib as sly
 
 
@@ -15,10 +16,10 @@ if g.mode == "Create new Project":
     if len(selected_classes) < 2:
         raise Exception("At least 2 classes must be selected")
 else:
-    if sly.fs.dir_exists(init_directories.proj_dir):
-        sly.fs.remove_dir(init_directories.proj_dir)
+    local_classifier_path = init_directories.proj_dir
+    if sly.fs.dir_exists(local_classifier_path):
+        sly.fs.remove_dir(local_classifier_path)
     remote_classifier_path = os.environ["modal.state.classifierPath"]
-    local_classifier_path = os.path.join(init_directories.proj_dir)
 
     dir_size = 0
     file_infos = g.api.file.list2(g.team_id, remote_classifier_path)
@@ -29,11 +30,11 @@ else:
 
     progress_upload_cb = init_ui_progress.get_progress_cb(g.api, g.task_id, 1,
                                                  "Preparing project",
-                                                 dir_size,
-                                                 is_size=True,
-                                                 func=init_ui_progress.set_progress)
+                                                 total=dir_size,
+                                                 is_size=True)
 
-    g.api.file.download_directory(g.team_id, remote_classifier_path, local_classifier_path)
+    g.api.file.download_directory(g.team_id, remote_classifier_path, local_classifier_path, progress_cb=progress_upload_cb)
+
     for file in os.listdir(init_directories.proj_dir):
         if file.endswith(".ilp"):
             remote_classifier_status = f"{file} {date}"

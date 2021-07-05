@@ -10,4 +10,10 @@
         </tr>
         </tbody>
     </table>
+    <div class="mt10" v-if="data.progressName1" v-show="state.loading">
+        <div>{{ data.progressName1 }}: {{ data.currentProgressLabel1 }} / {{ data.totalProgressLabel1 }}
+        </div>
+        <el-progress
+                :percentage="Math.round(data.currentProgress1 * 100 / data.totalProgress1)"></el-progress>
+    </div>
 </div>
