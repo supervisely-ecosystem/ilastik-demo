@@ -55,7 +55,7 @@ def predict(api: sly.Api, task_id, context, state, app_logger):
             color = ms.machine_map[class_name][0]
             mask_bool = mask == color
             if not np.any(mask_bool):
-                g.my_app.logger.warn(f"Mask for class: {class_name} is empty")
+                g.my_app.logger.info(f"Mask for class: {class_name} is empty")
                 continue
             labels.append(sly.Label(sly.Bitmap(mask_bool), g.project_meta.get_obj_class(class_name), tags=sly.TagCollection([g.prediction_tag])))
 
