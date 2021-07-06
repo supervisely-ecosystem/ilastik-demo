@@ -1,6 +1,5 @@
 import os
 import cache
-import shutil
 import subprocess
 import numpy as np
 import globals as g
@@ -47,15 +46,8 @@ def predict(api: sly.Api, task_id, context, state, app_logger):
         bash_out = subprocess.Popen([test_cmd], shell=True, executable="/bin/bash", stdout=subprocess.PIPE).communicate()
         output_log = bash_out[0]
         error_log = bash_out[1]
-
-        new_file_name = sly.fs.get_file_name(img_path) + "_Simple Segmentation.png"
-        seg_path = os.path.join(os.path.dirname(img_path), new_file_name)
-        # seg_path = img_path.replace(sly.fs.get_file_ext(img_path), "_Simple Segmentation.png")
-
-
-
-        # seg_path = shutil.copy(img_path, seg_path)
-
+        seg_img_name = sly.fs.get_file_name(img_path) + "_Simple Segmentation.png"
+        seg_path = os.path.join(os.path.dirname(img_path), seg_img_name)
         img = sly.image.read(seg_path)
         mask = img[:, :, 0]
         labels = []
