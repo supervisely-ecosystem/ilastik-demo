@@ -21,7 +21,6 @@ def save_project_to_team_files(api: sly.Api, task_id, context, state, app_logger
             api.task.set_field(task_id, "state.loading", False)
         else:
             sly.fs.remove_dir(init_directories.test_dir)
-            sly.fs.remove_dir(init_directories.test_ann_dir)
             project_dir = init_directories.proj_dir
 
             meta_json = g.api.project.get_meta(g.project_id)
@@ -54,7 +53,7 @@ def save_project_to_team_files(api: sly.Api, task_id, context, state, app_logger
                                                       progress_size_cb=progress_cb)
                     return res_dir
                 res_dir = upload_project_and_log_progress()
-                g.my_app.show_modal_window(f"Classifier has been saved to Team-Files: {res_dir}")
+                g.my_app.show_modal_window(f"Classifier has been saved to Team-Files: {res_dir}/")
                 api.task.set_field(task_id, "state.loading", False)
     except Exception as e:
         api.task.set_field(task_id, "state.loading", False)

@@ -6,7 +6,6 @@ proj_dir = os.path.join(g.my_app.data_dir, g.project.name)
 train_dir = os.path.join(proj_dir, 'train')
 train_ann_dir = os.path.join(proj_dir, 'train_ann')
 test_dir = os.path.join(proj_dir, 'test')
-test_ann_dir = os.path.join(proj_dir, 'test_ann')
 machine_masks_dir = os.path.join(proj_dir, 'masks_machine')
 
 
@@ -16,5 +15,4 @@ def init_directories():
     sly.fs.mkdir(train_dir)
     sly.fs.mkdir(train_ann_dir)
     sly.fs.mkdir(test_dir)
-    sly.fs.mkdir(test_ann_dir)
     sly.fs.mkdir(machine_masks_dir)

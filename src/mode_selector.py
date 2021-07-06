@@ -40,6 +40,7 @@ else:
                                   remote_classifier_path,
                                   local_classifier_path,
                                   progress_cb=progress_upload_cb)
+    sly.fs.mkdir(init_directories.test_dir)
 
     for file in os.listdir(init_directories.proj_dir):
         if file.endswith(".ilp"):

@@ -62,7 +62,6 @@ def predict(api: sly.Api, task_id, context, state, app_logger):
         ann = ann.add_labels(labels)
         api.annotation.upload_ann(image_id, ann)
         sly.fs.clean_dir(init_directories.test_dir)
-        sly.fs.clean_dir(init_directories.test_ann_dir)
         api.task.set_field(task_id, "state.loading", False)
     except Exception as e:
         api.task.set_field(task_id, "state.loading", False)
