@@ -18,6 +18,7 @@ sly.logger.info(f"Added to sys.path: {ui_sources_dir}")
 
 
 import globals as g
+g.my_app.debug(os.environ["modal.state.classes"])
 import init_ui
 import train
 import predict
