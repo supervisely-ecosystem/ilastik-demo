@@ -27,7 +27,7 @@ def remove_predicted_labels(api: sly.Api, task_id, context, state, app_logger):
 
 @g.my_app.callback("predict")
 @sly.timeit
-#@g.my_app.ignore_errors_and_show_dialog_window()
+@g.my_app.ignore_errors_and_show_dialog_window()
 def predict(api: sly.Api, task_id, context, state, app_logger):
     try:
         image_id = context['imageId']

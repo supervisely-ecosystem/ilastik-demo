@@ -1,4 +1,6 @@
 import os
+import sys
+from pathlib import Path
 import cache
 import datetime
 import subprocess
@@ -79,7 +81,8 @@ def train_model(api: sly.Api, task_id, context, state, app_logger):
         interpreter = "/ilastik-build/ilastik-1.4.0b14-Linux/bin/python"
         ilp_path = os.path.join(g.my_app.data_dir, init_directories.proj_dir, f"{g.project.name}.ilp")
 
-        train_script_path = os.path.join(init_directories.source_path, "train_headless.py")
+        train_script_path = os.path.join(str(Path(sys.argv[0]).parents[0]), "train_headless.py")
+        # train_script_path = os.path.join(init_directories.source_path, "train_headless.py")
         train_cmd = f"{interpreter} " \
                     f"{train_script_path} " \
                     f"--project={ilp_path} "

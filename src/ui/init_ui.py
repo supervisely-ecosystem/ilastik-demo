@@ -3,8 +3,9 @@ import train
 import settings
 import globals as g
 import target_classes
-import mode_selector as ms
 import init_ui_progress
+import mode_selector as ms
+
 
 def init(data, state):
     data["ownerId"] = int(os.environ['context.userId'])

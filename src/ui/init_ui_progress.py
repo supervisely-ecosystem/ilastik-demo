@@ -1,6 +1,7 @@
 import supervisely_lib as sly
 from functools import partial
 
+
 def init_progress(data, state):
     data["progressName1"] = None
     data["currentProgressLabel1"] = 0
