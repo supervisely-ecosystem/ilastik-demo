@@ -18,7 +18,8 @@ sly.logger.info(f"Added to sys.path: {ui_sources_dir}")
 
 
 import globals as g
-g.my_app.debug(os.environ["modal.state.classes"])
+sly.logger.info(f"Classes: {os.environ['modal.state.classes']}")
+sly.logger.info(f"Classes: {type(os.environ['modal.state.classes'])}")
 import init_ui
 import train
 import predict
@@ -29,8 +30,6 @@ import target_classes
 import init_ui_progress
 import init_directories
 
-
-g.my_app.debug(os.environ["modal.state.classes"])
 
 ## MAX
 #@TODO: show modal window ValueError("Unknown level 'debug'. Supported levels: ['warning', 'info', 'error']")
