@@ -3,7 +3,6 @@ import json
 import globals as g
 import init_directories
 import init_ui_progress
-from functools import partial
 import supervisely_lib as sly
 
 

@@ -29,6 +29,8 @@ import init_ui_progress
 import init_directories
 
 
+g.my_app.debug(os.environ["modal.state.classes"])
+
 ## MAX
 #@TODO: show modal window ValueError("Unknown level 'debug'. Supported levels: ['warning', 'info', 'error']")
 #@TODO: create all features
