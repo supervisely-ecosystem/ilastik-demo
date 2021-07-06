@@ -54,8 +54,8 @@ else:
     selected_classes = [obj_class.name for obj_class in ex_meta.obj_classes]
     if len(selected_classes) < 2:
         raise Exception("At least 2 classes must be selected")
-    project_meta = g.project_meta.merge(ex_meta)
-    g.api.project.update_meta(g.project_id, project_meta.to_json())
+    g.project_meta = g.project_meta.merge(ex_meta)
+    g.api.project.update_meta(g.project_id, g.project_meta.to_json())
     g.api.task.set_field(g.task_id, "state.loading", False)
     
 machine_map = {obj_class: [idx, idx, idx] for idx, obj_class in enumerate(selected_classes, start=1)}
