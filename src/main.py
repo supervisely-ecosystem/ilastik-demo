@@ -18,8 +18,6 @@ sly.logger.info(f"Added to sys.path: {ui_sources_dir}")
 
 
 import globals as g
-sly.logger.info(f"Classes: {os.environ['modal.state.classes']}")
-sly.logger.info(f"Classes: {type(os.environ['modal.state.classes'])}")
 import init_ui
 import train
 import predict
