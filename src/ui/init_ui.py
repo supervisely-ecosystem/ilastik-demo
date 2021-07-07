@@ -19,15 +19,15 @@ def init(data, state):
     else:
         #state["classifierStatus"] = ms.remote_classifier_status
         state["classifierStatus"] = None
-        state["classesInfo"] = None
-        data["trainSet"] = None
+        state["classesInfo"] = []
+        data["trainSet"] = []
         state["newProjectName"] = None
+        ms.reset_info(data, state)
 
     state["loading"] = False
     state["tabName"] = "info"
     #"info" "train" "predict" "settings
 
-    mode_selector.init(data, state)
     target_classes.init(data, state)
     train.init(data, state)
     settings.init(data, state)
