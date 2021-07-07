@@ -12,9 +12,15 @@ def init(data, state):
     data["mode"] = g.mode
 
     if g.mode == "Create new Project":
-        state["classifierStatus"] = ms.classifier_status
+        # state["classifierStatus"] = ms.classifier_status
+        state["classifierStatus"] = None
     else:
-        state["classifierStatus"] = ms.remote_classifier_status
+        #state["classifierStatus"] = ms.remote_classifier_status
+        state["classifierStatus"] = None
+        state["classesInfo"] = []
+        data["trainSet"] = []
+        state["newProjectName"] = None
+
 
     state["loading"] = False
     state["tabName"] = "info"

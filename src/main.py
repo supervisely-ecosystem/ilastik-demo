@@ -2,6 +2,7 @@ import os
 import sys
 from pathlib import Path
 import supervisely_lib as sly
+import mode_selector as ms
 
 
 root_source_dir = str(Path(sys.argv[0]).parents[1])
