@@ -61,12 +61,8 @@ def main():
     g.my_app.compile_template(root_source_dir)
     sly.logger.debug(f"DATA: {data}")
     sly.logger.debug(f"STATE: {state}")
+    g.my_app.run(data=data, state=state)
 
-    if g.mode == "Create new project":
-        g.my_app.run(data=data, state=state)
-    else:
-        g.my_app.run(data=None, state=None)
-        init_ui.init(data, state)
 
 if __name__ == "__main__":
     sly.main_wrapper("main", main)
