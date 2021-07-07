@@ -65,7 +65,7 @@ def reset_info(data, state):
         fields = [
             {"field": "state.classesInfo", "payload": []},
             {"field": "state.trainSet", "payload": []},
-            {"field": "state.classifierStatus", "payload": remote_classifier_status.id},
+            {"field": "state.classifierStatus", "payload": remote_classifier_status},
             {"field": "state.newProjectName", "payload": None}
         ]
         g.api.app.set_fields(g.task_id, fields)
