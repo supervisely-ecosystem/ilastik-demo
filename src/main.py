@@ -2,7 +2,6 @@ import os
 import sys
 from pathlib import Path
 import supervisely_lib as sly
-import mode_selector as ms
 
 
 root_source_dir = str(Path(sys.argv[0]).parents[1])
@@ -19,15 +18,15 @@ sly.logger.info(f"Added to sys.path: {ui_sources_dir}")
 
 
 import globals as g
+import init_directories
 import init_ui
+import mode_selector
+import cache
+import target_classes
 import train
 import predict
 import settings
-import cache
-import mode_selector
-import target_classes
 import init_ui_progress
-import init_directories
 
 
 ## MAX
@@ -60,10 +59,7 @@ def main():
     init_ui.init(data, state)
 
     g.my_app.compile_template(root_source_dir)
-    sly.logger.debug(f"BEFORE RUN DATA: {data}")
-    sly.logger.debug(f"BEFORE RUN STATE: {state}")
     g.my_app.run(data=data, state=state)
-    ms.reset_info(data, state)
 
 
 if __name__ == "__main__":
