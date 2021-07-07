@@ -1,5 +1,6 @@
 import os
 import train
+import cache
 import settings
 import init_mode
 import globals as g
@@ -17,6 +18,7 @@ def init(data, state):
 
     if g.mode == "Create new Project":
         state["classifierStatus"] = None
+        init_mode.init(data, state)
     else:
         state["classifierStatus"] = None
 

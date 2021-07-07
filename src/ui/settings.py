@@ -25,7 +25,7 @@ def save_project_to_team_files(api: sly.Api, task_id, context, state, app_logger
 
             meta_json = g.api.project.get_meta(g.project_id)
             meta = sly.ProjectMeta.from_json(meta_json)
-            selected_classes = target_classes.selected_classes()
+            selected_classes = target_classes.get_classes()
             for obj_class in meta.obj_classes:
                 if obj_class.name not in selected_classes:
                     meta = meta.delete_obj_class(obj_class.name)

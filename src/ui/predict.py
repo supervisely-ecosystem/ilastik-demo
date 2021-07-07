@@ -6,6 +6,8 @@ import globals as g
 import init_directories
 import supervisely_lib as sly
 
+import target_classes
+
 
 @g.my_app.callback("rm_predictions")
 @sly.timeit
@@ -50,8 +52,8 @@ def predict(api: sly.Api, task_id, context, state, app_logger):
         img = sly.image.read(seg_path)
         mask = img[:, :, 0]
         labels = []
-        selected_classes = cache.selected_classes()
-        machine_map = cache.generate_machine_map(selected_classes)
+        selected_classes = target_classes.get_classes()
+        machine_map = target_classes.generate_machine_map(selected_classes)
         for class_name in selected_classes:
             color = machine_map[class_name][0]
             mask_bool = mask == color

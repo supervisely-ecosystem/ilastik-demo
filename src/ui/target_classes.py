@@ -7,13 +7,13 @@ import supervisely_lib as sly
 
 def init(data, state):
     state["classesInfo"] = []
-    selected_classes = cache.selected_classes()
+    selected_classes = get_classes()
     for obj_class in g.project_meta.obj_classes:
         if obj_class.name in selected_classes:
             state["classesInfo"].append(obj_class.to_json())
 
 
-def selected_classes():
+def get_classes():
     if g.mode == "Create new project":
         selected_classes = json.loads(os.environ["modal.state.classes"].replace("'", '"'))
     else:

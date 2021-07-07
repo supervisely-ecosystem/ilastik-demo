@@ -1,6 +1,5 @@
 import os
 import cv2
-import json
 import numpy as np
 import globals as g
 import target_classes
@@ -36,9 +35,6 @@ def download_existing_project():
                                   local_classifier_path,
                                   progress_cb=progress_upload_cb)
 
-    g.api.file.download_directory(g.team_id,
-                                  remote_classifier_path,
-                                  local_classifier_path)
     sly.fs.mkdir(init_directories.test_dir)
     g.api.app.set_field(g.task_id, "state.prepare", False)
 
@@ -54,7 +50,7 @@ def remove_train_image_from_set(image_name):
 
 
 def download_train(image_id, project_id):
-    selected_classes = target_classes.selected_classes()
+    selected_classes = target_classes.get_classes()
     ann_json = g.api.annotation.download(image_id).annotation
     ann = sly.Annotation.from_json(ann_json, project_meta=g.project_meta)
 
