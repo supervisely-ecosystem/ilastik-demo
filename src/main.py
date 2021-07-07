@@ -19,8 +19,8 @@ sly.logger.info(f"Added to sys.path: {ui_sources_dir}")
 
 import globals as g
 import init_directories
+import init_mode
 import init_ui
-import mode_selector
 import cache
 import target_classes
 import train
@@ -60,6 +60,8 @@ def main():
 
     g.my_app.compile_template(root_source_dir)
     g.my_app.run(data=data, state=state)
+    if g.mode == "Existing project":
+        cache.download_existing_project()
 
 
 if __name__ == "__main__":

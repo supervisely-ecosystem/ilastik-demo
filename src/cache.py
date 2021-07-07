@@ -1,10 +1,46 @@
 import os
 import cv2
+import json
 import numpy as np
 import globals as g
+import target_classes
 import init_directories
-import mode_selector as ms
+import init_ui_progress
 import supervisely_lib as sly
+
+
+def download_existing_project():
+    g.api.app.set_field(g.task_id,"state.prepare", True)
+    local_classifier_path = init_directories.proj_dir
+    if sly.fs.dir_exists(local_classifier_path):
+        sly.fs.remove_dir(local_classifier_path)
+    remote_classifier_path = os.environ["modal.state.classifierPath"]
+
+    dir_size = 0
+    detected = False
+    file_infos = g.api.file.list2(g.team_id, remote_classifier_path)
+    for file_info in file_infos:
+        dir_size += file_info.sizeb
+        if file_info.name.endswith('.ilp'):
+            detected = True
+    if detected is False:
+        raise Exception("No trained classifier detected")
+
+    progress_upload_cb = init_ui_progress.get_progress_cb(g.api,
+                                                          g.task_id, 1,
+                                                          "Preparing project",
+                                                          total=dir_size,
+                                                          is_size=True)
+    g.api.file.download_directory(g.team_id,
+                                  remote_classifier_path,
+                                  local_classifier_path,
+                                  progress_cb=progress_upload_cb)
+
+    g.api.file.download_directory(g.team_id,
+                                  remote_classifier_path,
+                                  local_classifier_path)
+    sly.fs.mkdir(init_directories.test_dir)
+    g.api.app.set_field(g.task_id, "state.prepare", False)
 
 
 def remove_train_image_from_set(image_name):
@@ -18,7 +54,7 @@ def remove_train_image_from_set(image_name):
 
 
 def download_train(image_id, project_id):
-    selected_classes = ms.selected_classes
+    selected_classes = target_classes.selected_classes()
     ann_json = g.api.annotation.download(image_id).annotation
     ann = sly.Annotation.from_json(ann_json, project_meta=g.project_meta)
 
@@ -39,11 +75,12 @@ def download_train(image_id, project_id):
     if is_in is False:
         g.my_app.show_modal_window(f"There are no selected classes on current image. Please draw labels and try again")
     else:
+        machine_map = target_classes.generate_machine_map(selected_classes)
         for label in ann.labels:
             if g.prediction_tag in label.tags:
                 ann = ann.delete_label(label)
             if label.obj_class.name in selected_classes:
-                label.geometry.draw(machine_mask, color=ms.machine_map[label.obj_class.name])
+                label.geometry.draw(machine_mask, color=machine_map[label.obj_class.name])
             else:
                 ann = ann.delete_label(label)
 

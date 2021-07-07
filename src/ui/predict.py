@@ -4,7 +4,6 @@ import subprocess
 import numpy as np
 import globals as g
 import init_directories
-import mode_selector as ms
 import supervisely_lib as sly
 
 
@@ -33,7 +32,7 @@ def predict(api: sly.Api, task_id, context, state, app_logger):
     try:
         image_id = context['imageId']
         ann, img_path = cache.download_test(image_id)
-        ilp_path = ms.path_to_trained_project
+        ilp_path = os.path.join(init_directories.proj_dir, f'{g.project.name}.ilp')
 
         test_cmd = f"/ilastik-build/ilastik-1.4.0b14-Linux/run_ilastik.sh " \
                    f"--headless " \
@@ -51,8 +50,10 @@ def predict(api: sly.Api, task_id, context, state, app_logger):
         img = sly.image.read(seg_path)
         mask = img[:, :, 0]
         labels = []
-        for class_name in ms.selected_classes:
-            color = ms.machine_map[class_name][0]
+        selected_classes = cache.selected_classes()
+        machine_map = cache.generate_machine_map(selected_classes)
+        for class_name in selected_classes:
+            color = machine_map[class_name][0]
             mask_bool = mask == color
             if not np.any(mask_bool):
                 g.my_app.logger.info(f"Mask for class: {class_name} is empty")
