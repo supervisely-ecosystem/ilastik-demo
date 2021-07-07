@@ -1,4 +1,6 @@
 import os
+
+import mode_selector
 import train
 import settings
 import globals as g
@@ -24,6 +26,7 @@ def init(data, state):
     state["tabName"] = "info"
     #"info" "train" "predict" "settings
 
+    mode_selector.init(data, state)
     target_classes.init(data, state)
     train.init(data, state)
     settings.init(data, state)
