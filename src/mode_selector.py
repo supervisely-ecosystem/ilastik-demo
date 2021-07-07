@@ -69,3 +69,5 @@ def reset_info(data, state):
             {"field": "state.newProjectName", "payload": None}
         ]
         g.api.app.set_fields(g.task_id, fields)
+        sly.logger.debug(f"AFTER RUN DATA: {data}")
+        sly.logger.debug(f"AFTER RUN STATE: {state}")

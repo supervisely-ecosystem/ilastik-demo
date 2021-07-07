@@ -2,6 +2,7 @@ import os
 import sys
 from pathlib import Path
 import supervisely_lib as sly
+import mode_selector as ms
 
 
 root_source_dir = str(Path(sys.argv[0]).parents[1])
@@ -62,8 +63,7 @@ def main():
     sly.logger.debug(f"BEFORE RUN DATA: {data}")
     sly.logger.debug(f"BEFORE RUN STATE: {state}")
     g.my_app.run(data=data, state=state)
-    sly.logger.debug(f"AFTER RUN DATA: {data}")
-    sly.logger.debug(f"AFTER RUN STATE: {state}")
+    ms.reset_info(data, state)
 
 
 if __name__ == "__main__":

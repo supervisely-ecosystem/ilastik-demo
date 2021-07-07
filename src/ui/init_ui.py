@@ -1,6 +1,4 @@
 import os
-
-import mode_selector
 import train
 import settings
 import globals as g
@@ -22,7 +20,7 @@ def init(data, state):
         state["classesInfo"] = []
         data["trainSet"] = []
         state["newProjectName"] = None
-        ms.reset_info(data, state)
+
 
     state["loading"] = False
     state["tabName"] = "info"
