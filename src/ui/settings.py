@@ -1,9 +1,10 @@
 import os
 import globals as g
+import target_classes
 import init_ui_progress
 import init_directories
-import supervisely_lib as sly
 from functools import partial
+import supervisely_lib as sly
 
 
 def init(data, state):
@@ -24,8 +25,9 @@ def save_project_to_team_files(api: sly.Api, task_id, context, state, app_logger
 
             meta_json = g.api.project.get_meta(g.project_id)
             meta = sly.ProjectMeta.from_json(meta_json)
+            selected_classes = target_classes.selected_classes()
             for obj_class in meta.obj_classes:
-                if obj_class.name not in ms.selected_classes:
+                if obj_class.name not in selected_classes:
                     meta = meta.delete_obj_class(obj_class.name)
             for tag_meta in meta.tag_metas:
                 if tag_meta.name != g.prediction_tag_meta.name:
