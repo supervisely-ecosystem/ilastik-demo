@@ -60,8 +60,8 @@ def main():
 
     g.my_app.compile_template(root_source_dir)
     g.my_app.run(data=data, state=state)
-    if g.mode == "Existing project":
-        cache.download_existing_project()
+    if g.mode == "Existing Project":
+        cache.download_existing_project(data, state)
 
 
 if __name__ == "__main__":
