@@ -2,7 +2,6 @@ import os
 import globals as g
 import init_ui_progress
 import init_directories
-import mode_selector as ms
 import supervisely_lib as sly
 from functools import partial
 
