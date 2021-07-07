@@ -59,6 +59,8 @@ def main():
     init_ui.init(data, state)
 
     g.my_app.compile_template(root_source_dir)
+    sly.logger.debug(f"DATA: {data}")
+    sly.logger.debug(f"STATE: {state}")
     g.my_app.run(data=data, state=state)
 
 
