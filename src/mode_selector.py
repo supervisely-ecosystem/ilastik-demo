@@ -29,9 +29,16 @@ else:
     if detected is False:
         raise Exception("No trained classifier detected")
 
+    # progress_upload_cb = init_ui_progress.get_progress_cb(g.api,
+    #                                                       g.task_id, 1,
+    #                                                       "Preparing project",
+    #                                                       total=dir_size,
+    #                                                       is_size=True)
     g.api.file.download_directory(g.team_id,
                                   remote_classifier_path,
                                   local_classifier_path)
+                                  # progress_cb=progress_upload_cb)
+
     sly.fs.mkdir(init_directories.test_dir)
 
     for file in os.listdir(init_directories.proj_dir):
