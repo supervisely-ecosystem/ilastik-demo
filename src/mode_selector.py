@@ -8,7 +8,8 @@ import supervisely_lib as sly
 def init(data, state):
     if g.mode == "Create new Project":
         classifier_path = None
-        classifier_status = "No trained classifier detected"
+        # classifier_status = "No trained classifier detected"
+        state["classifierStatus"] = "No trained classifier detected"
         selected_classes = json.loads(os.environ["modal.state.classes"].replace("'", '"'))
         init_directories.init_directories()
         path_to_trained_project = os.path.join(init_directories.proj_dir, f'{g.project.name}.ilp')
