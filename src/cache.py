@@ -1,5 +1,6 @@
 import os
 import cv2
+import init_mode
 import numpy as np
 import globals as g
 import target_classes
@@ -7,7 +8,7 @@ import init_directories
 import init_ui_progress
 import supervisely_lib as sly
 
-@g.my_app.callback("preprocessing")
+@g.my_app.callback("preprocessing_project")
 @sly.timeit
 def download_existing_project(api: sly.Api, task_id, context, state, app_logger):
     local_classifier_path = init_directories.proj_dir
@@ -37,6 +38,7 @@ def download_existing_project(api: sly.Api, task_id, context, state, app_logger)
 
     sly.fs.mkdir(init_directories.test_dir)
     g.api.app.set_field(g.task_id, "state.prepare", False)
+    init_mode.init_ex_project()
 
 
 def remove_train_image_from_set(image_name):

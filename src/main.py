@@ -58,7 +58,7 @@ def main():
     state = {}
 
     if g.mode == "Existing Project":
-        initial_events = [{"state": None, "context": None, "command": "preprocessing"}]
+        initial_events = [{"state": None, "context": None, "command": "preprocessing_project"}]
 
     init_ui.init(data, state)
     g.my_app.compile_template(root_source_dir)
@@ -66,7 +66,6 @@ def main():
         g.my_app.run(data=data, state=state)
     else:
         g.my_app.run(data=data, state=state, initial_events=initial_events)
-
 
 
 if __name__ == "__main__":

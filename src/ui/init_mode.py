@@ -12,17 +12,20 @@ def init(data, state):
         if len(selected_classes) < 2:
             raise Exception("At least 2 classes must be selected")
     else:
-        for file in os.listdir(init_directories.proj_dir):
-            if file.endswith(".ilp"):
-                state["classifierStatus"] = file
-                os.rename(os.path.join(init_directories.proj_dir, file),
-                          os.path.join(init_directories.proj_dir, f"{g.project.name}.ilp"))
-                break
+        state["classifierStatus"] = None
 
-        ex_meta_json = sly.json.load_json_file(os.path.join(init_directories.proj_dir, "meta.json"))
-        ex_meta = sly.ProjectMeta.from_json(ex_meta_json)
-        selected_classes = [obj_class.name for obj_class in ex_meta.obj_classes]
-        if len(selected_classes) < 2:
-            raise Exception("At least 2 classes must be selected")
-        g.project_meta = g.project_meta.merge(ex_meta)
-        g.api.project.update_meta(g.project_id, g.project_meta.to_json())
+
+def init_ex_project():
+    for file in os.listdir(init_directories.proj_dir):
+        if file.endswith(".ilp"):
+            g.api.app.set_field(g.task_id, "state.classifierStatus", file)
+            os.rename(os.path.join(init_directories.proj_dir, file),
+                      os.path.join(init_directories.proj_dir, f"{g.project.name}.ilp"))
+            break
+    ex_meta_json = sly.json.load_json_file(os.path.join(init_directories.proj_dir, "meta.json"))
+    ex_meta = sly.ProjectMeta.from_json(ex_meta_json)
+    selected_classes = [obj_class.name for obj_class in ex_meta.obj_classes]
+    if len(selected_classes) < 2:
+        raise Exception("At least 2 classes must be selected")
+    g.project_meta = g.project_meta.merge(ex_meta)
+    g.api.project.update_meta(g.project_id, g.project_meta.to_json())
