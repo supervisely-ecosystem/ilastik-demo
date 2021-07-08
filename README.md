@@ -35,27 +35,22 @@ No machine learning expertise required.
 ## How To Run 
 **Step 1**: Add app to your team from [Ecosystem](https://ecosystem.supervise.ly/apps/ilastik-pixel-classification) if it is not there.
 
-**Step 2**: Open context images project click on `Apps` tab and  -> `Tags to image URLs` 
+**Step 2**: Open context images project click on `Apps` tab and  -> `ilastik pixel classification` 
 
-<img src="https://i.imgur.com/4mqzfp8.png" width="600px"/>
+<img src="https://i.imgur.com/4mqzfp8.png"/>
 
-**Step 3**:
+**Step 3**: Modal window
 
 **1.** In the modal window select whether you want to use previously saved project or create a new one.
 
 **2.** Depending on the selected mode select classes that you want to segment (at least 2 classes must be selected) or paste a path from Team Files to your previously saved project.
 
-<img src="https://i.imgur.com/B4RUqnj.png"/>
+<img src="https://i.imgur.com/B4RUqnj.png" width="600px"/>
 
 ## How to use
 
-After running the application, you will be redirected to the `Tasks` page. Once application processing has finished, your file will be available for downloading. 
-Click on the `file name` to open file folder.
+Watch video guide for more details:
 
-Your file will placed to the following path: `Team Files`->`tags_to_urls`->`<taskId>_<TeamId>_<projectName>.json`. 
-
-<img src="https://i.imgur.com/X79Yqft.png"/>
-
-In the file folder simply right click on the file name and choose `Download` option to download it.
-
-<img src="https://i.imgur.com/GIiuw7O.gif"/>
+<a data-key="sly-embeded-video-link" href="https://youtu.be/z31-K7NAAbU" data-video-code="z31-K7NAAbU">
+    <img src="https://i.imgur.com/Jf54wuS.png" alt="SLY_EMBEDED_VIDEO_LINK"  style="max-width:500px;">
+</a>
