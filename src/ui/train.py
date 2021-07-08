@@ -13,7 +13,7 @@ def init(data, state):
     if g.mode == "Create new Project":
         data["trainSet"] = None
     else:
-        data["trainSet"] = os.listdir(init_directories.train_dir)
+        data["trainSet"] = None
     state["toDelete"] = None
 
 

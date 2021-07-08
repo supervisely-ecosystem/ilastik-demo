@@ -38,4 +38,9 @@ def init_ex_project():
         if obj_class.name in selected_classes:
             classes_info.append(obj_class.to_json())
 
-    g.api.app.set_field(g.task_id, "state.classesInfo", classes_info)
+    train_set = os.listdir(init_directories.train_dir)
+    fields = [
+        {"field": "data.trainSet", "payload": train_set},
+        {"field": "state.classesInfo", "payload": classes_info},
+    ]
+    g.api.task.set_fields(g.task_id, fields)
