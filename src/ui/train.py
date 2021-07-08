@@ -70,7 +70,7 @@ def remove_from_train(api: sly.Api, task_id, context, state, app_logger):
 @g.my_app.ignore_errors_and_show_dialog_window()
 def train_model(api: sly.Api, task_id, context, state, app_logger):
     try:
-        if len(os.environ["data.trainSet"]) == 0:
+        if len(os.listdir(init_directories.train_dir)) == 0:
             g.my_app.show_modal_window("Please add at least 1 image to training set")
             api.task.set_field(task_id, "state.loading", False)
         else:
