@@ -7,8 +7,9 @@ import init_directories
 import init_ui_progress
 import supervisely_lib as sly
 
-
-def download_existing_project(data, state):
+@g.my_app.callback("preprocessing")
+@sly.timeit
+def download_existing_project(api: sly.Api, task_id, context, state, app_logger):
     local_classifier_path = init_directories.proj_dir
     if sly.fs.dir_exists(local_classifier_path):
         sly.fs.remove_dir(local_classifier_path)
@@ -36,16 +37,6 @@ def download_existing_project(data, state):
 
     sly.fs.mkdir(init_directories.test_dir)
     g.api.app.set_field(g.task_id, "state.prepare", False)
-
-    import init_mode
-    import train
-    import settings
-
-    init_mode.init(data, state)
-    init_ui_progress.init_progress(data, state)
-    target_classes.init(data, state)
-    train.init(data, state)
-    settings.init(data, state)
 
 
 def remove_train_image_from_set(image_name):

@@ -56,12 +56,17 @@ def main():
 
     data = {}
     state = {}
-    init_ui.init(data, state)
 
-    g.my_app.compile_template(root_source_dir)
-    g.my_app.run(data=data, state=state)
     if g.mode == "Existing Project":
-        cache.download_existing_project(data, state)
+        initial_events = [{"state": None, "context": None, "command": "preprocessing"}]
+
+    init_ui.init(data, state)
+    g.my_app.compile_template(root_source_dir)
+    if g.mode == "Create new Project":
+        g.my_app.run(data=data, state=state)
+    else:
+        g.my_app.run(data=data, state=state, initial_events=initial_events)
+
 
 
 if __name__ == "__main__":

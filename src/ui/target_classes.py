@@ -14,7 +14,7 @@ def init(data, state):
 
 
 def get_classes():
-    if g.mode == "Create new project":
+    if g.mode == "Create new Project":
         selected_classes = json.loads(os.environ["modal.state.classes"].replace("'", '"'))
     else:
         ex_meta_json = sly.json.load_json_file(os.path.join(init_directories.proj_dir, "meta.json"))
