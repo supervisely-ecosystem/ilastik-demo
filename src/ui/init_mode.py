@@ -2,6 +2,7 @@ import os
 import json
 import globals as g
 import init_directories
+import target_classes
 import supervisely_lib as sly
 
 def init(data, state):
@@ -13,6 +14,7 @@ def init(data, state):
             raise Exception("At least 2 classes must be selected")
     else:
         state["classifierStatus"] = None
+        init_directories.init_directories()
 
 
 def init_ex_project():
@@ -29,3 +31,11 @@ def init_ex_project():
         raise Exception("At least 2 classes must be selected")
     g.project_meta = g.project_meta.merge(ex_meta)
     g.api.project.update_meta(g.project_id, g.project_meta.to_json())
+
+    classes_info = []
+    selected_classes = target_classes.get_classes()
+    for obj_class in g.project_meta.obj_classes:
+        if obj_class.name in selected_classes:
+            classes_info.append(obj_class.to_json())
+
+    g.api.app.set_field(g.task_id, "state.classesInfo", classes_info)

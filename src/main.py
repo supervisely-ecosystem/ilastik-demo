@@ -18,9 +18,9 @@ sly.logger.info(f"Added to sys.path: {ui_sources_dir}")
 
 
 import globals as g
+import init_ui
 import init_directories
 import init_mode
-import init_ui
 import cache
 import target_classes
 import train

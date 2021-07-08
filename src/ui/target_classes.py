@@ -6,11 +6,14 @@ import init_directories
 import supervisely_lib as sly
 
 def init(data, state):
-    state["classesInfo"] = []
-    selected_classes = get_classes()
-    for obj_class in g.project_meta.obj_classes:
-        if obj_class.name in selected_classes:
-            state["classesInfo"].append(obj_class.to_json())
+    if g.mode == "Create new Project":
+        state["classesInfo"] = []
+        selected_classes = get_classes()
+        for obj_class in g.project_meta.obj_classes:
+            if obj_class.name in selected_classes:
+                state["classesInfo"].append(obj_class.to_json())
+    else:
+        state["classesInfo"] = None
 
 
 def get_classes():

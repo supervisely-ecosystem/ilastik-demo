@@ -15,13 +15,11 @@ def init(data, state):
     state["loading"] = False
     state["prepare"] = False
     state["tabName"] = "info"  # "info" "train" "predict" "settings"
+    state["classifierStatus"] = None
 
     if g.mode == "Create new Project":
-        state["classifierStatus"] = None
         state["prepare"] = False
-
     else:
-        state["classifierStatus"] = None
         state["prepare"] = True
 
 

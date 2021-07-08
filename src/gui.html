@@ -24,14 +24,6 @@
             <el-progress
                     :percentage="Math.round(data.currentProgress1 * 100 / data.totalProgress1)"></el-progress>
         </div>
-
-
-        <pre>
-            {{ JSON.stringify(data, undefined, 2) }}
-            {{ JSON.stringify(state, undefined, 2) }}
-        </pre>
-
-
         <el-tabs class="small" v-model="state.tabName" v-if="state.classesInfo">
             <el-tab-pane label="INFO" name="info">
                 {% include 'src/ui/target_classes.html' %}
