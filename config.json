@@ -2,8 +2,7 @@
   "name": "ilastik pixel classification",
   "type": "app",
   "categories": [
-    "neural network",
-    "detection"
+    "labeling"
   ],
   "description": "Image Pixel Classification using ilastik",
   "docker_image": "supervisely/ilastik:1.0.0",
