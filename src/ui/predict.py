@@ -35,6 +35,9 @@ def predict(api: sly.Api, task_id, context, state, app_logger):
         image_id = context['imageId']
         ann, img_path = cache.download_test(image_id)
         ilp_path = os.path.join(init_directories.proj_dir, f'{g.project.name}.ilp')
+        if not os.path.exists(ilp_path):
+            raise Exception("No trained classifier detected")
+            api.task.set_field(task_id, "state.loading", False)
 
         test_cmd = f"/ilastik-build/ilastik-1.4.0b14-Linux/run_ilastik.sh " \
                    f"--headless " \
