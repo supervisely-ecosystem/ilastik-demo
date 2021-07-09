@@ -32,20 +32,40 @@ Most operations are interactive, even on large datasets: you just draw the label
 
 No machine learning expertise required.
 
-When creating a new ilastik project you must select at least 2 target classes, all target classes must be bitmaps. 
+When creating a new ilastik project you must select at least 2 target classes, all target classes must have bitmap shape. 
 All predicted labels are tagged with `ilastik_prediction` tag.
 
-**Buttons functionality:**
-**train tab:**
-add to train set
-train model
+**Buttons functionality**
 
-**predict tab**
-remove 
-predict
+**1. - train tab -**
 
-**settings**
-save mode
+* <img src="https://i.imgur.com/E8DGTid.png"/> 
+
+  **-** Add image to the training set. Training image name is image id in supervisely server.
+
+* <img src="https://i.imgur.com/lFrPX8a.png"/> 
+
+  **-** Remove image from train set.
+
+* <img src="https://i.imgur.com/wlhkmrZ.png"/> 
+
+  **-** Train classifier with images from current training set.
+
+**2. - predict tab -**
+
+* <img src="https://i.imgur.com/ZbDABZB.png"/> 
+
+  **-** Remove all labels with `ilastik_prediction` tag from current image.
+
+* <img src="https://i.imgur.com/mKKw7bP.png"/> 
+
+  **-** Build predictions for current image.
+
+**3. - settings tab -**
+
+* <img src="https://i.imgur.com/9SOehlM.png"/> 
+
+  **-** Save ilastik project to ilastik folder in Team Files. Disabled by default, requires project name input.
 
 
 
