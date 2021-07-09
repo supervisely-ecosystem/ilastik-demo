@@ -35,7 +35,7 @@ No machine learning expertise required.
 ## How To Run 
 **Step 1**: Add app to your team from [Ecosystem](https://ecosystem.supervise.ly/apps/ilastik-pixel-classification) if it is not there.
 
-**Step 2**: Open context images project click on `Apps` tab and  -> `ilastik pixel classification` 
+**Step 2**: Open images project click on `Apps` tab and  -> `ilastik pixel classification` 
 
 <img src="https://i.imgur.com/4mqzfp8.png"/>
 
