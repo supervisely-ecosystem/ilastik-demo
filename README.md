@@ -1,5 +1,5 @@
 <div align="center" markdown>
-<img src="https://i.imgur.com/bxy51mv.png"/>
+<img src="https://i.imgur.com/ok6t92G.png"/>
 
 
 
@@ -28,14 +28,31 @@
 App uses ilastik machine learning algorithms to easily segment and classify your cells or other experimental data.
 Most operations are interactive, even on large datasets: you just draw the labels and immediately see the result.
 
+**ilastik** version used for app - **ilastik-1.4.0b14-Linux**
+
 No machine learning expertise required.
+
+When creating a new ilastik project you must select at least 2 target classes, all target classes must be bitmaps. 
+All predicted labels are tagged with `ilastik_prediction` tag.
+
+**Buttons functionality:**
+**train tab:**
+add to train set
+train model
+
+**predict tab**
+remove 
+predict
+
+**settings**
+save mode
 
 
 
 ## How To Run 
 **Step 1**: Add app to your team from [Ecosystem](https://ecosystem.supervise.ly/apps/ilastik-pixel-classification) if it is not there.
 
-**Step 2**: Open images project click on `Apps` tab and  -> `ilastik pixel classification` 
+**Step 2**: Open context images project click on `Apps` tab and  -> `ilastik pixel classification` 
 
 <img src="https://i.imgur.com/4mqzfp8.png"/>
 
