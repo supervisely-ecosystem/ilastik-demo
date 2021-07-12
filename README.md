@@ -45,7 +45,7 @@ All predicted labels are tagged with `ilastik_prediction` tag.
 
 * <img src="https://i.imgur.com/lFrPX8a.png"/> 
 
-  **-** Remove image from train set.
+  **-** Remove image from train set. Click **✕** to remove image.
 
 * <img src="https://i.imgur.com/wlhkmrZ.png"/> 
 
