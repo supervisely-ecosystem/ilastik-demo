@@ -27,5 +27,5 @@ tag_meta = project_meta.get_tag_meta(prediction_tag_meta.name)
 if tag_meta is None:
     project_meta = project_meta.add_tag_meta(prediction_tag_meta)
     api.project.update_meta(project_id, project_meta.to_json())
-    project = api.project.get_info_by_id(project_id)
-    project_meta = sly.ProjectMeta.from_json(api.project.get_meta(project_id))
+    # project = api.project.get_info_by_id(project_id)
+    # project_meta = sly.ProjectMeta.from_json(api.project.get_meta(project_id))
