@@ -1,11 +1,11 @@
 import os
 import sys
-from pathlib import Path
 import cache
 import datetime
 import subprocess
 import globals as g
 import init_directories
+from pathlib import Path
 import supervisely_lib as sly
 
 
@@ -13,7 +13,7 @@ def init(data, state):
     if g.mode == "Create new Project":
         data["trainSet"] = None
     else:
-        data["trainSet"] = os.listdir(init_directories.train_dir)
+        data["trainSet"] = None
     state["toDelete"] = None
 
 

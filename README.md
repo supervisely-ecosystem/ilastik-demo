@@ -28,7 +28,44 @@
 App uses ilastik machine learning algorithms to easily segment and classify your cells or other experimental data.
 Most operations are interactive, even on large datasets: you just draw the labels and immediately see the result.
 
+**ilastik** version used for app - **ilastik-1.4.0b14-Linux**
+
 No machine learning expertise required.
+
+When creating a new ilastik project you must select at least 2 target classes, all target classes must have bitmap shape. 
+All predicted labels are tagged with `ilastik_prediction` tag.
+
+**Buttons functionality**
+
+**1. - train tab -**
+
+* <img src="https://i.imgur.com/E8DGTid.png"/> 
+
+  **-** Add image to the training set. Training image name is image id in supervisely server.
+
+* <img src="https://i.imgur.com/lFrPX8a.png"/> 
+
+  **-** Remove image from train set. Click **✕** to remove image.
+
+* <img src="https://i.imgur.com/wlhkmrZ.png"/> 
+
+  **-** Train classifier with images from current training set.
+
+**2. - predict tab -**
+
+* <img src="https://i.imgur.com/ZbDABZB.png"/> 
+
+  **-** Remove all labels with `ilastik_prediction` tag from current image.
+
+* <img src="https://i.imgur.com/mKKw7bP.png"/> 
+
+  **-** Build predictions for current image.
+
+**3. - settings tab -**
+
+* <img src="https://i.imgur.com/9SOehlM.png"/> 
+
+  **-** Save ilastik project to ilastik folder in Team Files. Disabled by default, requires project name input.
 
 
 

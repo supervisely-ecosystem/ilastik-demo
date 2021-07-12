@@ -1,10 +1,11 @@
 import os
 import train
+import cache
 import settings
+import init_mode
 import globals as g
 import target_classes
 import init_ui_progress
-import mode_selector as ms
 
 
 def init(data, state):
@@ -12,14 +13,18 @@ def init(data, state):
     data["mode"] = g.mode
 
     state["loading"] = False
-    state["tabName"] = "info" # "info" "train" "predict" "settings"
+    state["prepare"] = False
+    state["tabName"] = "info"  # "info" "train" "predict" "settings"
+    state["classifierStatus"] = None
 
     if g.mode == "Create new Project":
-        state["classifierStatus"] = ms.classifier_status
+        state["prepare"] = False
     else:
-        state["classifierStatus"] = ms.remote_classifier_status
+        state["prepare"] = True
+
 
     init_ui_progress.init_progress(data, state)
+    init_mode.init(data, state)
     target_classes.init(data, state)
     train.init(data, state)
     settings.init(data, state)

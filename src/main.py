@@ -18,9 +18,9 @@ sly.logger.info(f"Added to sys.path: {ui_sources_dir}")
 
 
 import globals as g
-import init_directories
 import init_ui
-import mode_selector
+import init_directories
+import init_mode
 import cache
 import target_classes
 import train
@@ -56,10 +56,16 @@ def main():
 
     data = {}
     state = {}
-    init_ui.init(data, state)
 
+    if g.mode == "Existing Project":
+        initial_events = [{"state": None, "context": None, "command": "preprocessing_project"}]
+
+    init_ui.init(data, state)
     g.my_app.compile_template(root_source_dir)
-    g.my_app.run(data=data, state=state)
+    if g.mode == "Create new Project":
+        g.my_app.run(data=data, state=state)
+    else:
+        g.my_app.run(data=data, state=state, initial_events=initial_events)
 
 
 if __name__ == "__main__":
