@@ -18,7 +18,7 @@
   "icon": "https://i.imgur.com/pIz4rq9.png",
   "icon_background": "#FFFFFF",
   "isolate": true,
-  "instance_version": "6.4.20"
+  "instance_version": "6.4.20",
   "integrated_into": ["image_annotation_tool"],
   "context_menu": {
     "target": ["images_project"]
