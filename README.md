@@ -26,9 +26,9 @@
 [ilastik](https://www.ilastik.org/) - the interactive learning and segmentation toolkit.
 (**ilastik** version used for app - **ilastik-1.4.0b14-Linux**)
 
-App use ilastik machine learning algorithms to easily segment and classify your cells or other experimental data.
+App uses ilastik machine learning algorithms to easily segment and classify your cells or other experimental data.
 Most operations are interactive, even on large datasets: you just draw the labels and immediately see the result.
-No machine learning expertise required.
+No machine learning expertise is required.
 
 ## How To Run 
 **Step 1**: Add app to your team from [Ecosystem](https://ecosystem.supervise.ly/apps/ilastik-pixel-classification) if it is not there.
@@ -39,7 +39,7 @@ No machine learning expertise required.
 
 **Step 3**: Modal window
 
-**1.** In the modal window select whether you want to use previously saved project with trained classifier or create a new one.
+**1.** In the modal window select whether you want to use a previously saved project with a trained classifier or create a new one.
 
 **2.** Depending on the selected mode select classes that you want to segment (at least 2 classes must be selected) or paste a path from Team Files to your previously saved project.
 
@@ -47,9 +47,9 @@ No machine learning expertise required.
 
 ## How to use
 
-* When creating a new ilastik project you must select **at least 2 target classes**, all target classes must have **bitmap** shape. All predicted labels are tagged with `ilastik_prediction` tag. Tag will be created automatically on app launch.
+* When creating a new ilastik project you must select **at least 2 target classes**, all target classes must have **bitmap** shape. All predicted labels are tagged with `ilastik_prediction` tag. The tag will be created automatically on the app launch.
 
-* When loading existing project all classes from saved project and `ilastik_prediction` tag will be added to the target project meta automatically. If you want to edit target classes, you will have to create new project via app with desired classes. Existing project is ready to build predictions once it will be loaded, it already contain images in train set and trained classifier.
+* When loading the existing project all target classes from the saved project and `ilastik_prediction` tag will be added to the target project meta automatically. If you want to edit target classes, you will have to create a new project via the app with desired classes. The existing project is ready to build predictions, it already contains images in the train set and trained classifier.
 
 **App buttons functionality**
 
