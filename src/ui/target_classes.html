@@ -1,5 +1,11 @@
 <div>
     <div><b>Mode: </b>{{data.mode}}</div>
+    <el-button size="mini"
+               type="info"
+               :loading="state.loading"
+               @click="state.loading = true; command('synchronise_meta');">
+        Synchronise Meta
+    </el-button>
     <div><b>Target classes:</b></div>
     <table>
         <tbody>
