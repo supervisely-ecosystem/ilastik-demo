@@ -30,9 +30,26 @@ App use ilastik machine learning algorithms to easily segment and classify your 
 Most operations are interactive, even on large datasets: you just draw the labels and immediately see the result.
 No machine learning expertise required.
 
+## How To Run 
+**Step 1**: Add app to your team from [Ecosystem](https://ecosystem.supervise.ly/apps/ilastik-pixel-classification) if it is not there.
+
+**Step 2**: Open images project click on `Apps` tab and run `ilastik pixel classification` app.
+
+<img src="https://i.imgur.com/4mqzfp8.png"/>
+
+**Step 3**: Modal window
+
+**1.** In the modal window select whether you want to use previously saved project with trained classifier or create a new one.
+
+**2.** Depending on the selected mode select classes that you want to segment (at least 2 classes must be selected) or paste a path from Team Files to your previously saved project.
+
+<img src="https://i.imgur.com/B4RUqnj.png" width="600px"/>
+
+## How to use
+
 * When creating a new ilastik project you must select **at least 2 target classes**, all target classes must have **bitmap** shape. All predicted labels are tagged with `ilastik_prediction` tag. Tag will be created automatically on app launch.
 
-* When loading existing project all classes from saved project and `ilastik_prediction` tag will be added to the target project meta automatically. If you want to edit target classes, you will have to create new project via app with desired classes.
+* When loading existing project all classes from saved project and `ilastik_prediction` tag will be added to the target project meta automatically. If you want to edit target classes, you will have to create new project via app with desired classes. Existing project is ready to build predictions once it will be loaded, it already contain images in train set and trained classifier.
 
 **App buttons functionality**
 
@@ -64,26 +81,8 @@ No machine learning expertise required.
 
 * <img src="https://i.imgur.com/9SOehlM.png"/> 
 
-  **-** Save ilastik project to ilastik folder in Team Files. Disabled by default, requires project name input.
+  **-** Save ilastik project to ilastik folder in Team Files. Disabled by default, requires project name input. Trained `.ilp` classifier can be found inside saved project folder.
 
-
-
-## How To Run 
-**Step 1**: Add app to your team from [Ecosystem](https://ecosystem.supervise.ly/apps/ilastik-pixel-classification) if it is not there.
-
-**Step 2**: Open context images project click on `Apps` tab and  -> `ilastik pixel classification` 
-
-<img src="https://i.imgur.com/4mqzfp8.png"/>
-
-**Step 3**: Modal window
-
-**1.** In the modal window select whether you want to use previously saved project or create a new one.
-
-**2.** Depending on the selected mode select classes that you want to segment (at least 2 classes must be selected) or paste a path from Team Files to your previously saved project.
-
-<img src="https://i.imgur.com/B4RUqnj.png" width="600px"/>
-
-## How to use
 
 Watch video guide for more details:
 
