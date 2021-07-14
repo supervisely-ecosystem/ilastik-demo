@@ -47,7 +47,7 @@ No machine learning expertise is required.
 
 ## How to use
 
-* When creating a new ilastik project you must select **at least 2 target classes**, all target classes must have **bitmap** shape. All predicted labels are tagged with `ilastik_prediction` tag. The tag will be created automatically on the app launch.
+* When creating a new ilastik project you must select **at least 2 target classes**, all target classes must have **bitmap** shape.
 
 * When loading the existing project all target classes from the saved project and `ilastik_prediction` tag will be added to the target project meta automatically. If you want to edit the target classes, you will have to create a new project via the app with desired classes. The existing project is ready to build predictions, it already contains images in the train set and trained classifier.
 
@@ -75,7 +75,8 @@ No machine learning expertise is required.
 
 * <img src="https://i.imgur.com/mKKw7bP.png"/> 
 
-  **-** Build predictions for current image.
+  **-** Build predictions for current image. All predicted labels are tagged with `ilastik_prediction` tag. 
+        The tag will be created automatically on the app launch.
 
 **3. - settings tab -**
 
