@@ -24,18 +24,17 @@
 ## Overview
 
 [ilastik](https://www.ilastik.org/) - the interactive learning and segmentation toolkit.
+(**ilastik** version used for app - **ilastik-1.4.0b14-Linux**)
 
-App uses ilastik machine learning algorithms to easily segment and classify your cells or other experimental data.
+App use ilastik machine learning algorithms to easily segment and classify your cells or other experimental data.
 Most operations are interactive, even on large datasets: you just draw the labels and immediately see the result.
-
-**ilastik** version used for app - **ilastik-1.4.0b14-Linux**
-
 No machine learning expertise required.
 
-When creating a new ilastik project you must select at least 2 target classes, all target classes must have bitmap shape. 
-All predicted labels are tagged with `ilastik_prediction` tag.
+* When creating a new ilastik project you must select **at least 2 target classes**, all target classes must have **bitmap** shape. All predicted labels are tagged with `ilastik_prediction` tag. Tag will be created automatically on app launch.
 
-**Buttons functionality**
+* When loading existing project all classes from saved project and `ilastik_prediction` tag will be added to the target project meta automatically. If you want to edit target classes, you will have to create new project via app with desired classes.
+
+**App buttons functionality**
 
 **1. - train tab -**
 
