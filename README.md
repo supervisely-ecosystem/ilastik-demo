@@ -87,6 +87,6 @@ No machine learning expertise required.
 
 Watch video guide for more details:
 
-<a data-key="sly-embeded-video-link" href="https://youtu.be/z31-K7NAAbU" data-video-code="z31-K7NAAbU">
+<a data-key="sly-embeded-video-link" href="https://youtu.be/3Nf73GIju5w" data-video-code="3Nf73GIju5w">
     <img src="https://i.imgur.com/Jf54wuS.png" alt="SLY_EMBEDED_VIDEO_LINK"  style="max-width:500px;">
 </a>
