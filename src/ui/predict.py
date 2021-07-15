@@ -32,6 +32,9 @@ def remove_predicted_labels(api: sly.Api, task_id, context, state, app_logger):
 @g.my_app.ignore_errors_and_show_dialog_window()
 def predict(api: sly.Api, task_id, context, state, app_logger):
     try:
+        if g.project_id != context["projectId"]:
+            target_classes.synchronise_meta(api, task_id, context, state, app_logger)
+
         image_id = context['imageId']
         ann, img_path = cache.download_test(image_id)
         ilp_path = os.path.join(init_directories.proj_dir, f'{g.project.name}.ilp')
