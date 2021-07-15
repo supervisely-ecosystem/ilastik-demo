@@ -94,21 +94,20 @@ def download_train(image_id, project_id):
             cv2.imwrite(train_img_path, gray_img)
 
 
-def download_test(image_id):
+def download_test(image_id, project_id):
     test_img_path = os.path.join(init_directories.test_dir, f"{image_id}.png")
-
-    tag_meta = g.project_meta.get_tag_meta(g.prediction_tag.name)
-    if tag_meta is None:
-        project_meta = g.project_meta.add_tag_meta(g.prediction_tag_meta)
-        g.api.project.update_meta(g.project.id, project_meta.to_json())
-
     if not sly.fs.file_exists(test_img_path):
         img = g.api.image.download_np(image_id)
         gray_img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
         cv2.imwrite(test_img_path, gray_img)
 
     ann_json = g.api.annotation.download(image_id).annotation
-    ann = sly.Annotation.from_json(ann_json, g.project_meta)
+    if project_id == g.project_id:
+        ann = sly.Annotation.from_json(ann_json, g.project_meta)
+    else:
+        meta_json = g.api.project.get_meta(project_id)
+        meta = sly.ProjectMeta.from_json(meta_json)
+        ann = sly.Annotation.from_json(ann_json, meta)
 
     for label in ann.labels:
         if g.prediction_tag in label.tags:

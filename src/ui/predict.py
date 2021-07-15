@@ -16,7 +16,14 @@ def remove_predicted_labels(api: sly.Api, task_id, context, state, app_logger):
     try:
         image_id = context['imageId']
         ann_info = g.api.annotation.download(image_id).annotation
-        ann = sly.Annotation.from_json(ann_info, g.project_meta)
+
+        if g.project_id != context["projectId"]:
+            meta_json = g.api.project.get_meta(context["projectId"])
+            meta = sly.ProjectMeta.from_json(meta_json)
+            ann_json = g.api.annotation.download(image_id).annotation
+            ann = sly.Annotation.from_json(ann_json, meta)
+        else:
+            ann = sly.Annotation.from_json(ann_info, g.project_meta)
         for label in ann.labels:
             if g.prediction_tag in label.tags:
                 ann = ann.delete_label(label)
@@ -36,7 +43,7 @@ def predict(api: sly.Api, task_id, context, state, app_logger):
             target_classes.synchronise_meta(api, task_id, context, state, app_logger)
 
         image_id = context['imageId']
-        ann, img_path = cache.download_test(image_id)
+        ann, img_path = cache.download_test(image_id, context["projectId"])
         ilp_path = os.path.join(init_directories.proj_dir, f'{g.project.name}.ilp')
         if not os.path.exists(ilp_path):
             api.task.set_field(task_id, "state.loading", False)
