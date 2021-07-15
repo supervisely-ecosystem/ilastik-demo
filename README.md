@@ -51,9 +51,17 @@ No machine learning expertise is required.
 
 * When loading the existing project all target classes from the saved project and `ilastik_prediction` tag will be added to the target project meta automatically. If you want to edit the target classes, you will have to create a new project via the app with desired classes. The existing project is ready to build predictions as it already contains the images in the train set and trained classifier.
 
+**Note:** You can add images to the training set from different projects and workspaces within one Team.
+
 **App buttons functionality**
 
-**1. - train tab -**
+**1. - info tab -**
+
+* <img src="https://i.imgur.com/YQ5GEyJ.png"/>
+
+**-** Synchronize target classes and prediction tag with current project. Helpful when you add images to the training set from different projects.
+
+**2. - train tab -**
 
 * <img src="https://i.imgur.com/E8DGTid.png"/> 
 
@@ -67,7 +75,7 @@ No machine learning expertise is required.
 
   **-** Train classifier with images from current training set.
 
-**2. - predict tab -**
+**3. - predict tab -**
 
 * <img src="https://i.imgur.com/ZbDABZB.png"/> 
 
@@ -78,7 +86,7 @@ No machine learning expertise is required.
   **-** Build predictions for current image. All predicted labels are tagged with `ilastik_prediction` tag. 
         The tag will be created automatically on the app launch.
 
-**3. - settings tab -**
+**4. - settings tab -**
 
 * <img src="https://i.imgur.com/9SOehlM.png"/> 
 
