@@ -54,7 +54,12 @@ def remove_train_image_from_set(image_name):
 def download_train(image_id, project_id):
     selected_classes = target_classes.get_classes()
     ann_json = g.api.annotation.download(image_id).annotation
-    ann = sly.Annotation.from_json(ann_json, project_meta=g.project_meta)
+    if g.project_id != project_id:
+        meta_json = g.api.project.get_meta(project_id)
+        meta = sly.ProjectMeta.from_json(meta_json)
+        ann = sly.Annotation.from_json(ann_json, meta)
+    else:
+        ann = sly.Annotation.from_json(ann_json, g.project_meta)
 
     machine_mask = np.zeros(shape=ann.img_size + (3,), dtype=np.uint8)
     mask_img_path = os.path.join(init_directories.machine_masks_dir, f"{image_id}.png")
