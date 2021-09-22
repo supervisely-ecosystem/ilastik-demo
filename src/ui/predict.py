@@ -51,10 +51,10 @@ def predict(api: sly.Api, task_id, context, state, app_logger):
 
         test_cmd = f"/ilastik-build/ilastik-1.4.0b14-Linux/run_ilastik.sh " \
                    f"--headless " \
-                   f"--project={ilp_path} " \
+                   f"--project='{ilp_path}' " \
                    f"--export_source='Simple Segmentation' " \
                    f"--output_format='png' " \
-                   f"{img_path}"
+                   f"'{img_path}' "
 
         sly.logger.info("Testing", extra={"command": test_cmd})
         bash_out = subprocess.Popen([test_cmd], shell=True, executable="/bin/bash", stdout=subprocess.PIPE).communicate()
@@ -62,6 +62,7 @@ def predict(api: sly.Api, task_id, context, state, app_logger):
         error_log = bash_out[1]
         seg_img_name = sly.fs.get_file_name(img_path) + "_Simple Segmentation.png"
         seg_path = os.path.join(os.path.dirname(img_path), seg_img_name)
+        #os.rename(img_path, seg_path)
         img = sly.image.read(seg_path)
         mask = img[:, :, 0]
         labels = []

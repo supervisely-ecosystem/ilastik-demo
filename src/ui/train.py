@@ -89,7 +89,7 @@ def train_model(api: sly.Api, task_id, context, state, app_logger):
             # train_script_path = os.path.join(init_directories.source_path, "train_headless.py")
             train_cmd = f"{interpreter} " \
                         f"{train_script_path} " \
-                        f"--project={ilp_path} "
+                        f"--project='{ilp_path}' "
             for image_path, mask_path in zip(images_paths, masks):
                 train_cmd += f"--images='{image_path}' "
                 train_cmd += f"--masks='{mask_path}' "

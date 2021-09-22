@@ -35,12 +35,6 @@ import init_ui_progress
 #@TODO: hotkeys
 #@TODO: add multiple images to train-headless
 
-
-#@TODO: launch app from instance
-
-#@TODO: existing project launch progress
-#@TODO: save project progress bar
-
 #@TODO: add slyfields with description to buttons?
 #@TODO: Predict all unlabeled images button?
 #@TODO: Videos support?
