@@ -7,9 +7,9 @@ FROM supervisely/base-py-sdk:6.1.88
 #RUN tar -xf /ilastik-1.4.0b14-Linux.tar.bz2 -C /ilastik-build
 
 RUN apt-get install unzip
-RUN wget https://github.com/supervisely-ecosystem/ilastik-pixel-classification/releases/download/v1.0.0/ilastik-1.4.0b15-Linux.tar.bz2 -O /ilastik-1.4.0b15-Linux.tar.bz2
+RUN wget https://github.com/supervisely-ecosystem/ilastik-pixel-classification/releases/download/v1.0.0/ilastik-1.4.0b14-Linux.zip -O /ilastik-1.4.0b14-Linux.zip
 RUN mkdir /ilastik-build
-RUN tar -xf /ilastik-1.4.0b15-Linux.tar.bz2 -C /ilastik-build
+RUN unzip /ilastik-1.4.0b14-Linux.zip -d /ilastik-build
 #COPY roi.py /ilastik-build/ilastik-meta/ilastik/lazyflow/roi.py
 
 
