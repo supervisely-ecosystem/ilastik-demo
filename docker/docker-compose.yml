@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile-dev
       args:
-        IMAGE: supervisely/ilastik:1.0.0
+        IMAGE: supervisely/ilastik:6.1.88
     ports:
       - "3333:22"
     volumes:
