@@ -19,4 +19,4 @@ git status
 4. ssh root@gpu1 -p 7777
 
 to fix WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!
-ssh-keygen -R [66.248.205.57]:7777
+ssh-keygen -R [xxxx]:7777
