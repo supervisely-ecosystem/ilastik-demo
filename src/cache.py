@@ -16,6 +16,10 @@ def download_existing_project(api: sly.Api, task_id, context, state, app_logger)
         sly.fs.remove_dir(local_classifier_path)
     remote_classifier_path = os.environ["modal.state.classifierPath"]
 
+    ext = sly.fs.get_file_ext(remote_classifier_path)
+    if ext != '':
+        raise Exception("Please input path to folder containing .ilp file")
+
     dir_size = 0
     detected = False
     file_infos = g.api.file.list2(g.team_id, remote_classifier_path)
