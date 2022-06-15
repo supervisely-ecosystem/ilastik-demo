@@ -5,7 +5,8 @@
     "neural network",
     "images",
     "interactive segmentation",
-    "inference interfaces"
+    "inference interfaces",
+    "labeling"
   ],
   "description": "Image Pixel Classification using ilastik",
   "docker_image": "supervisely/ilastik:6.1.88",
