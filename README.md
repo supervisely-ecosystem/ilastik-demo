@@ -35,7 +35,7 @@ No machine learning expertise is required.
 
 **Step 2**: Open images project click on `Apps` tab and run `ilastik pixel classification` app.
 
-<img src="https://i.imgur.com/4mqzfp8.png"/>
+<img src="media/htr2.png"/>
 
 **Step 3**: Modal window
 
@@ -43,7 +43,7 @@ No machine learning expertise is required.
 
 **2.** Depending on the selected mode select classes that you want to segment (at least 2 classes must be selected) or paste a path from Team Files to your previously saved project.
 
-<img src="https://i.imgur.com/B4RUqnj.png" width="600px"/>
+<img src="media/htr3.png" width="600px"/>
 
 ## How to use
 
@@ -57,38 +57,38 @@ No machine learning expertise is required.
 
 **1. - info tab -**
 
-* <img src="https://i.imgur.com/YQ5GEyJ.png"/>
+* <img src="media/htu1.png"/>
 
 **-** Synchronize target classes and prediction tag with current project. Helpful when you add images to the training set from different projects.
 
 **2. - train tab -**
 
-* <img src="https://i.imgur.com/E8DGTid.png"/> 
+* <img src="media/htu2a.png"/> 
 
   **-** Add image to the training set. Training image name is image id in supervisely server.
 
-* <img src="https://i.imgur.com/lFrPX8a.png"/> 
+* <img src="media/htu2b.png"/> 
 
   **-** Remove image from train set. Click **✕** to remove image.
 
-* <img src="https://i.imgur.com/wlhkmrZ.png"/> 
+* <img src="media/htu2c.png"/> 
 
   **-** Train classifier with images from current training set.
 
 **3. - predict tab -**
 
-* <img src="https://i.imgur.com/ZbDABZB.png"/> 
+* <img src="media/htu3a.png"/> 
 
   **-** Remove all labels with `ilastik_prediction` tag from current image.
 
-* <img src="https://i.imgur.com/mKKw7bP.png"/> 
+* <img src="media/htu3b.png"/> 
 
   **-** Build predictions for current image. All predicted labels are tagged with `ilastik_prediction` tag. 
         The tag will be created automatically on the app launch.
 
 **4. - settings tab -**
 
-* <img src="https://i.imgur.com/9SOehlM.png"/> 
+* <img src="media/htu4.png"/> 
 
   **-** Save ilastik project to ilastik folder in Team Files. Disabled by default, requires project name input. Trained `.ilp` classifier can be found inside saved project folder.
 
@@ -96,5 +96,5 @@ No machine learning expertise is required.
 Watch video guide for more details:
 
 <a data-key="sly-embeded-video-link" href="https://youtu.be/3Nf73GIju5w" data-video-code="3Nf73GIju5w">
-    <img src="https://i.imgur.com/Jf54wuS.png" alt="SLY_EMBEDED_VIDEO_LINK"  style="max-width:500px;">
+    <img src="media/d.png" alt="SLY_EMBEDED_VIDEO_LINK"  style="max-width:500px;">
 </a>
