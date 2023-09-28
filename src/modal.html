@@ -40,6 +40,11 @@
                                   :classes.sync="state.classes"
                                   :options="{multiple: true, showLabel: false}">
                 </sly-select-class>
+                <div style="margin: 10px 0 0 0">
+                    <span v-if="state.classes | state.classes.length < 2" style="color: #b7675d;">
+                        Please select at least 2 classes
+                    </span>
+                </div>
             </el-tab-pane>
             <el-tab-pane name="Existing Project">
                 <el-radio slot="label" v-model="state.projectMode" label="Existing Project">
