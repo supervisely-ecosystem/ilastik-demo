@@ -19,7 +19,7 @@
     "classifierPath": ""
   },
   "task_location": "application_sessions",
-  "icon": "https://i.imgur.com/pIz4rq9.png",
+  "icon": "https://github.com/supervisely-ecosystem/ilastik-pixel-classification/assets/79905215/e5d86bea-7ae7-41dc-8697-dec8eb4c684f",
   "icon_background": "#FFFFFF",
   "isolate": true,
   "instance_version": "6.4.20",
