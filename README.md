@@ -63,7 +63,7 @@ No machine learning expertise is required.
 
 **2. - train tab -**
 
-* <img src="https://github.com/supervisely-ecosystem/ilastik-pixel-classification/assets/79905215/9701b3d0-c69d-4b3a-b943-2eceb27ab038"/> 
+* <img src="https://github.com/supervisely-ecosystem/ilastik-pixel-classification/releases/download/v1.0.19/add_image.png"/> 
 
   **-** Add image to the training set. Training image name is image id in supervisely server.
 
